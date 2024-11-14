@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-class UserLoginPage extends StatelessWidget {
-  const UserLoginPage({super.key});
+class TeacherLoginPage extends StatelessWidget {
+  const TeacherLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -16,49 +13,93 @@ class UserLoginPage extends StatelessWidget {
           ],
         )
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 100.0, left: 60, right: 60),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              height:  size.height*20/100,
-              child: const Column(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Flexible(
+            fit: FlexFit.loose,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight * 0.9,
+                );
+              }
+            ),
+          ),
+
+          const Flexible(
+            fit: FlexFit.loose,
+            child: Padding(
+              padding: EdgeInsets.only(left: 60.0, right: 60.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Username"
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Username"
+                      ),
                     ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Password"
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Password"
+                      ),
                     ),
                   )
                 ],
               ),
             ),
-            SizedBox(
-              height: size.height*15/100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => {},
-                    child: const Text("Accedi")
+          ),
+
+          Flexible(
+            fit: FlexFit.loose,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight * 0.2,
+                );
+              }
+            ),
+          ),
+
+          Flexible(
+            fit: FlexFit.loose,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight * 0.6,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 60.0, right: 60.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => {},
+                          child: const Text("Accedi")
+                        ),
+                        ElevatedButton(
+                          onPressed: () => {},
+                          child: const Text("Non hai un account? Iscriviti")
+                        )
+                      ],
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () => {},
-                    child: const Text("Non hai un account? Iscriviti")
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                );
+              }
+            ),
+          )
+        ],
       )
     );
   }
