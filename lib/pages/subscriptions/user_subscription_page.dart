@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
+import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 
 class UserSubscriptionPage extends StatelessWidget {
   const UserSubscriptionPage({super.key});
@@ -7,101 +10,126 @@ class UserSubscriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    return Column(
-      children: [
-        SizedBox(
-          height: size.height * 0.05,
-        ),
+    //final List<Subscription> subscriptions = List.empty();
 
-        SizedBox(
-          width: size.width,
-          height: 30,
-          child: const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20.0),
-                child: Text(
-                  "Abbonamenti",
-                  style: TextStyle(fontSize: 26),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(
-          height: size.height * 0.1,
-        ),
-
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return BlocConsumer<SubscriptionsBloc, SubscriptionsState>(
+      listener: (context, state) {
+      },
+      builder: (context, state) {
+        return Column(
           children: [
-            SubscriptionFree(),
-            SubscriptionSilver(),
-            SubscriptionGold()
+            SizedBox(
+              height: size.height * 0.05,
+            ),
+            SizedBox(
+              width: size.width,
+              height: 30,
+              child: const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "Abbonamenti",
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.1,
+            ),
+            Flexible(
+              fit: FlexFit.loose,
+              child: ListView.builder(
+                itemCount: state.subscriptionTypes.length,
+                itemBuilder: (context, index) {
+                  final subscriptionType = state.subscriptionTypes[index];
+                  return SubscriptionWidget(
+                    name: subscriptionType.name,
+                    pricePerMonth: subscriptionType.price,
+                    description: subscriptionType.description,
+                    onSubscriptionSelected: () {
+                      context.read<UserBloc>().add(SetSubscription(
+                        subscriptionType: subscriptionType
+                      ));
+                    },
+                  );
+                }
+              ),
+            ),
           ],
-        )
-      ],
+        );
+      },
     );
   }
 }
 
+class SubscriptionWidget extends StatelessWidget {
+  final String name;
+  final String pricePerMonth;
+  final String description;
+  final VoidCallback onSubscriptionSelected;
 
-class SubscriptionFree extends StatelessWidget {
-  const SubscriptionFree({super.key});
+  const SubscriptionWidget(
+    {
+      super.key,
+      required this.name,
+      required this.pricePerMonth,
+      required this.description,
+      required this.onSubscriptionSelected
+    }
+  );
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
     return SizedBox(
-      width: size.width * 0.25,
-      height: size.height * 0.7,
+      width: size.width * 0.5,
+      height: size.height * 0.5,
       child: Card(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 80.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 80.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Free",
-                    style: TextStyle(fontSize: 34),
+                    name,
+                    style: const TextStyle(fontSize: 34),
                   )
                 ],
               ),
             ),
-
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 80.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 80.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "0.0\$/mese",
-                    style: TextStyle(fontSize: 20),
+                    "$pricePerMonth/mese",
+                    style: const TextStyle(fontSize: 20),
                   )
                 ],
               ),
             ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, bottom: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Accesso alle ricette",
-                    style: TextStyle(fontSize: 16),
+                    description,
+                    style: const TextStyle(fontSize: 16),
                   )
                 ],
               ),
             ),
-
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -109,226 +137,11 @@ class SubscriptionFree extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 40.0),
                     child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Seleziona",
-                        style: TextStyle(fontSize: 25),
-                      )
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SubscriptionSilver extends StatelessWidget {
-  const SubscriptionSilver({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
-    return SizedBox(
-      width: size.width * 0.25,
-      height: size.height * 0.7,
-      child: Card(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 80.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Silver",
-                    style: TextStyle(fontSize: 34),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 80.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "5.90\$/mese",
-                    style: TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Accesso alle ricette",
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Accesso alle lezioni",
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Seleziona",
-                        style: TextStyle(fontSize: 25),
-                      )
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SubscriptionGold extends StatelessWidget {
-  const SubscriptionGold({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
-    return SizedBox(
-      width: size.width * 0.25,
-      height: size.height * 0.7,
-      child: Card(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 80.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Gold",
-                    style: TextStyle(fontSize: 34),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 80.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "10.90\$/mese",
-                    style: TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Accesso alle ricette",
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Accesso alle lezioni",
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Accesso ai corsi",
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Accesso alle promozioni",
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Seleziona",
-                        style: TextStyle(fontSize: 25),
-                      )
-                    ),
+                        onPressed: onSubscriptionSelected,
+                        child: const Text(
+                          "Seleziona",
+                          style: TextStyle(fontSize: 25),
+                        )),
                   )
                 ],
               ),
