@@ -22,3 +22,9 @@ final class NavigateToUserHomePromoCodes extends NavigationEvent {}
 final class NavigateToUserHomeSubscription extends NavigationEvent {}
 
 final class NavigateToUserHomeProfileInfo extends NavigationEvent {}
+
+// User-Create-Recipe
+
+final class NavigateToRecipeCreation extends NavigationEvent {}
+
+final class NavigateToRecipeStepCreation extends NavigationEvent {}

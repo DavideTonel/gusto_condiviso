@@ -25,5 +25,11 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<NavigateToUserHomeSubscription>((event, emit) => emit(NavigationUserHomeSubscription()));
 
     on<NavigateToUserHomeProfileInfo>((event, emit) => emit(NavigationUserHomeProfileInfo()));
+
+    // User-Create-Recipe
+
+    on<NavigateToRecipeCreation>((event, emit) => emit(NavigationRecipeCreation()));
+
+    on<NavigateToRecipeStepCreation>((event, emit) => emit(NavigationRecipeStepCreation()));
   }
 }

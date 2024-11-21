@@ -24,3 +24,9 @@ final class NavigationUserHomePromoCodes extends NavigationState {}
 final class NavigationUserHomeSubscription extends NavigationState {}
 
 final class NavigationUserHomeProfileInfo extends NavigationState {}
+
+// User-Create-Recipe
+
+final class NavigationRecipeCreation extends NavigationState {}
+
+final class NavigationRecipeStepCreation extends NavigationState {}

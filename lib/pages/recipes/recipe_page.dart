@@ -91,7 +91,7 @@ class RecipePage extends StatelessWidget{
             fit: FlexFit.loose,
             child: ListView.builder(
               itemCount: list.length,
-              itemBuilder: (context, i) => const RecipeStep()
+              itemBuilder: (context, i) => const RecipeStepWidget()
             ),
           )
         ],
@@ -101,8 +101,8 @@ class RecipePage extends StatelessWidget{
 }
 
 
-class RecipeStep extends StatelessWidget {
-  const RecipeStep({super.key});
+class RecipeStepWidget extends StatelessWidget {
+  const RecipeStepWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

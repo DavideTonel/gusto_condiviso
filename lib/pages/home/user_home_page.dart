@@ -103,7 +103,6 @@ class UserHomePage extends StatelessWidget {
                             context.read<NavigationBloc>().add(NavigateToUserHomeSubscription());
                           }
                           case 2: {
-                            dev.log("navigate to recipes");
                             context.read<NavigationBloc>().add(NavigateToUserHomeRecipes());
                           }
                           case 3: {

@@ -47,7 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
                 startDate: value.data["DataInizio"] as String,
                 subscriptionType: SubscriptionType(
                   id: value.data["CodiceTipoAbbonamento"] as int,
-                  name: value.data["NomeTipo"] as String, 
+                  name: value.data["Nome"] as String, 
                   description: value.data["Descrizione"] as String,
                   price: value.data["PrezzoMensile"] as String
                 )

@@ -4,6 +4,8 @@ import 'package:gusto_condiviso/pages/entry_point/entry_point_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/user_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/user_signin_page.dart';
 import 'package:gusto_condiviso/pages/home/user_home_page.dart';
+import 'package:gusto_condiviso/pages/recipes/creation/recipe_creation_page.dart';
+import 'package:gusto_condiviso/pages/recipes/creation/recipe_step_creation_page.dart';
 
 class AppRouter {
   static String entryPoint = "/";
@@ -30,6 +32,14 @@ class AppRouter {
         path: "/userHome",
         builder: (context, state) => const UserHomePage(),
       ),
+      GoRoute(
+        path: "/recipeCreation",
+        builder: (context, state) => const RecipeCreationPage(),
+      ),
+      GoRoute(
+        path: "/recipeCreation/recipeStepCreation",
+        builder: (context, state) => const RecipeStepCreationPage(),
+      )
     ]
   );
 

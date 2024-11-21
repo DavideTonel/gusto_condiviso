@@ -29,7 +29,7 @@ class SubscriptionsBloc extends Bloc<SubscriptionsEvent, SubscriptionsState> {
           subsciptionTypes.add(
             SubscriptionType(
               id: entry["Codice"] as int,
-              name: entry["NomeTipo"] as String,
+              name: entry["Nome"] as String,
               description: entry["Descrizione"] as String,
               price: entry["PrezzoMensile"] as String
             )
