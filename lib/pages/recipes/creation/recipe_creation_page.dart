@@ -30,18 +30,8 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-
-    final List<String> items = [
-      'Item1',
-      'Item2',
-      'Item3',
-      'Item4',
-    ];
-    List<String> selectedItems = [];
-
     return BlocConsumer<RecipeCreationBloc, RecipeCreationState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return Scaffold(

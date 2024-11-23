@@ -8,11 +8,11 @@ import 'dart:developer' as dev;
 
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
-// TODO quando si guarda ricetta mostrare:
-// UsernameUtente, NomeRicetta, Descrizione
-// + per ogni passaggio -> numero, ogni ingrediente (NomeIngrediente) e quantità, ogni utensile (NomeUtensile) 
-
 // TODO clear quando si esce dalla prima fase della creazione ricetta e dalla seconda
+// TODO dopo aver creato ricetta si deve aggiornare di nuovo l'ordine di tutte e ricette che sono state fatte.
+// ogni volta che si va nella recipeFeed
+
+// TODO aggiungere anche dosi nel db
 
 class RecipeStepCreationPage extends StatefulWidget {
   const RecipeStepCreationPage({super.key});
@@ -38,11 +38,11 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
 
     return BlocConsumer<RecipeCreationBloc, RecipeCreationState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: Text(""),
             title: const Text(
               "Creazione passaggio",
               style: TextStyle(fontSize: 25),

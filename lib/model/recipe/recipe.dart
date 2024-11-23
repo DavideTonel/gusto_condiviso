@@ -1,11 +1,19 @@
 class Recipe {
   final int id;
+  final String usernameCreator;
   final String name;
   final String description;
+  final List<RecipeStep> steps;
 
-  List<RecipeStep> steps = [];
+  Recipe({required this.id, required this.usernameCreator, required this.name, required this.description, required this.steps});
+}
 
-  Recipe({required this.id, required this.name, required this.description});
+class RecipePreview {
+  final int id;
+  final String name;
+  final String usernameCreator;
+
+  RecipePreview({required this.id, required this.name, required this.usernameCreator});
 }
 
 class RecipeCategory {

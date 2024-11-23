@@ -1,115 +1,140 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gusto_condiviso/bloc/recipe/recipe_bloc.dart';
+import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
-class RecipePage extends StatelessWidget{
+import 'dart:developer' as dev;
+
+class RecipePage extends StatelessWidget {
   const RecipePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    var list = List.generate(6, (i) => i);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Pasta patate e provola",
-                style: TextStyle(fontSize: 35),
-              ),
-
-              Text(
-                "di Carletto Amleto",
-                style: TextStyle(fontSize: 28),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: size.height * 0.005,
-          ),
-
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0),
-                child: Text(
-                  "del 12/19/2000",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
-          ),
-          
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 35,
+    return BlocConsumer<RecipeBloc, RecipeState>(
+      listener: (context, state) {
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    state.recipe?.name ?? "nome non disponibile",
+                    style: const TextStyle(fontSize: 35),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Text(
+                      "di ${state.recipe?.usernameCreator ?? "username non disponibile"}",
+                      style: const TextStyle(fontSize: 28),
                     ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          body: Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.005,
+              ),
+              const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      "del 12/19/2000", //TODO aggiungere data
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 25.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 35,
+                        ),
+                        Text(
+                          "4.5",  // TODO aggiungere valutazione
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+               Padding(
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
                     Text(
-                      "4.5",
-                      style: TextStyle(fontSize: 30),
+                      state.recipe?.description ?? "descrizione non disponibile",
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ],
                 ),
               ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Flexible(
+                fit: FlexFit.loose,
+                child: ListView.builder(
+                  itemCount: state.recipe?.steps.length ?? 0,
+                  itemBuilder: (context, i) => RecipeStepWidget(
+                    stepNumber: i+1,
+                    step: state.recipe?.steps[i] ?? RecipeStep(
+                      description: "",
+                      ingredients: [],
+                      tools: []
+                    ),
+                  )
+                ),
+              )
             ],
           ),
-
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-
-          const Padding(
-            padding: EdgeInsets.only(left: 25.0, right: 25.0),
-            child: Text(
-              "Ricetta antichissima che piace a tutti, originaria della Sardegna piace a mia mamma, mia nonna ed il tuo cane.Ricetta antichissima che piace a tutti, originaria della Sardegna piace a mia mamma, mia nonna ed il tuo cane.Ricetta antichissima che piace a tutti, originaria della Sardegna piace a mia mamma, mia nonna ed il tuo cane.Ricetta antichissima che piace a tutti, originaria della Sardegna piace a mia mamma, mia nonna ed il tuo cane.",
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-
-          Flexible(
-            fit: FlexFit.loose,
-            child: ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, i) => const RecipeStepWidget()
-            ),
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
-
 class RecipeStepWidget extends StatelessWidget {
-  const RecipeStepWidget({super.key});
+  final int stepNumber;
+  final RecipeStep step;
+
+  const RecipeStepWidget(
+    {
+      super.key,
+      required this.stepNumber,
+      required this.step
+    }
+  );
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
     return Padding(
-      padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 10.0),
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
       child: SizedBox(
         //width: size.width * 0.9,
         child: Card(
@@ -117,41 +142,36 @@ class RecipeStepWidget extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Passaggio 1",
-                      style: TextStyle(
-                        fontSize: 25
-                      ),
+                      "Passaggio $stepNumber",
+                      style: const TextStyle(fontSize: 25),
                     ),
                   ],
                 ),
-            
+
                 SizedBox(
                   height: size.height * 0.002,
                 ),
-                  
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Flexible(
                       child: Text(
-                        "Per prima cosa comprare le patate e della provola, questo servirà più tardi nella ricetta. Ci sono al conad o altrove.Per prima cosa comprare le patate e della provola, questo servirà più tardi nella ricetta. Ci sono al conad o altrove.Per prima cosa comprare le patate e della provola, questo servirà più tardi nella ricetta. Ci sono al conad o altrove.",
-                        style: TextStyle(
-                          fontSize: 18
-                        ),
+                        step.description,
+                        style: const TextStyle(fontSize: 18),
                       )
                     ),
                   ],
                 ),
-            
+
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                  
-                const Row(
+
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
@@ -160,41 +180,50 @@ class RecipeStepWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            if (step.ingredients.isNotEmpty)
+                            const Text(
                               "Ingredienti",
-                              style: TextStyle(
-                                fontSize: 20
-                              ),
+                              style: TextStyle(fontSize: 20),
                             ),
                           ],
                         ),
-                        Text("200 patate"),
-                        Text("40 provole"),
-                        Text("4 kg di pepe"),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: step.ingredients
+                            .map((ingredient) {
+                              //dev.log(ingredient.ingredient.name);
+                              return Text("${ingredient.ingredient.name} ${ingredient.amount}");
+                            })
+                            .toList(),
+                        )
                       ],
                     ),
                   ],
                 ),
-            
+
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                  
-                const Row(
+
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        if (step.tools.isNotEmpty)
+                        const Text(
                           "Utensili",
-                          style: TextStyle(
-                            fontSize: 20
-                          ),
+                          style: TextStyle(fontSize: 20),
                         ),
-                        Text("Schiaccia patate"),
-                        Text("Abbati provole"),
-                        Text("Macina pepe"),
+                        Column(
+                          children: step.tools
+                            .map((tool) {
+                              //dev.log(tool.name);
+                              return Text(tool.name);
+                            })
+                            .toList(),
+                        )
                       ],
                     ),
                   ],
@@ -206,5 +235,4 @@ class RecipeStepWidget extends StatelessWidget {
       ),
     );
   }
-
 }

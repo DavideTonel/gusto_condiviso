@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart';
 
+class RecipePreviewWidget extends StatelessWidget {
+  final String name;
+  final String creator;
+  final VoidCallback onPressed;
+
+  const RecipePreviewWidget({super.key, required this.name, required this.creator, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(name),
+        subtitle: Text("di $creator"),
+        onTap: onPressed,
+      ),
+    );
+  }
+
+}
+
+/*
 class RecipePreview extends StatelessWidget{
   const RecipePreview({super.key});
 
@@ -70,3 +91,4 @@ class RecipePreview extends StatelessWidget{
     );
   }
 }
+*/

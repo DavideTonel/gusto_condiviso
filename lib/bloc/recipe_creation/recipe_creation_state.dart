@@ -72,7 +72,6 @@ final class RecipeCreationInProgress extends RecipeCreationState {
       required super.currentTools,
       required super.currentCategories,
       super.currentStepDescription = "",
-      // TODO forse potrebbe dare null di nuovo perchè non aggiorno quando tratto utensili?
       super.currentIngredientSelected,
       super.currentToolSelected,
       super.recipeName,

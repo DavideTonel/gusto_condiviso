@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gusto_condiviso/bloc/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
@@ -104,6 +105,16 @@ class UserHomePage extends StatelessWidget {
                           }
                           case 2: {
                             context.read<NavigationBloc>().add(NavigateToUserHomeRecipes());
+                            context.read<FeedRecipesBloc>()
+                              .add(LoadRecipesMadeByUserRequest(
+                                  username: context.read<UserBloc>().state.user!.username
+                                )
+                              );
+                            context.read<FeedRecipesBloc>()
+                              .add(LoadRecipesSavedByUserRequest(
+                                  username: context.read<UserBloc>().state.user!.username
+                                )
+                              );
                           }
                           case 3: {
                             context.read<NavigationBloc>().add(NavigateToUserHomeVideoClasses());

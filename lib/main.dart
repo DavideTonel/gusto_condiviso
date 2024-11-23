@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gusto_condiviso/bloc/recipe/recipe_bloc.dart';
+import 'package:gusto_condiviso/bloc/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/login/user_login_bloc.dart';
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipe_creation/recipe_creation_bloc.dart';
+import 'package:gusto_condiviso/bloc/recipes_search/recipes_search_bloc.dart';
 import 'package:gusto_condiviso/bloc/signin/user_signin_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
@@ -40,7 +43,16 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RecipeCreationBloc()
-        )
+        ),
+        BlocProvider(
+          create: (context) => FeedRecipesBloc()
+        ),
+        BlocProvider(
+          create: (context) => RecipeBloc()
+        ),
+        BlocProvider(
+          create: (context) => RecipesSearchBloc()
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: appRouter.router,

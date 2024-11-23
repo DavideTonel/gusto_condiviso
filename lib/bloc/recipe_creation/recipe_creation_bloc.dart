@@ -207,7 +207,6 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
         ...state.savedSteps,
         step
       ];
-      // TODO reset step description anche nel text field controller
       emit(RecipeCreationInProgress(
           recipeName: state.recipeName,
           recipeDescription: state.recipeDescription,
@@ -353,7 +352,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
     SaveRecipeRequest event,
     Emitter<RecipeCreationState> emit
   ) async {
-    dev.log("Save recipe request");
+    //dev.log("Save recipe request");
     var steps = [...state.savedSteps];
     var categories = [...state.currentCategories];
 
