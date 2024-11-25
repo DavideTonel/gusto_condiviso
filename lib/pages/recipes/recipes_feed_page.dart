@@ -5,6 +5,7 @@ import 'package:gusto_condiviso/bloc/recipe/recipe_bloc.dart';
 import 'package:gusto_condiviso/bloc/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipe_creation/recipe_creation_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes_search/recipes_search_bloc.dart';
+import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/widgets/recipes/recipe_preview_widget.dart';
 
 
@@ -17,7 +18,6 @@ class RecipesFeedPage extends StatelessWidget {
 
     return BlocConsumer<FeedRecipesBloc, FeedRecipesState>(
       listener: (context, state) {
-        
       },
       builder: (context, state) {
         return Column(
@@ -33,7 +33,7 @@ class RecipesFeedPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: size.width * 0.3,
+                    width: size.width * 0.6,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -43,7 +43,6 @@ class RecipesFeedPage extends StatelessWidget {
                             onPressed: () {
                               final router = GoRouter.of(context);
                               router.push("/recipeCreation");
-                              //context.read<NavigationBloc>().add(NavigateToRecipeCreation());
                               context.read<RecipeCreationBloc>().add(LoadAvailableCategoriesRequest());
                               context.read<RecipeCreationBloc>().add(LoadAvailableIngredientsRequest());
                               context.read<RecipeCreationBloc>().add(LoadAvailableToolsRequest());
@@ -54,6 +53,7 @@ class RecipesFeedPage extends StatelessWidget {
                             ),
                           ),
                         ),
+
                         ElevatedButton(
                           onPressed: () {
                             final router = GoRouter.of(context);
@@ -64,6 +64,25 @@ class RecipesFeedPage extends StatelessWidget {
                           },
                           child: const Text(
                             "Cerca Ricetta",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<FeedRecipesBloc>().add(
+                              LoadRecipesMadeByUserRequest(
+                                username: context.read<UserBloc>().state.user!.username
+                              )
+                            );
+                            context.read<FeedRecipesBloc>().add(
+                              LoadRecipesSavedByUserRequest(
+                                username: context.read<UserBloc>().state.user!.username
+                              )
+                            );
+                          },
+                          child: const Text(
+                            "Aggiorna Pagina",
                             style: TextStyle(fontSize: 20),
                           ),
                         )
@@ -104,7 +123,16 @@ class RecipesFeedPage extends StatelessWidget {
                   child: RecipePreviewWidget(
                     name: elem.name,
                     creator: elem.usernameCreator,
-                    onPressed: () {
+                    favorite: state.savedRecipes.map((r) => r.id).contains(elem.id),
+                    onFavoritePressed: () {
+                      context.read<FeedRecipesBloc>().add(
+                        ToggleFavoriteRecipe(
+                          recipeId: elem.id,
+                          username: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+                    },
+                    onTap: () {
                       context.read<RecipeBloc>().add(LoadRecipeRequest(recipeId: elem.id));
                       final router = GoRouter.of(context);
                       router.push("/recipe");
@@ -143,7 +171,25 @@ class RecipesFeedPage extends StatelessWidget {
                   child: RecipePreviewWidget(
                     name: elem.name,
                     creator: elem.usernameCreator,
-                    onPressed: () {},
+                    favorite: state.savedRecipes.map((r) => r.id).contains(elem.id),
+                    onFavoritePressed: () {
+                      context.read<FeedRecipesBloc>().add(
+                        ToggleFavoriteRecipe(
+                          recipeId: elem.id,
+                          username: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+                      context.read<FeedRecipesBloc>().add(
+                        LoadRecipesSavedByUserRequest(
+                          username: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+                    },
+                    onTap: () {
+                      context.read<RecipeBloc>().add(LoadRecipeRequest(recipeId: elem.id));
+                      final router = GoRouter.of(context);
+                      router.push("/recipe");
+                    },
                   ),
                 )).toList(),
               ),

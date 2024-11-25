@@ -11,6 +11,12 @@ final class LoadAvailableToolsRequest extends RecipeCreationEvent {}
 
 final class LoadAvailableCategoriesRequest extends RecipeCreationEvent {}
 
+final class SetRecipeIdIfExistsRequest extends RecipeCreationEvent {
+  final String id;
+
+  SetRecipeIdIfExistsRequest({required this.id});
+}
+
 // Recipe setters
 
 final class SetRecipeNameEvent extends RecipeCreationEvent {
@@ -68,3 +74,5 @@ final class SaveRecipeRequest extends RecipeCreationEvent {
 
   SaveRecipeRequest({required this.creatorId});
 }
+
+final class ClearRecipeCreation extends RecipeCreationEvent {}

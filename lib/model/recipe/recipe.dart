@@ -4,8 +4,9 @@ class Recipe {
   final String name;
   final String description;
   final List<RecipeStep> steps;
+  final String? revisitedRecipeId;
 
-  Recipe({required this.id, required this.usernameCreator, required this.name, required this.description, required this.steps});
+  Recipe({required this.id, required this.usernameCreator, required this.name, required this.description, required this.steps, this.revisitedRecipeId});
 }
 
 class RecipePreview {

@@ -14,3 +14,10 @@ final class LoadRecipesSavedByUserRequest extends FeedRecipesEvent {
 
   LoadRecipesSavedByUserRequest({required this.username});
 }
+
+final class ToggleFavoriteRecipe extends FeedRecipesEvent {
+  final int recipeId;
+  final String username;
+
+  ToggleFavoriteRecipe({required this.recipeId, required this.username});
+}

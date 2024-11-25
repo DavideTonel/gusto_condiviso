@@ -21,6 +21,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
 
     on<LoadAvailableCategoriesRequest>(onLoadAvailableCategoriesRequest);
 
+    on<SetRecipeIdIfExistsRequest>(onCheckRecipeIdExistsRequest);
+
     // Setters
     on<SetRecipeNameEvent>((event, emit) {
       emit(
@@ -37,6 +39,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentCategories: state.currentCategories,
           currentTools: state.currentTools,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -55,7 +58,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           availableCategories: state.availableCategories,
           currentIngredients: state.currentIngredients,
           currentCategories: state.currentCategories,
-          currentTools: state.currentTools
+          currentTools: state.currentTools,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -81,7 +85,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentTools: state.currentTools,
           currentCategories: newCategoriesSelected,
-          currentStepDescription: state.currentStepDescription
+          currentStepDescription: state.currentStepDescription,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -100,7 +105,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
-          currentStepDescription: event.description
+          currentStepDescription: event.description,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -119,7 +125,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
-          currentIngredientSelected: event.ingredient//Ingredient(name: event.ingredientId)
+          currentIngredientSelected: event.ingredient,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -138,7 +145,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
-          currentToolSelected: event.tool
+          currentToolSelected: event.tool,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -167,7 +175,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: newCurrentIngredients,
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
-          currentIngredientSelected: null
+          currentIngredientSelected: null,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -191,7 +200,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentTools: newCurrentTools,
           currentCategories: state.currentCategories,
-          currentIngredientSelected: null
+          currentIngredientSelected: null,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -207,7 +217,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
         ...state.savedSteps,
         step
       ];
-      emit(RecipeCreationInProgress(
+      emit(
+        RecipeCreationInProgress(
           recipeName: state.recipeName,
           recipeDescription: state.recipeDescription,
           savedSteps: newSavedSteps,
@@ -219,7 +230,28 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentCategories: state.currentCategories,
           currentStepDescription: "",
           currentIngredientSelected: null,
-          currentToolSelected: null
+          currentToolSelected: null,
+          revisitedRecipeId: state.revisitedRecipeId
+        )
+      );
+    });
+
+    on<ClearRecipeCreation>((event, emit) {
+      emit(
+        RecipeCreationInProgress(
+          recipeName: state.recipeName,
+          recipeDescription: state.recipeDescription,
+          savedSteps: const [],
+          availableIngredients: state.availableIngredients,
+          availableTools: state.availableTools,
+          availableCategories: state.availableCategories,
+          currentIngredients: const [],
+          currentTools: const [],
+          currentCategories: const [],
+          currentStepDescription: "",
+          currentIngredientSelected: null,
+          currentToolSelected: null,
+          revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
@@ -256,7 +288,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
               availableCategories: state.availableCategories,
               currentIngredients: state.currentIngredients,
               currentTools: state.currentTools,
-              currentCategories: state.currentCategories
+              currentCategories: state.currentCategories,
+              revisitedRecipeId: state.revisitedRecipeId
             )
           );
         }
@@ -296,7 +329,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
               availableCategories: state.availableCategories,
               currentIngredients: state.currentIngredients,
               currentTools: state.currentTools,
-              currentCategories: state.currentCategories
+              currentCategories: state.currentCategories,
+              revisitedRecipeId: state.revisitedRecipeId
             )
           );
         }
@@ -337,7 +371,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
               availableCategories: categories,
               currentIngredients: state.currentIngredients,
               currentTools: state.currentTools,
-              currentCategories: state.currentCategories
+              currentCategories: state.currentCategories,
+              revisitedRecipeId: state.revisitedRecipeId
             )
           );
         }
@@ -368,6 +403,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           "recipeName": state.recipeName,
           "recipeDescription": state.recipeDescription,
           "categories": jsonCategories,
+          "revisitedRecipeId": state.revisitedRecipeId,
           "steps": jsonSteps,
         }
       ).then((value) {
@@ -376,6 +412,82 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
     } catch (e) {
       dev.log("Error");
       dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onCheckRecipeIdExistsRequest(
+    SetRecipeIdIfExistsRequest event,
+    Emitter<RecipeCreationState> emit
+  ) async {
+    if (event.id.isNotEmpty) {  
+      try {
+        var client = DioClient();
+        await client.dio.post(
+          "api/recipeExistsCheck",
+          data: {
+            "recipeId": int.parse(event.id),
+          }
+        ).then((value) {
+          if (value.data[0]["Esiste"] == 1) {
+            emit(
+              RecipeCreationInProgress(
+                savedSteps: state.savedSteps,
+                availableIngredients: state.availableIngredients,
+                availableTools: state.availableTools,
+                availableCategories: state.availableCategories,
+                currentIngredients: state.currentIngredients,
+                currentTools: state.currentTools,
+                currentCategories: state.currentCategories,
+                recipeName: state.recipeName,
+                recipeDescription: state.recipeDescription,
+                currentStepDescription: state.currentStepDescription,
+                currentIngredientSelected: state.currentIngredientSelected,
+                currentToolSelected: state.currentToolSelected,
+                revisitedRecipeId: event.id,
+              )
+            );
+          } else {
+            emit(
+              RecipeCreationInProgress(
+                savedSteps: state.savedSteps,
+                availableIngredients: state.availableIngredients,
+                availableTools: state.availableTools,
+                availableCategories: state.availableCategories,
+                currentIngredients: state.currentIngredients,
+                currentTools: state.currentTools,
+                currentCategories: state.currentCategories,
+                recipeName: state.recipeName,
+                recipeDescription: state.recipeDescription,
+                currentStepDescription: state.currentStepDescription,
+                currentIngredientSelected: state.currentIngredientSelected,
+                currentToolSelected: state.currentToolSelected,
+                revisitedRecipeId: null,
+              )
+            );
+          }
+        });
+      } catch (e) {
+        dev.log("Error");
+        dev.log(e.toString());
+      }
+    } else {
+      emit(
+        RecipeCreationInProgress(
+          savedSteps: state.savedSteps,
+          availableIngredients: state.availableIngredients,
+          availableTools: state.availableTools,
+          availableCategories: state.availableCategories,
+          currentIngredients: state.currentIngredients,
+          currentTools: state.currentTools,
+          currentCategories: state.currentCategories,
+          recipeName: state.recipeName,
+          recipeDescription: state.recipeDescription,
+          currentStepDescription: state.currentStepDescription,
+          currentIngredientSelected: state.currentIngredientSelected,
+          currentToolSelected: state.currentToolSelected,
+          revisitedRecipeId: null,
+        )
+      );
     }
   }
 }

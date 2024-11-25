@@ -5,7 +5,7 @@ sealed class RecipeCreationState {
   // Recipe
   final String? recipeName;
   final String? recipeDescription;
-  //final String? revisitedRecipeId;
+  final String? revisitedRecipeId;
   
   // Steps
   final List<RecipeStep> savedSteps;
@@ -27,7 +27,7 @@ sealed class RecipeCreationState {
     {
       this.recipeName,
       this.recipeDescription,
-      //this.revisitedRecipeId,
+      this.revisitedRecipeId,
 
       required this.savedSteps,
 
@@ -76,7 +76,7 @@ final class RecipeCreationInProgress extends RecipeCreationState {
       super.currentToolSelected,
       super.recipeName,
       super.recipeDescription,
-      //super.revisitedRecipeId
+      super.revisitedRecipeId
     }
   );
 }

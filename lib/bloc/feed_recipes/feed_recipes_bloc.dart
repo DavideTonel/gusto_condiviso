@@ -14,6 +14,8 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
     on<LoadRecipesMadeByUserRequest>(onLoadRecipesMadeByUserRequest);
 
     on<LoadRecipesSavedByUserRequest>(onLoadRecipesSavedByUserRequest);
+
+    on<ToggleFavoriteRecipe>(onToggleFavoriteRecipe);
   }
 
   FutureOr<void> onLoadRecipesMadeByUserRequest(
@@ -63,6 +65,7 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
           "username": event.username
         }
       ).then((value) {
+        dev.log("Load saved recipes");
         List<RecipePreview> recipes = [];
         for(dynamic entry in value.data) {
           recipes.add(
@@ -72,13 +75,66 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
               usernameCreator: entry["UsernameUtente"] as String
             )
           );
+          
+          dev.log("Saved recipes: ");
+          dev.log(entry.toString());
+          dev.log("end saved recipes");
+
+        }
+        emit(
+          FeedRecipesLoaded(
+            userRecipes: state.userRecipes,
+            savedRecipes: recipes
+          )
+        );
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onToggleFavoriteRecipe(
+    ToggleFavoriteRecipe event,
+    Emitter<FeedRecipesState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/toggleFavoriteRecipe",
+        data: {
+          "recipeId": event.recipeId,
+          "username": event.username
+        }
+      ).then((value) async {
+        await client.dio.post(
+          "api/recipesSavedByUser",
+          data: {
+            "username": event.username
+          }
+        ).then((value) {
+          dev.log("Load saved recipes");
+          List<RecipePreview> recipes = [];
+          for(dynamic entry in value.data) {
+            recipes.add(
+              RecipePreview(
+                id: entry["Codice"] as int,
+                name: entry["Nome"] as String,
+                usernameCreator: entry["UsernameUtente"] as String
+              )
+            );
+          
+            dev.log("Saved recipes: ");
+            dev.log(entry.toString());
+            dev.log("end saved recipes");
+          }
           emit(
             FeedRecipesLoaded(
               userRecipes: state.userRecipes,
               savedRecipes: recipes
             )
           );
-        }
+        });
       });
     } catch (e) {
       dev.log("Error");

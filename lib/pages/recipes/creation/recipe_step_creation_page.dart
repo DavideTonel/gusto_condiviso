@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gusto_condiviso/bloc/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipe_creation/recipe_creation_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
@@ -8,9 +10,6 @@ import 'dart:developer' as dev;
 
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
-// TODO clear quando si esce dalla prima fase della creazione ricetta e dalla seconda
-// TODO dopo aver creato ricetta si deve aggiornare di nuovo l'ordine di tutte e ricette che sono state fatte.
-// ogni volta che si va nella recipeFeed
 
 // TODO aggiungere anche dosi nel db
 
@@ -42,7 +41,14 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            leading: Text(""),
+            leading: IconButton(
+              onPressed: () {
+                context.read<RecipeCreationBloc>().add(ClearRecipeCreation());
+                final router = GoRouter.of(context);
+                router.pop();
+              },
+              icon: const Icon(Icons.arrow_back)
+            ) ,
             title: const Text(
               "Creazione passaggio",
               style: TextStyle(fontSize: 25),
@@ -273,7 +279,9 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              // TODO delete all and go to home
+                              context.read<RecipeCreationBloc>().add(ClearRecipeCreation());
+                              final router = GoRouter.of(context);
+                              router.pop();
                             },
                             child: const Text(
                               "Annulla",
@@ -306,11 +314,20 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
                                 context.read<RecipeCreationBloc>().add(SaveRecipeStepEvent());
                                 descriptionTextController.clear();
                               }
-                              //dev.log(context.read<UserBloc>().state.user!.username);
+                              // TODO ricette salvate non si aggiornano automaticamente
                               context.read<RecipeCreationBloc>().add(SaveRecipeRequest(
                                   creatorId: context.read<UserBloc>().state.user!.username
                                 )
                               );
+                              /*
+                              context.read<FeedRecipesBloc>().add(LoadRecipesMadeByUserRequest(
+                                  username: context.read<UserBloc>().state.user!.username
+                                )
+                              );
+                              */
+                              final router = GoRouter.of(context);
+                              router.pop();
+                              router.pop();
                             },
                             child: const Text(
                               "Fine",

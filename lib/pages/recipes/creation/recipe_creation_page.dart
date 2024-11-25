@@ -18,11 +18,13 @@ class RecipeCreationPage extends StatefulWidget {
 class RecipeCreationPageState extends State<RecipeCreationPage> {
   final recipeNameTextController = TextEditingController();
   final recipeDescriptionTextController = TextEditingController();
+  final revisitedRecipeId = TextEditingController();
 
   @override
   void dispose() {
     recipeNameTextController.dispose();
     recipeDescriptionTextController.dispose();
+    revisitedRecipeId.dispose();
     super.dispose();
   }
 
@@ -133,13 +135,32 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
                 height: size.height * 0.05,
               ),
 
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: TextField(
-                  decoration: InputDecoration(
+                  onChanged: ((value) {
+                    context.read<RecipeCreationBloc>().add(SetRecipeIdIfExistsRequest(id: revisitedRecipeId.text));
+                  }),
+                  controller: revisitedRecipeId,
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Codice ricetta (se rivisitazione)"  // TODO gestire rivisitazione
                   ),
+                ),
+              ),
+
+              if (state.revisitedRecipeId != null)
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+
+              if (state.revisitedRecipeId != null)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Text("Ricetta salvata come rivisitazione")
+                  ]
                 ),
               ),
 
@@ -147,21 +168,33 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
                 height: size.height * 0.1,
               ),
 
-              ElevatedButton(
-                onPressed: () {
-                  if (
-                    state.recipeName != null && state.recipeName!.isNotEmpty &&
-                    state.recipeDescription != null && state.recipeDescription!.isNotEmpty &&
-                    state.currentCategories.isNotEmpty
-                  ) {
-                    final router = GoRouter.of(context);
-                    router.push("/recipeCreation/recipeStepCreation");  
-                  }
-                },
-                child: const Text(
-                  "Avanti",
-                  style: TextStyle(fontSize: 24),
-                )
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (
+                          state.recipeName != null && state.recipeName!.isNotEmpty &&
+                          state.recipeDescription != null && state.recipeDescription!.isNotEmpty &&
+                          state.currentCategories.isNotEmpty
+                        ) {
+                          final router = GoRouter.of(context);
+                          router.push("/recipeCreation/recipeStepCreation");  
+                        }
+                      },
+                      child: const Text(
+                        "Avanti",
+                        style: TextStyle(fontSize: 24),
+                      )
+                    ),
+
+                    SizedBox(
+                      height: size.height * 0.05,
+                    )
+                  ],
+                ),
               )
             ]
           )

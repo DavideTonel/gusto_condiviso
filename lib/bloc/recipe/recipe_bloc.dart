@@ -36,6 +36,13 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         final recipeDescription = value.data["DescrizioneRicetta"] as String;
         //dev.log("recipeDescription: $recipeDescription");
 
+        String? revisitedRecipeId;
+        try {
+          revisitedRecipeId = (value.data["CodiceRicettaRivisitata"] as int).toString();
+        } catch (e) {
+          dev.log(e.toString());
+        }
+
         //dev.log(value.data["Passaggi"].toString());
 
         List<RecipeStep> steps = [];
@@ -91,7 +98,8 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
               usernameCreator: usernameUtente,
               name: recipeName,
               description: recipeDescription,
-              steps: steps
+              steps: steps,
+              revisitedRecipeId: revisitedRecipeId
             )
           )
         );

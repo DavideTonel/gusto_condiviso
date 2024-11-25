@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:gusto_condiviso/bloc/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 import 'package:gusto_condiviso/model/recipe/search/recipe_search_type.dart';

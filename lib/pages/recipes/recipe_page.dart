@@ -68,6 +68,7 @@ class RecipePage extends StatelessWidget {
                           Icons.star,
                           size: 35,
                         ),
+
                         Text(
                           "4.5",  // TODO aggiungere valutazione
                           style: TextStyle(fontSize: 30),
@@ -77,6 +78,24 @@ class RecipePage extends StatelessWidget {
                   ),
                 ],
               ),
+
+              SizedBox(
+                width: size.height * 0.02,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      state.recipe == null || state.recipe?.revisitedRecipeId != null ? "rivisitazione di ${state.recipe?.revisitedRecipeId ?? "non disponibile"}" : "",  // TODO aggiungere valutazione
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+
               SizedBox(
                 height: size.height * 0.05,
               ),
@@ -136,7 +155,6 @@ class RecipeStepWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
       child: SizedBox(
-        //width: size.width * 0.9,
         child: Card(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -191,7 +209,6 @@ class RecipeStepWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: step.ingredients
                             .map((ingredient) {
-                              //dev.log(ingredient.ingredient.name);
                               return Text("${ingredient.ingredient.name} ${ingredient.amount}");
                             })
                             .toList(),
