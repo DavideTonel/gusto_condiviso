@@ -21,6 +21,14 @@ class EntryPointPage extends StatelessWidget {
             final router = GoRouter.of(context);
             router.push("/userSignin");
           }
+          case NavigationTeacherLogin _: {
+            final router = GoRouter.of(context);
+            router.push("/teacherLogin");
+          }
+          case NavigationTeacherSignin _: {
+            final router = GoRouter.of(context);
+            router.push("/teacherSignin");
+          }
           default: {
 
           }
@@ -102,7 +110,9 @@ class EntryPointPage extends StatelessWidget {
                   width: size.width * 0.3,
                   height: size.height * 0.1,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<NavigationBloc>().add(NavigateToTeacherLogin());
+                    },
                     child: const Text(
                       "Insegnante",
                       style: TextStyle(fontSize: 25),
@@ -115,7 +125,9 @@ class EntryPointPage extends StatelessWidget {
                 ),
               
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<NavigationBloc>().add(NavigateToTeacherSignin());
+                  },
                   child: const Text(
                     "Non hai un proflo insegante? Iscriviti",
                     style: TextStyle(

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gusto_condiviso/widgets/video_classes/video_class_preview.dart';
 
-class VideoClassesFeedPage extends StatefulWidget {
+class UserVideoClassesFeedPage extends StatefulWidget {
 
-  const VideoClassesFeedPage({super.key});
+  const UserVideoClassesFeedPage({super.key});
 
   @override
-  VideoClassesFeedPageState createState() => VideoClassesFeedPageState();
+  UserVideoClassesFeedPageState createState() => UserVideoClassesFeedPageState();
 }
 
-class VideoClassesFeedPageState extends State<VideoClassesFeedPage> {
+class UserVideoClassesFeedPageState extends State<UserVideoClassesFeedPage> {
 
   final scrollController = ScrollController();
   final list = List.generate(20, (index) => "Item ${index + 1}");
@@ -100,7 +100,12 @@ class VideoClassesFeedPageState extends State<VideoClassesFeedPage> {
                   controller: scrollController,
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return const VideoClassPreview();
+                    return VideoClassPreview(
+                      name: "Prova",
+                      duration: "prova",
+                      teacherId: "prova",
+                      onTap: () {},
+                    );
                   },
                 ),
           ),

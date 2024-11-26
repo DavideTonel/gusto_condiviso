@@ -22,7 +22,7 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
     try {
       var client = DioClient();
       await client.dio.post(
-        "api/loginRequest",
+        "api/userLoginRequest",
         data: {
           "username": event.username,
           "password": event.password

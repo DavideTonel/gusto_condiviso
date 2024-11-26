@@ -9,7 +9,7 @@ import 'package:gusto_condiviso/pages/profiles/user_profile_page.dart';
 import 'package:gusto_condiviso/pages/promotional_codes/promotional_codes_page.dart';
 import 'package:gusto_condiviso/pages/recipes/recipes_feed_page.dart';
 import 'package:gusto_condiviso/pages/subscriptions/user_subscription_page.dart';
-import 'package:gusto_condiviso/pages/video_classes/video_classes_feed_page.dart';
+import 'package:gusto_condiviso/pages/video_classes/user_video_classes_feed_page.dart';
 
 import 'dart:developer' as dev;
 
@@ -141,7 +141,7 @@ class UserHomePage extends StatelessWidget {
                       0 => const UserProfilePage(),
                       1 => const UserSubscriptionPage(),
                       2 => const RecipesFeedPage(),
-                      3 => const VideoClassesFeedPage(),
+                      3 => const UserVideoClassesFeedPage(),
                       4 => const CoursesFeedPage(),
                       5 => const PromotionalCodesPage(),
                       _ => const UserProfilePage()

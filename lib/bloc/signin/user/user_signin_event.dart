@@ -11,5 +11,14 @@ final class SigninRequestEvent extends UserSigninEvent {
   final String mail;
   final String birthday;
 
-  SigninRequestEvent({required this.username, required this.password, required this.name, required this.surname, required this.mail, required this.birthday});
+  SigninRequestEvent(
+    {
+      required this.username,
+      required this.password,
+      required this.name,
+      required this.surname,
+      required this.mail,
+      required this.birthday
+    }
+  );
 }

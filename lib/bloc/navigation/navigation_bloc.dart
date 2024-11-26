@@ -31,5 +31,19 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<NavigateToRecipeCreation>((event, emit) => emit(NavigationRecipeCreation()));
 
     on<NavigateToRecipeStepCreation>((event, emit) => emit(NavigationRecipeStepCreation()));
+
+    // Teacher
+
+    on<NavigateToTeacherSignin>((event, emit) => emit(NavigationTeacherSignin()));
+
+    on<NavigateToTeacherLogin>((event, emit) => emit(NavigationTeacherLogin()));
+
+    on<NavigateToTeacherHomeProfileInfo>((event, emit) => emit(NavigationTeacherHomeProfileInfo()));
+
+    on<NavigateToTeacherHomeVideoClasses>((event, emit) => emit(NavigationTeacherHomeVideoClasses()));
+
+    on<NavigateToTeacherHomeCourses>((event, emit) => emit(NavigationTeacherHomeCourses()));
+
+    
   }
 }

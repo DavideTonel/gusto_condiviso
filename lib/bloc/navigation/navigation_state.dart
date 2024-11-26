@@ -30,3 +30,15 @@ final class NavigationUserHomeProfileInfo extends NavigationState {}
 final class NavigationRecipeCreation extends NavigationState {}
 
 final class NavigationRecipeStepCreation extends NavigationState {}
+
+// Teacher
+
+final class NavigationTeacherSignin extends NavigationState {}
+
+final class NavigationTeacherLogin extends NavigationState {}
+
+final class NavigationTeacherHomeProfileInfo extends NavigationState {}
+
+final class NavigationTeacherHomeVideoClasses extends NavigationState {}
+
+final class NavigationTeacherHomeCourses extends NavigationState {}

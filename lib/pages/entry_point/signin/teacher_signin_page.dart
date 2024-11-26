@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gusto_condiviso/bloc/signin/teacher/teacher_signin_bloc.dart';
 
-class TeacherSigninPage extends StatelessWidget {
+class TeacherSigninPage extends StatefulWidget {
   const TeacherSigninPage({super.key});
+
+  @override
+  TeacherSigninPageState createState() => TeacherSigninPageState();
+}
+
+class TeacherSigninPageState extends State<TeacherSigninPage> {
+  final usernameTextController = TextEditingController();
+  final passwordTextController = TextEditingController();
+  final nameTextController = TextEditingController();
+  final surnameTextController = TextEditingController();
+  final mailTextController = TextEditingController();
+  final birthdayTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameTextController.dispose();
+    passwordTextController.dispose();
+    nameTextController.dispose();
+    surnameTextController.dispose();
+    mailTextController.dispose();
+    birthdayTextController.dispose();
+    descriptionTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,125 +41,186 @@ class TeacherSigninPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                  
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Username"
-                    ),
-                  ),
-                ),
-                  
-                const SizedBox(
-                  height: 20,
-                ),
-                  
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Mail"
-                    ),
-                  ),
-                ),
-                  
-                const SizedBox(
-                  height: 20,
-                ),
-                  
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Password"
-                    ),
-                  ),
-                ),
-                  
-                const SizedBox(
-                  height: 40,
-                ),
-                  
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Nome"
-                    ),
-                  ),
-                ),
-                  
-                const SizedBox(
-                  height: 20,
-                ),
-                  
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Cognome"
-                    ),
-                  ),
-                ),
-                  
-                const SizedBox(
-                  height: 20,
-                ),
-                  
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: InputDatePickerFormField(
-                    firstDate: DateTime(1920),
-                    lastDate: DateTime.now(),
-                    fieldLabelText: "Data di nascita",
-                  ),
-                ),
+          BlocConsumer<TeacherSigninBloc, TeacherSigninState>(
+            listener: (context, state) {
+              switch (state) {
+                case TeacherSigninSuccess _:
+                  final router = GoRouter.of(context);
+                  router.pop();
 
-                const SizedBox(
-                  height: 20,
-                ),
+                case TeacherSigninFailure _:
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        child: SizedBox(
+                          width: size.width * 0.4,
+                          height: size.height * 0.4,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Username già utilizzato",
+                                style: TextStyle(
+                                  fontSize: 20
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+                      );
+                    }
+                  );
 
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: TextField(
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Descrizione"
+                default: {
+
+                }
+              }
+            },
+            builder: (context, state) {
+              return SizedBox(
+                width: size.width,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.05,
                     ),
-                  ),
+                
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        controller: usernameTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Username"
+                        ),
+                      ),
+                    ),
+                
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        controller: mailTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Mail"
+                        ),
+                      ),
+                    ),
+                
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        controller: passwordTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Password"
+                        ),
+                      ),
+                    ),
+                
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        controller: nameTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Nome"
+                        ),
+                      ),
+                    ),
+                
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        controller: surnameTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Cognome"
+                        ),
+                      ),
+                    ),
+                
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        controller: birthdayTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Data di Nascita",
+                          helper: Text("YYYY-MM-DD")
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: TextField(
+                        maxLines: 3,
+                        controller: descriptionTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Descrizione",
+                        ),
+                      ),
+                    ),
+                
+                    SizedBox(
+                      height: size.height * 0.08,
+                    ),
+                
+                    SizedBox(
+                      width: size.width * 0.2,
+                      height: 80,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<TeacherSigninBloc>().add(SigninRequestEvent(
+                            username: usernameTextController.text,
+                            password: passwordTextController.text,
+                            name: nameTextController.text,
+                            surname: surnameTextController.text,
+                            mail: mailTextController.text,
+                            birthday: birthdayTextController.text, // TODO aggiustare data
+                            description: descriptionTextController.text
+                          ));
+                        },
+                        child: const Text(
+                          "Iscriviti",
+                          style: TextStyle(
+                            fontSize: 22
+                          ),
+                        )
+                      ),
+                    ),
+                  ],
                 ),
-                  
-                const SizedBox(
-                  height: 20,
-                ),
-                  
-                SizedBox(
-                  width: size.width * 0.2,
-                  height: 80,
-                  child: ElevatedButton(
-                    onPressed: (){},
-                    child: const Text(
-                      "Iscriviti",
-                      style: TextStyle(fontSize: 22),
-                    )
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           )
         ],
       ),

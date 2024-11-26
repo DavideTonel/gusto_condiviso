@@ -28,3 +28,15 @@ final class NavigateToUserHomeProfileInfo extends NavigationEvent {}
 final class NavigateToRecipeCreation extends NavigationEvent {}
 
 final class NavigateToRecipeStepCreation extends NavigationEvent {}
+
+// Teacher
+
+final class NavigateToTeacherSignin extends NavigationEvent {}
+
+final class NavigateToTeacherLogin extends NavigationEvent {}
+
+final class NavigateToTeacherHomeProfileInfo extends NavigationEvent {}
+
+final class NavigateToTeacherHomeVideoClasses extends NavigationEvent {}
+
+final class NavigateToTeacherHomeCourses extends NavigationEvent {}

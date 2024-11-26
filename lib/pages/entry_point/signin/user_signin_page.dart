@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_condiviso/bloc/signin/user_signin_bloc.dart';
+import 'package:gusto_condiviso/bloc/signin/user/user_signin_bloc.dart';
 
 class UserSigninPage extends StatefulWidget {
   const UserSigninPage({super.key});

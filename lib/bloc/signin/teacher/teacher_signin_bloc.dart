@@ -4,34 +4,35 @@ import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:meta/meta.dart';
 
-part 'user_signin_event.dart';
-part 'user_signin_state.dart';
+part 'teacher_signin_event.dart';
+part 'teacher_signin_state.dart';
 
-class UserSigninBloc extends Bloc<UserSigninEvent, UserSigninState> {
-  UserSigninBloc() : super(UserSigninInitial()) {
+class TeacherSigninBloc extends Bloc<TeacherSigninEvent, TeacherSigninState> {
+  TeacherSigninBloc() : super(TeacherSigninInitial()) {
     on<SigninRequestEvent>(onSigninRequestEvent);
   }
 
   FutureOr<void> onSigninRequestEvent(
     SigninRequestEvent event,
-    Emitter<UserSigninState> emit
+    Emitter<TeacherSigninState> emit
   ) async {
     var client = DioClient();
     await client.dio.post(
-      "api/signinRequest",
+      "api/teacherSigninRequest",
       data: {
         "username": event.username,
         "mail": event.mail,
         "password": event.password,
         "name": event.name,
         "surname": event.surname,
-        "birthday": event.birthday
+        "birthday": event.birthday,
+        "description": event.description
       }
     ).then((value) {
       if (value.data) {
-        emit(UserSigninSuccess());
+        emit(TeacherSigninSuccess());
       } else {
-        emit (UserSigninFailure(errorMessage: "Username esiste già"));
+        emit (TeacherSigninFailure(errorMessage: "Username esiste già"));
       }
     });
   }
