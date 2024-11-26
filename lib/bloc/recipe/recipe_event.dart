@@ -8,3 +8,29 @@ final class LoadRecipeRequest extends RecipeEvent {
 
   LoadRecipeRequest({required this.recipeId});
 }
+
+final class LoadRecipeReviewsRequest extends RecipeEvent {
+  final int recipeId;
+
+  LoadRecipeReviewsRequest({required this.recipeId});
+}
+
+final class SetReviewScore extends RecipeEvent {
+  final int score;
+
+  SetReviewScore({required this.score});
+}
+
+final class SetReviewDescription extends RecipeEvent {
+  final String description;
+
+  SetReviewDescription({required this.description});
+}
+
+final class SaveReviewRequest extends RecipeEvent {
+  final String usernameReviewCreator;
+
+  SaveReviewRequest({required this.usernameReviewCreator});
+}
+
+final class ClearReviewCreation extends RecipeEvent {}

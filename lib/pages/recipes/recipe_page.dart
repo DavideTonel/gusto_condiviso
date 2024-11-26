@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipe/recipe_bloc.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
@@ -58,20 +59,34 @@ class RecipePage extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.05,
               ),
-              const Row(
+              Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 25.0),
+                    padding: const EdgeInsets.only(left: 25.0),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.star,
-                          size: 35,
-                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<RecipeBloc>().add(LoadRecipeReviewsRequest(
+                                recipeId: state.recipe!.id
+                              )
+                            );
+                            final router = GoRouter.of(context);
+                            router.push("/recipe/reviews");
+                          },
+                          child: const Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                size: 35,
+                              ),
 
-                        Text(
-                          "4.5",  // TODO aggiungere valutazione
-                          style: TextStyle(fontSize: 30),
+                              Text(
+                                "4.5",  // TODO aggiungere valutazione
+                                style: TextStyle(fontSize: 30),
+                              ),
+                            ],
+                          )
                         ),
                       ],
                     ),
@@ -89,7 +104,7 @@ class RecipePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      state.recipe == null || state.recipe?.revisitedRecipeId != null ? "rivisitazione di ${state.recipe?.revisitedRecipeId ?? "non disponibile"}" : "",  // TODO aggiungere valutazione
+                      state.recipe == null || state.recipe?.revisitedRecipeId != null ? "rivisitazione di ${state.recipe?.revisitedRecipeId ?? "non disponibile"}" : "",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ],
@@ -111,9 +126,11 @@ class RecipePage extends StatelessWidget {
                   ],
                 ),
               ),
+
               SizedBox(
                 height: size.height * 0.05,
               ),
+
               Flexible(
                 fit: FlexFit.loose,
                 child: ListView.builder(

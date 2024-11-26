@@ -144,7 +144,7 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
                   controller: revisitedRecipeId,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Codice ricetta (se rivisitazione)"  // TODO gestire rivisitazione
+                    labelText: "Codice ricetta (se rivisitazione)"
                   ),
                 ),
               ),

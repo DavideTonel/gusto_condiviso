@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
+import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
 import 'package:meta/meta.dart';
 
 part 'recipe_event.dart';
@@ -12,6 +13,43 @@ part 'recipe_state.dart';
 class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
   RecipeBloc() : super(const RecipeInitial()) {
     on<LoadRecipeRequest>(onLoadRecipeRequest);
+
+    on<LoadRecipeReviewsRequest>(onLoadRecipeReviewsRequest);
+
+    on<SetReviewScore>((event, emit) {
+      emit(
+        RecipeLoaded(
+          recipe: state.recipe,
+          reviews: state.reviews,
+          currentReviewScore: event.score,
+          currentReviewDescription: state.currentReviewDescription
+        )
+      );
+    });
+
+    on<SetReviewDescription>((event, emit) {
+      emit(
+        RecipeLoaded(
+          recipe: state.recipe,
+          reviews: state.reviews,
+          currentReviewScore: state.currentReviewScore,
+          currentReviewDescription: event.description
+        )
+      );
+    });
+
+    on<SaveReviewRequest>(onSaveReviewRequest);
+
+    on<ClearReviewCreation>((event, emit) {
+      emit(
+        RecipeLoaded(
+          recipe: state.recipe,
+          reviews: state.reviews,
+          currentReviewDescription: null,
+          currentReviewScore: null
+        )
+      );
+    });
   }
 
   FutureOr<void> onLoadRecipeRequest(
@@ -26,7 +64,6 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
           "recipeId": event.recipeId
         }
       ).then((value) {
-        //dev.log(value.toString());
         final id = value.data["Codice"] as int;
         //dev.log("id: $id");
         final usernameUtente = value.data["UsernameUtente"] as String;
@@ -40,7 +77,7 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         try {
           revisitedRecipeId = (value.data["CodiceRicettaRivisitata"] as int).toString();
         } catch (e) {
-          dev.log(e.toString());
+          dev.log("Recipe is not a revisitation");
         }
 
         //dev.log(value.data["Passaggi"].toString());
@@ -100,9 +137,121 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
               description: recipeDescription,
               steps: steps,
               revisitedRecipeId: revisitedRecipeId
-            )
+            ),
+            reviews: state.reviews
           )
         );
+      });
+    } catch (e) {
+      dev.log("error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onLoadRecipeReviewsRequest(
+    LoadRecipeReviewsRequest event,
+    Emitter<RecipeState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/recipeReviews",
+        data: {
+          "recipeId": event.recipeId
+        }
+      ).then((value) {
+        List<RecipeReview> reviews = [];
+
+        for (var row in value.data) {
+          //dev.log(row.toString());
+          final usernameCreator = row["UsernameUtente"] as String;
+          final score = row["Punteggio"] as int;
+          final date = row["DataCreazione"] as String;
+
+          String? description;
+          try {
+            description = row["Descrizione"] as String;        
+          } catch (e) {
+            dev.log("Review has no description");
+          }
+
+          reviews.add(
+            RecipeReview(
+              usernameCreator: usernameCreator,
+              score: score,
+              date: date,
+              description: description,
+            )
+          );
+        }
+
+        emit(
+          RecipeLoaded(
+            recipe: state.recipe,
+            reviews: reviews
+          )
+        );
+      });
+    } catch (e) {
+      dev.log("error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onSaveReviewRequest(
+    SaveReviewRequest event,
+    Emitter<RecipeState> emit
+  ) async {
+    dev.log(state.currentReviewDescription ?? "niente");
+    try {
+      final client = DioClient();
+      await client.dio.post(
+        "api/saveRecipeReview",
+        data: {
+          "recipeId": state.recipe?.id,
+          "usernameCreator": event.usernameReviewCreator,
+          "score": state.currentReviewScore,
+          "description": state.currentReviewDescription,
+        }
+      ).then((value) async {
+        await client.dio.post(
+          "api/recipeReviews",
+          data: {
+            "receipeId": state.recipe?.id
+          }
+        ).then((value) {
+          List<RecipeReview> reviews = [];
+
+          for (var row in value.data) {
+            //dev.log(row.toString());
+            final usernameCreator = row["UsernameUtente"] as String;
+            final score = row["Punteggio"] as int;
+            final date = row["DataCreazione"] as String;
+
+            String? description;
+            try {
+              description = row["Descrizione"] as String;        
+            } catch (e) {
+              dev.log("Review has no description");
+            }
+
+            reviews.add(
+              RecipeReview(
+                usernameCreator: usernameCreator,
+                score: score,
+                date: date,
+                description: description,
+              )
+            );
+          }
+
+          emit(
+            RecipeLoaded(
+              recipe: state.recipe,
+              reviews: reviews
+            )
+          );
+        });
       });
     } catch (e) {
       dev.log("error");

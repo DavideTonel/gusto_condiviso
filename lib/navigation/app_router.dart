@@ -5,8 +5,10 @@ import 'package:gusto_condiviso/pages/entry_point/login/user_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/user_signin_page.dart';
 import 'package:gusto_condiviso/pages/home/user_home_page.dart';
 import 'package:gusto_condiviso/pages/recipes/creation/recipe_creation_page.dart';
+import 'package:gusto_condiviso/pages/recipes/creation/recipe_review_creation_page.dart';
 import 'package:gusto_condiviso/pages/recipes/creation/recipe_step_creation_page.dart';
 import 'package:gusto_condiviso/pages/recipes/recipe_page.dart';
+import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_results_page.dart';
 
@@ -46,6 +48,14 @@ class AppRouter {
       GoRoute(
         path: "/recipe",
         builder: (context, state) => const RecipePage(),
+      ),
+      GoRoute(
+        path: "/recipe/reviews",
+        builder: (context, state) => const RecipeReviewsPage(),
+      ),
+      GoRoute(
+        path: "/recipe/reviews/createReview",
+        builder: (context, state) => const RecipeReviewCreationPage(),
       ),
       GoRoute(
         path: "/recipeSearch",

@@ -30,7 +30,6 @@ class RecipeSearchPageState extends State<RecipeSearchPage> {
 
     return BlocConsumer<RecipesSearchBloc, RecipesSearchState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return Scaffold(

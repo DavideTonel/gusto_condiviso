@@ -1,122 +1,160 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gusto_condiviso/bloc/recipe/recipe_bloc.dart';
 
-class RecipeReviewsPage extends StatelessWidget{
+// TODO inserire valutazione calcolata realmente
+class RecipeReviewsPage extends StatefulWidget {
   const RecipeReviewsPage({super.key});
+
+  @override
+  RecipeReviewsPageState createState() => RecipeReviewsPageState();
+}
+
+class RecipeReviewsPageState extends State<RecipeReviewsPage> {
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    var list = List.generate(6, (i) => i);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Pasta patate e provola",
-                style: TextStyle(fontSize: 35),
+    return BlocConsumer<RecipeBloc, RecipeState>(
+      listener: (context, state) {
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    state.recipe!.name,
+                    style: const TextStyle(fontSize: 35),
+                  ),
+                  Text(
+                    "di ${state.recipe?.usernameCreator}",
+                    style: const TextStyle(fontSize: 28),
+                  ),
+                ],
               ),
-
-              Text(
-                "di Carletto Amleto",
-                style: TextStyle(fontSize: 28),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: ElevatedButton(
-        onPressed: () {},
-        child: SizedBox(
-          width: size.width * 0.1,
-          height: size.height * 0.1,
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Scrivi Recensione",
-                style: TextStyle(
-                  fontSize: 18
-                ),
-              ),
-            ],
-          )
-        )
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: size.height * 0.005,
-          ),
-
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0),
-                child: Text(
-                  "del 12/19/2000",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
-          ),
-          
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      size: 35,
-                    ),
-                    Text(
-                      "4.5",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-
-          Flexible(
-            fit: FlexFit.loose,
-            child: ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, i) => const RecipeReview()
             ),
-          )
-        ],
-      ),
+          ),
+          floatingActionButton: ElevatedButton(
+              onPressed: () {
+                final router = GoRouter.of(context);
+                router.push("/recipe/reviews/createReview");
+              },
+              child: SizedBox(
+                  width: size.width * 0.1,
+                  height: size.height * 0.1,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Scrivi Recensione",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ))),
+          body: Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.005,
+              ),
+              const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      "del 12/19/2000",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          size: 35,
+                        ),
+                        const Text(
+                          "4.5",
+                          style: TextStyle(fontSize: 30),
+                        ),
+
+                        SizedBox(
+                          width: size.width * 0.1,
+                        ),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<RecipeBloc>().add(LoadRecipeReviewsRequest(recipeId: state.recipe!.id));
+                          },
+                          child: const Text("Aggiorna")
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+
+              Flexible(
+                fit: FlexFit.loose,
+                child: ListView.builder(
+                    itemCount: state.reviews.length,
+                    itemBuilder: (context, i) => RecipeReview(
+                      usernameCreator: state.reviews[i].usernameCreator,
+                      score: state.reviews[i].score,
+                      date: state.reviews[i].date,
+                      description: state.reviews[i].description,
+                    )),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
 
-
 class RecipeReview extends StatelessWidget {
-  const RecipeReview({super.key});
+  final String usernameCreator;
+  final int score;
+  final String date;
+  final String? description;
+
+  const RecipeReview(
+    {
+      super.key,
+      required this.usernameCreator,
+      required this.score,
+      required this.date,
+      this.description
+    }
+  ); 
+  
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
     return Padding(
-      padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom: 10.0),
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
       child: SizedBox(
         //width: size.width * 0.3,
         child: Card(
@@ -124,57 +162,43 @@ class RecipeReview extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "4/5",
-                      style: TextStyle(
-                        fontSize: 25
-                      ),
+                      "$score/5",
+                      style: const TextStyle(fontSize: 25),
                     ),
                     Text(
-                      "Franchino DJ",
-                      style: TextStyle(
-                        fontSize: 22
-                      ),
+                      usernameCreator,
+                      style: const TextStyle(fontSize: 22),
                     ),
                   ],
                 ),
-            
                 SizedBox(
                   height: size.height * 0.002,
                 ),
-                  
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Flexible(
-                      child: Text(
-                        "Buona eh.. forse troppe poche patate",
-                        style: TextStyle(
-                          fontSize: 18
-                        ),
-                      )
-                    ),
+                        child: Text(
+                      description ?? "",
+                      style: const TextStyle(fontSize: 18),
+                    )),
                   ],
                 ),
-            
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                  
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Flexible(
-                      child: Text(
-                        "12/30/2024",
-                        style: TextStyle(
-                          fontSize: 14
-                        ),
-                      )
-                    ),
+                        child: Text(
+                      date,
+                      style: const TextStyle(fontSize: 14),
+                    )),
                   ],
                 ),
               ],
@@ -184,5 +208,4 @@ class RecipeReview extends StatelessWidget {
       ),
     );
   }
-
 }
