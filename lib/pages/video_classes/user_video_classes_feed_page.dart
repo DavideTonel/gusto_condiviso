@@ -104,7 +104,9 @@ class UserVideoClassesFeedPageState extends State<UserVideoClassesFeedPage> {
                       name: "Prova",
                       duration: "prova",
                       teacherId: "prova",
-                      onTap: () {},
+                      onTap: () {
+                        // TODO sistemare videolezioni per l'utente
+                      },
                     );
                   },
                 ),
