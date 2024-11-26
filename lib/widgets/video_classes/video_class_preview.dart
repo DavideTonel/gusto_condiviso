@@ -26,6 +26,7 @@ class VideoClassPreview extends StatelessWidget {
         title: Text(name),
         subtitle: Text("di $teacherId"),
         trailing: Text(duration),
+        onTap: onTap,
       ),
     );
   }

@@ -15,6 +15,7 @@ import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_results_page.dart';
 import 'package:gusto_condiviso/pages/video_classes/creation/video_class_creation_page.dart';
+import 'package:gusto_condiviso/pages/video_classes/video_class_page.dart';
 
 class AppRouter {
   static String entryPoint = "/";
@@ -86,6 +87,10 @@ class AppRouter {
       GoRoute(
         path: "/videoClassCreation",
         builder: (context, state) => const VideoClassCreationPage(),
+      ),
+      GoRoute(
+        path: "/videoClass",
+        builder: (context, state) => const VideoClassPage(),
       ),
     ]
   );

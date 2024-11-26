@@ -12,6 +12,7 @@ import 'package:gusto_condiviso/bloc/signin/user/user_signin_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
+import 'package:gusto_condiviso/bloc/video_classes/bloc/video_class_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
 import 'package:gusto_condiviso/navigation/app_router.dart';
 
@@ -70,6 +71,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TeacherVideoClassesBloc()
+        ),
+        BlocProvider(
+          create: (context) => VideoClassBloc()
         ),
       ],
       child: MaterialApp.router(

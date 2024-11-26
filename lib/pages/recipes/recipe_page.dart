@@ -6,6 +6,7 @@ import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
 import 'dart:developer' as dev;
 
+// TODO mostrare id ricetta
 class RecipePage extends StatelessWidget {
   const RecipePage({super.key});
 
