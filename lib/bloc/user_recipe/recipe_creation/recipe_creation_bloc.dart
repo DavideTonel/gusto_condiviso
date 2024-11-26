@@ -275,24 +275,24 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
               name: entry["Nome"] as String
             )
           );
-          emit(
-            RecipeCreationInProgress(
-              recipeName: state.recipeName,
-              recipeDescription: state.recipeDescription,
-              savedSteps: state.savedSteps,
-              currentStepDescription: state.currentStepDescription,
-              currentIngredientSelected: state.currentIngredientSelected,
-              currentToolSelected: state.currentToolSelected,
-              availableIngredients: ingredients,
-              availableTools: state.availableTools,
-              availableCategories: state.availableCategories,
-              currentIngredients: state.currentIngredients,
-              currentTools: state.currentTools,
-              currentCategories: state.currentCategories,
-              revisitedRecipeId: state.revisitedRecipeId
-            )
-          );
         }
+        emit(
+          RecipeCreationInProgress(
+            recipeName: state.recipeName,
+            recipeDescription: state.recipeDescription,
+            savedSteps: state.savedSteps,
+            currentStepDescription: state.currentStepDescription,
+            currentIngredientSelected: state.currentIngredientSelected,
+            currentToolSelected: state.currentToolSelected,
+            availableIngredients: ingredients,
+            availableTools: state.availableTools,
+            availableCategories: state.availableCategories,
+            currentIngredients: state.currentIngredients,
+            currentTools: state.currentTools,
+            currentCategories: state.currentCategories,
+            revisitedRecipeId: state.revisitedRecipeId
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");

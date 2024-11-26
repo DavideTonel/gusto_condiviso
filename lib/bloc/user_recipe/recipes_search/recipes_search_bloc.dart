@@ -189,21 +189,21 @@ class RecipesSearchBloc extends Bloc<RecipesSearchEvent, RecipesSearchState> {
               name: entry["Nome"] as String
             )
           );
-          emit(
-            RecipeSearchInProgress(
-              recipeId: state.recipeId,
-              recipeName: state.recipeName,
-              availableIngredients: state.availableIngredients,
-              availableTools: state.availableTools,
-              availableCategories: categories,
-              selectedIngredients: state.selectedIngredients,
-              selectedTools: state.selectedTools,
-              selectedCategories: state.selectedCategories,
-              results: state.results,
-              searchType: state.searchType
-            )
-          );
         }
+        emit(
+          RecipeSearchInProgress(
+            recipeId: state.recipeId,
+            recipeName: state.recipeName,
+            availableIngredients: state.availableIngredients,
+            availableTools: state.availableTools,
+            availableCategories: categories,
+            selectedIngredients: state.selectedIngredients,
+            selectedTools: state.selectedTools,
+            selectedCategories: state.selectedCategories,
+            results: state.results,
+            searchType: state.searchType
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");

@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_condiviso/bloc/recipes_search/recipes_search_bloc.dart';
+import 'package:gusto_condiviso/bloc/user_recipe/recipes_search/recipes_search_bloc.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 import 'package:gusto_condiviso/model/recipe/search/recipe_search_type.dart';
 

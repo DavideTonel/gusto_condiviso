@@ -39,13 +39,13 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
               usernameCreator: entry["UsernameUtente"] as String
             )
           );
-          emit(
-            FeedRecipesLoaded(
-              userRecipes: recipes,
-              savedRecipes: state.savedRecipes
-            )
-          );
         }
+        emit(
+          FeedRecipesLoaded(
+            userRecipes: recipes,
+            savedRecipes: state.savedRecipes
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");

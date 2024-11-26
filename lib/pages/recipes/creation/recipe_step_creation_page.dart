@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_condiviso/bloc/recipe_creation/recipe_creation_bloc.dart';
+import 'package:gusto_condiviso/bloc/user_recipe/recipe_creation/recipe_creation_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 
