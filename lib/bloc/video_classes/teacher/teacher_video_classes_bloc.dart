@@ -40,7 +40,6 @@ class TeacherVideoClassesBloc extends Bloc<TeacherVideoClassesEvent, TeacherVide
             )
           );
         }
-        // TODO questo va bene ma controllare tutti gli altri (file) emit che non siano dentro al for
         emit(
           TeacherVideoClassesLoaded(
             videoClasses: videoClasses,

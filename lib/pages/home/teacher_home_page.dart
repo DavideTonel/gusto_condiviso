@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gusto_condiviso/bloc/courses/teacher/teacher_courses_bloc.dart';
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
+import 'package:gusto_condiviso/pages/courses/teacher_courses_page.dart';
 
 import 'dart:developer' as dev;
 
@@ -76,7 +78,10 @@ class TeacherHomePage extends StatelessWidget {
                           }
                           case 2: {
                             context.read<NavigationBloc>().add(NavigateToTeacherHomeCourses());
-                            // TODO load courses
+                            context.read<TeacherCoursesBloc>().add(LoadCoursesMadeByTeacherRequest(
+                                teacherId: state.teacher!.username
+                              )
+                            );
                           }
                           default: {
                             context.read<NavigationBloc>().add(NavigateToTeacherHomeProfileInfo());
@@ -93,7 +98,7 @@ class TeacherHomePage extends StatelessWidget {
                     child: switch (navigationRailIndex) {
                       0 => const TeacherProfilePage(),
                       1 => const TeacherVideoClassesPage(),
-                      //2 => const CoursesTeacherFeedPage(),
+                      2 => const TeacherCoursesPage(),
                       _ => const TeacherProfilePage()
                     }
                   )

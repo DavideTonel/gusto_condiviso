@@ -100,7 +100,12 @@ class CoursesFeedPageState extends State<CoursesFeedPage> {
                   controller: scrollController,
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return const CoursePreview();
+                    return CoursePreview(
+                      id: 0,
+                      name: "ciao",
+                      teacherId: "mm",
+                      onTap: () {},
+                    );
                   },
                 ),
           ),

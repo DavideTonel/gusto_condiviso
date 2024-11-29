@@ -6,4 +6,11 @@ class VideoClass {
   final String duration;
 
   VideoClass({required this.teacherCreatorId, required this.name, required this.description, required this.date, required this.duration});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "teacherCreatorId": teacherCreatorId,
+      "name": name,
+    };
+  }
 }

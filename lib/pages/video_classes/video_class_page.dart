@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_condiviso/bloc/video_classes/bloc/video_class_bloc.dart';
+import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 
 import 'dart:developer' as dev;
 
@@ -48,10 +48,10 @@ class VideoClassPage extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 25.0),
+                    padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
                       "${state.videoClass?.date}", //TODO aggiungere data
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ],

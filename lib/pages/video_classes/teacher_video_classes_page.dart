@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
-import 'package:gusto_condiviso/bloc/video_classes/bloc/video_class_bloc.dart';
+import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
 import 'package:gusto_condiviso/widgets/video_classes/video_class_preview.dart';
 
@@ -119,7 +119,4 @@ class TeacherVideoClassesPage extends StatelessWidget {
       },
     );
   }
-}
-
-class TeacherVideoClassesBlocState {
 }

@@ -6,7 +6,6 @@ import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes
 
 import 'dart:developer' as dev;
 
-
 class VideoClassCreationPage extends StatefulWidget {
   const VideoClassCreationPage({super.key});
 

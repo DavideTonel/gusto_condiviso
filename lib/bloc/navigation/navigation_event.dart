@@ -40,3 +40,13 @@ final class NavigateToTeacherHomeProfileInfo extends NavigationEvent {}
 final class NavigateToTeacherHomeVideoClasses extends NavigationEvent {}
 
 final class NavigateToTeacherHomeCourses extends NavigationEvent {}
+
+// Company
+
+final class NavigateToCompanySignin extends NavigationEvent {}
+
+final class NavigateToCompanyLogin extends NavigationEvent {}
+
+final class NavigateToCompanyHomeProfileInfo extends NavigationEvent {}
+
+final class NavigateToCompanyHomePromoCodes extends NavigationEvent {}

@@ -42,3 +42,13 @@ final class NavigationTeacherHomeProfileInfo extends NavigationState {}
 final class NavigationTeacherHomeVideoClasses extends NavigationState {}
 
 final class NavigationTeacherHomeCourses extends NavigationState {}
+
+// Company
+
+final class NavigationCompanySignin extends NavigationState {}
+
+final class NavigationCompanyLogin extends NavigationState {}
+
+final class NavigationCompanyHomeProfileInfo extends NavigationState {}
+
+final class NavigationCompanyHomePromoCodes extends NavigationState {}

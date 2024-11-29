@@ -29,6 +29,14 @@ class EntryPointPage extends StatelessWidget {
             final router = GoRouter.of(context);
             router.push("/teacherSignin");
           }
+          case NavigationCompanyLogin _: {
+            final router = GoRouter.of(context);
+            router.push("/companyLogin");
+          }
+          case NavigationCompanySignin _: {
+            final router = GoRouter.of(context);
+            router.push("/companySignin");
+          }
           default: {
 
           }
@@ -144,7 +152,9 @@ class EntryPointPage extends StatelessWidget {
                   width: size.width * 0.3,
                   height: size.height * 0.1,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<NavigationBloc>().add(NavigateToCompanyLogin());
+                    },
                     child: const Text(
                       "Azienda",
                       style: TextStyle(
@@ -159,7 +169,9 @@ class EntryPointPage extends StatelessWidget {
                 ),
               
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<NavigationBloc>().add(NavigateToCompanySignin());
+                  },
                   child: const Text(
                     "Non hai ancora un proflo azienda? Iscriviti",
                     style: TextStyle(

@@ -8,7 +8,7 @@ class TeacherLoginPage extends StatefulWidget {
   const TeacherLoginPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => TeacherLoginPageState();
+  TeacherLoginPageState createState() => TeacherLoginPageState();
 }
 
 class TeacherLoginPageState extends State<TeacherLoginPage> {
@@ -77,7 +77,8 @@ class TeacherLoginPageState extends State<TeacherLoginPage> {
                         controller: passwordTextController,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: "Password"),
+                          labelText: "Password"
+                        ),
                       ),
                     ),
                 
@@ -87,9 +88,11 @@ class TeacherLoginPageState extends State<TeacherLoginPage> {
                 
                     ElevatedButton(
                       onPressed: () {
-                        context.read<TeacherLoginBloc>().add(LoginRequestEvent(
-                          username: teacherTextController.text,
-                          password: passwordTextController.text)
+                        context.read<TeacherLoginBloc>().add(
+                          LoginRequestEvent(
+                            username: teacherTextController.text,
+                            password: passwordTextController.text
+                          )
                         );
                       },
                       child: const Text(

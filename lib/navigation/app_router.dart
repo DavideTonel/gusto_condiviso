@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gusto_condiviso/pages/courses/course_page.dart';
+import 'package:gusto_condiviso/pages/courses/creation/course_creation_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/entry_point_page.dart';
+import 'package:gusto_condiviso/pages/entry_point/login/company_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/teacher_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/user_login_page.dart';
+import 'package:gusto_condiviso/pages/entry_point/signin/company_signin_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/teacher_signin_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/user_signin_page.dart';
+import 'package:gusto_condiviso/pages/home/company_home_page.dart';
 import 'package:gusto_condiviso/pages/home/teacher_home_page.dart';
 import 'package:gusto_condiviso/pages/home/user_home_page.dart';
+import 'package:gusto_condiviso/pages/promos/creation/promo_creation_page.dart';
+import 'package:gusto_condiviso/pages/promos/promo_page.dart';
 import 'package:gusto_condiviso/pages/recipes/creation/recipe_creation_page.dart';
 import 'package:gusto_condiviso/pages/recipes/creation/recipe_review_creation_page.dart';
 import 'package:gusto_condiviso/pages/recipes/creation/recipe_step_creation_page.dart';
@@ -91,6 +98,35 @@ class AppRouter {
       GoRoute(
         path: "/videoClass",
         builder: (context, state) => const VideoClassPage(),
+      ),
+      GoRoute(
+        path: "/courseCreation",
+        builder: (context, state) => const CourseCreationPage(),
+      ),
+      GoRoute(
+        path: "/course",
+        builder: (context, state) => const CoursePage(),
+      ),
+      // Company
+      GoRoute(
+        path: "/companySignin",
+        builder: (context, state) => const CompanySigninPage(),
+      ),
+      GoRoute(
+        path: "/companyLogin",
+        builder: (context, state) => const CompanyLoginPage(),
+      ),
+      GoRoute(
+        path: "/companyHome",
+        builder: (context, state) => const CompanyHomePage(),
+      ),
+      GoRoute(
+        path: "/promoCreation",
+        builder: (context, state) => const PromoCreationPage(),
+      ),
+      GoRoute(
+        path: "/promo",
+        builder: (context, state) => const PromoPage(),
       ),
     ]
   );

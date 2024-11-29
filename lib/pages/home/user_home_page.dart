@@ -4,9 +4,9 @@ import 'package:gusto_condiviso/bloc/recipes/feed_recipes/feed_recipes_bloc.dart
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
-import 'package:gusto_condiviso/pages/courses/courses_feed_page.dart';
+import 'package:gusto_condiviso/pages/courses/user_courses_feed_page.dart';
 import 'package:gusto_condiviso/pages/profiles/user_profile_page.dart';
-import 'package:gusto_condiviso/pages/promotional_codes/promotional_codes_page.dart';
+import 'package:gusto_condiviso/pages/promos/user_promo_page.dart';
 import 'package:gusto_condiviso/pages/recipes/recipes_feed_page.dart';
 import 'package:gusto_condiviso/pages/subscriptions/user_subscription_page.dart';
 import 'package:gusto_condiviso/pages/video_classes/user_video_classes_feed_page.dart';

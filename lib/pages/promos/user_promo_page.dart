@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gusto_condiviso/widgets/promotional_codes/promotional_code_preview.dart';
+import 'package:gusto_condiviso/widgets/promos/promo_preview.dart';
 
 class PromotionalCodesPage extends StatefulWidget {
 
@@ -100,7 +100,13 @@ class PromotionalCodesPageState extends State<PromotionalCodesPage> {
                   controller: scrollController,
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return const PromotionalCodePreview();
+                    return PromoPreviewWidget(
+                      id: 0,
+                      name: "",
+                      endDate: "",
+                      onTap: () {
+                      },
+                    );
                   },
                 ),
           ),

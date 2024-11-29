@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 
 class CoursePreview extends StatelessWidget {
-  const CoursePreview({super.key});
+  final int id;
+  final String name;
+  final String teacherId;
+  final VoidCallback onTap;
+  //final String date;
+
+  const CoursePreview(
+    {
+      super.key,
+      required this.id,
+      required this.name,
+      required this.teacherId,
+      required this.onTap
+      //required this.date
+    }
+  );
+  
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Card (
       child: ListTile(
-        title: Text("Tutto quello che c'è da sapere sul pesce"),
-        subtitle: Text("2 ore e 10 min"),
-        trailing: Text("creato da Roberto Carli"),
+        title: Text(name),
+        subtitle: Text("di $teacherId"),
+        //trailing: Text(duration),
+        onTap: onTap,
       ),
     );
   }

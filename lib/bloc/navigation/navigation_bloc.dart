@@ -44,6 +44,14 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
 
     on<NavigateToTeacherHomeCourses>((event, emit) => emit(NavigationTeacherHomeCourses()));
 
-    
+    // Company
+
+    on<NavigateToCompanySignin>((event, emit) => emit(NavigationCompanySignin()));
+
+    on<NavigateToCompanyLogin>((event, emit) => emit(NavigationCompanyLogin()));
+
+    on<NavigateToCompanyHomeProfileInfo>((event, emit) => emit(NavigationCompanyHomeProfileInfo()));
+
+    on<NavigateToCompanyHomePromoCodes>((event, emit) => emit(NavigationCompanyHomePromoCodes()));
   }
 }
