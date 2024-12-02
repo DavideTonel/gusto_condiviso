@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'video_class_event.dart';
@@ -31,7 +32,7 @@ class VideoClassBloc extends Bloc<VideoClassEvent, VideoClassState> {
         final teacherId = value.data["UsernameInsegnante"] as String;
         final description = value.data["Descrizione"] as String;
         final duration = value.data["Durata"] as String;
-        final date = value.data["DataPubblicazione"] as String;
+        final date = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataPubblicazione"] as String));
 
         emit(
           VideoClassLoaded(

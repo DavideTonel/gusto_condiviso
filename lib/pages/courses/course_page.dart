@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/course/course_bloc.dart';
-import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
-import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
-
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
 
 class CoursePage extends StatelessWidget {
@@ -50,7 +47,7 @@ class CoursePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.course?.date}", // TODO sistemare data
+                      "${state.course?.date}",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),

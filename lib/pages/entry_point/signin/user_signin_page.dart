@@ -187,7 +187,7 @@ class UserSigninPageState extends State<UserSigninPage> {
                             name: nameTextController.text,
                             surname: surnameTextController.text,
                             mail: mailTextController.text,
-                            birthday: birthdayTextController.text // TODO aggiustare data
+                            birthday: birthdayTextController.text
                             //birthday: DateTime.now()
                           ));
                         },

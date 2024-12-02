@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/teacher/teacher.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'teacher_login_event.dart';
@@ -33,7 +34,7 @@ class TeacherLoginBloc extends Bloc<TeacherLoginEvent, TeacherLoginState> {
           final name = value.data["Nome"] as String;
           final surname = value.data["Cognome"] as String;
           final mail = value.data["Mail"] as String;
-          final birthday = value.data["DataNascita"] as String;     // TODO aggiustare data, il giorno è sempre -1
+          final birthday = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataNascita"] as String));
           final description = value.data["Descrizione"] as String;
 
           emit(
@@ -50,12 +51,11 @@ class TeacherLoginBloc extends Bloc<TeacherLoginEvent, TeacherLoginState> {
             )
           );
         } else {
-          dev.log("LoginFailure");
           emit(TeacherLoginFailure(errorMessage: "Username o password sbagliati"));
         }
       });
     } catch (e) {
-      dev.log("Errore");
+      dev.log("Error");
       dev.log(e.toString());
       emit(TeacherLoginFailure(errorMessage: e.toString()));
     }

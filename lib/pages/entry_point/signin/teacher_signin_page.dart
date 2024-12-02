@@ -205,7 +205,7 @@ class TeacherSigninPageState extends State<TeacherSigninPage> {
                             name: nameTextController.text,
                             surname: surnameTextController.text,
                             mail: mailTextController.text,
-                            birthday: birthdayTextController.text, // TODO aggiustare data
+                            birthday: birthdayTextController.text,
                             description: descriptionTextController.text
                           ));
                         },

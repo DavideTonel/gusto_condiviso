@@ -47,7 +47,7 @@ class VideoClassPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.videoClass?.date}", //TODO aggiungere data
+                      "${state.videoClass?.date}",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),

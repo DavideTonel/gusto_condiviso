@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'teacher_video_classes_event.dart';
@@ -35,7 +36,7 @@ class TeacherVideoClassesBloc extends Bloc<TeacherVideoClassesEvent, TeacherVide
               teacherCreatorId: entry["UsernameInsegnante"] as String,
               name: entry["Nome"] as String,
               description: entry["Descrizione"] as String,
-              date: entry["DataPubblicazione"] as String,
+              date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
               duration: entry["Durata"] as String,
             )
           );
@@ -80,7 +81,7 @@ class TeacherVideoClassesBloc extends Bloc<TeacherVideoClassesEvent, TeacherVide
                 teacherCreatorId: entry["UsernameInsegnante"] as String,
                 name: entry["Nome"] as String,
                 description: entry["Descrizione"] as String,
-                date: entry["DataPubblicazione"] as String,
+                date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
                 duration: entry["Durata"] as String,
               )
             );

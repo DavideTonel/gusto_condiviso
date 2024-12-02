@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/user/subscription_type.dart';
 import 'package:gusto_condiviso/model/user/user.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'user_login_event.dart';
@@ -29,29 +30,15 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
         }
       ).then((value) {
         if (value.data != null) {
-          dev.log("LoginSuccess");
-
-          /*
-          final user = User(
-            username: value.data["Username"] as String,
-            password: value.data["Password"] as String,
-            name: value.data["Nome"] as String,
-            surname: value.data["Cognome"] as String,
-            mail: value.data["Mail"] as String,
-            birthday: value.data["DataNascita"] as String      // TODO aggiustare data, il giorno è sempre -1
-          );
-          */
-
           final username = value.data["Username"] as String;
           final password = value.data["Password"] as String;
           final name = value.data["Nome"] as String;
           final surname = value.data["Cognome"] as String;
           final mail = value.data["Mail"] as String;
-          final birthday = value.data["DataNascita"] as String;     // TODO aggiustare data, il giorno è sempre -1
+          final birthday = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataNascita"] as String));
           
-
           try {
-            final startDateSubscription = value.data["DataInizio"] as String; // TODO aggiustare data
+            final startDateSubscription = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataInizio"] as String));
             final subscriptionTypeId = value.data["CodiceTipoAbbonamento"] as int;
             final subscriptionTypeName = value.data["NomeTipo"] as String;
             final subscriptionTypeDescription = value.data["Descrizione"] as String;
@@ -77,8 +64,6 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
               ),
             )); 
           } catch (e) {
-            dev.log("No subscription");
-
             emit(UserLoginSuccess(
               user: User(
                 username: username,
@@ -91,12 +76,11 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
             ));
           }
         } else {
-          dev.log("LoginFailure");
           emit(UserLoginFailure(errorMessage: "Username o password sbagliati"));
         }
       });
     } catch (e) {
-      dev.log("Errore");
+      dev.log("Error");
       dev.log(e.toString());
       emit(UserLoginFailure(errorMessage: e.toString()));
     }

@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'recipe_event.dart';
@@ -65,13 +66,9 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         }
       ).then((value) {
         final id = value.data["Codice"] as int;
-        //dev.log("id: $id");
         final usernameUtente = value.data["UsernameUtente"] as String;
-        //dev.log("usernameUtente: $usernameUtente");
         final recipeName = value.data["Nome"] as String;
-        //dev.log("recipeName: $recipeName");
         final recipeDescription = value.data["DescrizioneRicetta"] as String;
-        //dev.log("recipeDescription: $recipeDescription");
 
         String? revisitedRecipeId;
         try {
@@ -80,18 +77,14 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
           dev.log("Recipe is not a revisitation");
         }
 
-        //dev.log(value.data["Passaggi"].toString());
-
         List<RecipeStep> steps = [];
 
         for (var row in value.data["Passaggi"]) {
-          //dev.log(row.toString());
           final stepDescription = row["DescrizionePassaggio"] as String;
           List<IngredientInStep> ingredientsInStep = [];
           List<Tool> toolsInStep = [];
           
           for (var i in row["Ingredienti"]) {
-            //dev.log(i.toString());
             if (i["NomeIngrediente"] != null) {
               final ingredientName = i["NomeIngrediente"] as String;
               final amount = i["Quantità"] as String;
@@ -108,7 +101,6 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
           }
 
           for (var t in row["Utensili"]) {
-            //dev.log(t.toString());
             if (t["NomeUtensile"] != null) {
               final toolName = t["NomeUtensile"] as String;
               toolsInStep.add(
@@ -166,7 +158,7 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
           //dev.log(row.toString());
           final usernameCreator = row["UsernameUtente"] as String;
           final score = row["Punteggio"] as int;
-          final date = row["DataCreazione"] as String;
+          final date = DateFormat('dd/MM/yyyy').format(DateTime.parse(row["DataCreazione"] as String));
 
           String? description;
           try {
@@ -226,7 +218,7 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
             //dev.log(row.toString());
             final usernameCreator = row["UsernameUtente"] as String;
             final score = row["Punteggio"] as int;
-            final date = row["DataCreazione"] as String;
+            final date = DateFormat('dd/MM/yyyy').format(DateTime.parse(row["DataCreazione"] as String));
 
             String? description;
             try {

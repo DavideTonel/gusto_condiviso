@@ -23,7 +23,7 @@ class UserVideoClassPage extends StatelessWidget {
                 final router = GoRouter.of(context);
                 router.pop();
               },
-              icon: Icon(Icons.arrow_back)
+              icon: const Icon(Icons.arrow_back)
             ),
             title: Padding(
               padding:
@@ -57,7 +57,7 @@ class UserVideoClassPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.videoClass?.date}", //TODO aggiungere data
+                      "${state.videoClass?.date}",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),

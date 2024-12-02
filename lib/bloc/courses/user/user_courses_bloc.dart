@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:bloc/bloc.dart';
-import 'package:gusto_condiviso/bloc/promos/user/user_promos_bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/courses/course.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'user_courses_event.dart';
@@ -35,7 +35,7 @@ class UserCoursesBloc extends Bloc<UserCoursesEvent, UserCoursesState> {
               id: entry["Codice"] as int,
               teacherCreatorId: entry["UsernameInsegnante"] as String,
               name: entry["Nome"] as String,
-              date: entry["DataPubblicazione"] as String,
+              date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
             )
           );
         }
@@ -72,7 +72,7 @@ class UserCoursesBloc extends Bloc<UserCoursesEvent, UserCoursesState> {
               id: entry["Codice"] as int,
               teacherCreatorId: entry["UsernameInsegnante"] as String,
               name: entry["Nome"] as String,
-              date: entry["DataPubblicazione"] as String,
+              date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
             )
           );
         }
@@ -115,7 +115,7 @@ class UserCoursesBloc extends Bloc<UserCoursesEvent, UserCoursesState> {
                 id: entry["Codice"] as int,
                 teacherCreatorId: entry["UsernameInsegnante"] as String,
                 name: entry["Nome"] as String,
-                date: entry["DataPubblicazione"] as String,
+                date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
               )
             );
           }

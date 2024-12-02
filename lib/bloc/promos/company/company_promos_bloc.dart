@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/promos/promo.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'company_promos_event.dart';
@@ -35,7 +36,7 @@ class CompanyPromosBloc extends Bloc<CompanyPromosEvent, CompanyPromosState> {
               id: entry["Codice"] as int,
               name: entry["Nome"] as String,
               description: entry["Descrizione"] as String,
-              endDate: entry["DataScadenza"] as String,
+              endDate: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataScadenza"] as String)),
               useInstructions: entry["IstruzioniUso"] as String,
               companyId: event.companyId
             )
@@ -82,7 +83,7 @@ class CompanyPromosBloc extends Bloc<CompanyPromosEvent, CompanyPromosState> {
                 id: entry["Codice"] as int,
                 name: entry["Nome"] as String,
                 description: entry["Descrizione"] as String,
-                endDate: entry["DataScadenza"] as String,
+                endDate: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataScadenza"] as String)),
                 useInstructions: entry["IstruzioniUso"] as String,
                 companyId: event.companyId
               )

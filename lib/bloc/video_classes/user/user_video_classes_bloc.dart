@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'dart:developer' as dev;
 
@@ -45,7 +46,7 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
               teacherCreatorId: entry["UsernameInsegnante"] as String,
               name: entry["Nome"] as String,
               description: entry["Descrizione"] as String,
-              date: entry["DataPubblicazione"] as String,
+              date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
               duration: entry["Durata"] as String,
             )
           );
@@ -83,7 +84,7 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
               teacherCreatorId: entry["UsernameInsegnante"] as String,
               name: entry["Nome"] as String,
               description: entry["Descrizione"] as String,
-              date: entry["DataPubblicazione"] as String,
+              date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
               duration: entry["Durata"] as String,
             )
           );
@@ -109,7 +110,7 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
     try {
       var client = DioClient();
       await client.dio.post(
-        "api/saveVideoClassMinuteUser", // TODO query
+        "api/saveVideoClassMinuteUser",
         data: {
           "teacherId": event.teacherId,
           "videoClassName": event.videoClassName,
@@ -118,7 +119,7 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
         }
       ).then((value) async {
         await client.dio.post(
-          "api/getVideoClassMinuteUser", // TODO query
+          "api/getVideoClassMinuteUser",
           data: {
             "teacherId": event.teacherId,
             "videoClassName": event.videoClassName,

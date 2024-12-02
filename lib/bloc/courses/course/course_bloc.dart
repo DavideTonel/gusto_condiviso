@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/courses/course.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'course_event.dart';
@@ -32,7 +33,7 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
         final name = value.data[0]["Nome"] as String;
         final teacherId = value.data[0]["UsernameInsegnante"] as String;
         final description = value.data[0]["Descrizione"] as String;
-        final date = value.data[0]["DataPubblicazione"] as String;
+        final date = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data[0]["DataPubblicazione"] as String));
 
         final List<VideoClass> videoClasses = [];
         for (var entry in value.data) {
@@ -41,7 +42,7 @@ class CourseBloc extends Bloc<CourseEvent, CourseState> {
               teacherCreatorId: entry["IdInsegnante"] as String,
               name: entry["NomeVideolezione"] as String,
               description: entry["DescrizioneVideolezione"] as String,
-              date: entry["DataVideolezione"] as String,
+              date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataVideolezione"] as String)),
               duration: entry["Durata"] as String
             )
           );

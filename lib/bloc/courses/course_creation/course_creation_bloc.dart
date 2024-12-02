@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'course_creation_event.dart';
@@ -59,12 +60,11 @@ class CourseCreationBloc extends Bloc<CourseCreationEvent, CourseCreationState> 
             teacherCreatorId: value.data["UsernameInsegnante"] as String,
             name: value.data["Nome"] as String,
             description: value.data["Descrizione"] as String,
-            date: value.data["DataPubblicazione"] as String,
+            date: DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataPubblicazione"] as String)),
             duration: value.data["Durata"] as String,
           );
 
           if (!state.videoClasses.any((elem) => elem.name == video.name && elem.teacherCreatorId == video.teacherCreatorId)) {
-            dev.log("Aggiungo la videolezione");
             List<VideoClass> newVideoClasses = [...state.videoClasses];
             newVideoClasses.add(video);
             emit(
