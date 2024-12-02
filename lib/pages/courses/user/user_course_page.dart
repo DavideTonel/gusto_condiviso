@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/courses/course/course_bloc.dart';
+import 'package:gusto_condiviso/bloc/courses/user/user_courses_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
-
+import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
+import 'package:gusto_condiviso/pages/courses/course_page.dart';
 
-class CoursePage extends StatelessWidget {
-  const CoursePage({super.key});
+class UserCoursePage extends StatelessWidget {
+  const UserCoursePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
     return BlocConsumer<CourseBloc, CourseState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             title: Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
+              padding:
+                  const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,7 +35,7 @@ class CoursePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: Text(
-                      "di ${state.course?.teacherCreatorId ?? "username non disponibile"}",
+                      "dell'insegnante ${state.course?.teacherCreatorId ?? "username non disponibile"}",
                       style: const TextStyle(fontSize: 28),
                     ),
                   ),
@@ -50,28 +53,54 @@ class CoursePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.course?.date}", // TODO sistemare data
+                      "${state.course?.date}", //TODO aggiungere data
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
               ),
-
+              
               SizedBox(
                 height: size.height * 0.05,
               ),
 
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      state.course?.description ?? "descrizione non disponibile",
+                      state.course?.description ??
+                          "descrizione non disponibile",
                       style: const TextStyle(fontSize: 20),
                     ),
                   ],
                 ),
+              ),
+
+              SizedBox(
+                height: size.height * 0.2,
+              ),
+
+              BlocBuilder<UserCoursesBloc, UserCoursesState>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: state.enrolledCourses
+                      .map((c) => c.id)
+                      .toList()
+                      .contains(context.read<CourseBloc>().state.course?.id)
+                    ? null
+                    :  () {
+                      context.read<UserCoursesBloc>().add(
+                        EnrollUserRequest(
+                          userId: context.read<UserBloc>().state.user!.username,
+                          courseId: context.read<CourseBloc>().state.course!.id
+                        )
+                      );
+                    } ,
+                    child: const Text("Segui corso"),
+                  );
+                },
               ),
 
               SizedBox(
@@ -91,7 +120,23 @@ class CoursePage extends StatelessWidget {
                       date: "",
                       duration: "",
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      context.read<UserVideoClassesBloc>().add(
+                        GetCurrentVideoPercentageRequest(
+                          teacherId: state.course?.videoClasses[i].teacherCreatorId ?? "",
+                          videoClassName: state.course?.videoClasses[i].name?? "",
+                          userId: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+                      context.read<VideoClassBloc>().add(
+                        LoadVideoClassRequest(
+                          teacherId: state.course?.videoClasses[i].teacherCreatorId ?? "",
+                          videoClassName: state.course?.videoClasses[i].name?? ""
+                        )
+                      );
+                      final router = GoRouter.of(context);
+                      router.push("/userVideoClass");
+                    }
                   )
                 ),
               )
@@ -99,85 +144,6 @@ class CoursePage extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class VideoClassInCourseWidget extends StatelessWidget {
-  final int position;
-  final VideoClass videoClass;
-  final VoidCallback onTap;
-
-  const VideoClassInCourseWidget(
-    {
-      super.key,
-      required this.position,
-      required this.videoClass,
-      required this.onTap
-    }
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
-        child: SizedBox(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Lezione numero $position",
-                        style: const TextStyle(fontSize: 25),
-                      ),
-                    ],
-                  ),
-      
-                  SizedBox(
-                    height: size.height * 0.002,
-                  ),
-      
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          videoClass.name,
-                          style: const TextStyle(fontSize: 18),
-                        )
-                      ),
-                    ],
-                  ),
-      
-                  SizedBox(
-                    height: size.height * 0.002,
-                  ),
-      
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          videoClass.description,
-                          style: const TextStyle(fontSize: 18),
-                        )
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

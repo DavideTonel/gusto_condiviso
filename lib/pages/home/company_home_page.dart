@@ -3,9 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gusto_condiviso/bloc/company/company_bloc.dart';
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/promos/company/company_promos_bloc.dart';
-
-import 'dart:developer' as dev;
-
 import 'package:gusto_condiviso/pages/profiles/company_profile_page.dart';
 import 'package:gusto_condiviso/pages/promos/company_promos_page.dart';
 

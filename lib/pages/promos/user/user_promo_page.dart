@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/promos/promo/promo_bloc.dart';
+import 'package:gusto_condiviso/bloc/promos/user/user_promos_bloc.dart';
+import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 
-class PromoPage extends StatelessWidget {
-  const PromoPage({super.key});
+// TODO rivalutare id promozione monouso
+class UserPromoPage extends StatelessWidget {
+  const UserPromoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
     return BlocConsumer<PromoBloc, PromoState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                context.read<UserPromosBloc>().add(ClearCurrentOneshotCode());
+                final router = GoRouter.of(context);
+                router.pop();
+              },
+              icon: const Icon(Icons.arrow_back)
+            ),
             title: Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
+              padding:
+                  const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +53,6 @@ class PromoPage extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.005,
               ),
-
               Row(
                 children: [
                   Padding(
@@ -53,24 +64,21 @@ class PromoPage extends StatelessWidget {
                   ),
                 ],
               ),
-
               SizedBox(
                 height: size.height * 0.05,
               ),
-
               Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
-                    child: Text(state.promo?.description ?? "descrizione non disponibile"),
+                    child: Text(state.promo?.description ??
+                        "descrizione non disponibile"),
                   ),
                 ],
               ),
-
               SizedBox(
                 height: size.height * 0.05,
               ),
-
               Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Row(
@@ -83,6 +91,38 @@ class PromoPage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              BlocBuilder<UserPromosBloc, UserPromosState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: state.currentPromoOneshotCode != null
+                          ? null
+                          : () {
+                            context.read<UserPromosBloc>().add(
+                              ActivatePromoRequest(
+                                userId: context.read<UserBloc>().state.user!.username,
+                                promoId: context.read<PromoBloc>().state.promo!.id
+                              )
+                            );
+                          },
+                        child: const Text("Ottieni")
+                      ),
+
+                      if (state.currentPromoOneshotCode != null)
+                        SizedBox(
+                          height: size.height * 0.05,
+                        ),
+
+                      if (state.currentPromoOneshotCode != null)
+                        Text("Codice Monouso: ${state.currentPromoOneshotCode}")
+                    ],
+                  );
+                },
+              )
             ],
           ),
         );

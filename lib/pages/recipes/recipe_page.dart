@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe/recipe_bloc.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
-import 'dart:developer' as dev;
-
 // TODO mostrare id ricetta
 class RecipePage extends StatelessWidget {
   const RecipePage({super.key});

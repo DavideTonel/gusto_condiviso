@@ -96,7 +96,7 @@ class TeacherCoursesPage extends StatelessWidget {
               child: ListView(
                 children: state.courses.map((elem) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
-                  child: CoursePreview(
+                  child: CoursePreviewWidget(
                     id: elem.id,
                     name: elem.name,
                     teacherId: elem.teacherCreatorId,

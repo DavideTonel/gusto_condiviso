@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CoursePreview extends StatelessWidget {
+class CoursePreviewWidget extends StatelessWidget {
   final int id;
   final String name;
   final String teacherId;
   final VoidCallback onTap;
   //final String date;
 
-  const CoursePreview(
+  const CoursePreviewWidget(
     {
       super.key,
       required this.id,

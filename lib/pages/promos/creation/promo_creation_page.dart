@@ -3,10 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/company/company_bloc.dart';
 import 'package:gusto_condiviso/bloc/promos/company/company_promos_bloc.dart';
-import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
-import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
-
-import 'dart:developer' as dev;
 
 class PromoCreationPage extends StatefulWidget {
   const PromoCreationPage({super.key});

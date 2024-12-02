@@ -4,10 +4,12 @@ import 'package:gusto_condiviso/bloc/company/company_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/course/course_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/course_creation/course_creation_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/teacher/teacher_courses_bloc.dart';
+import 'package:gusto_condiviso/bloc/courses/user/user_courses_bloc.dart';
 import 'package:gusto_condiviso/bloc/login/company/company_login_bloc.dart';
 import 'package:gusto_condiviso/bloc/login/teacher/teacher_login_bloc.dart';
 import 'package:gusto_condiviso/bloc/promos/company/company_promos_bloc.dart';
 import 'package:gusto_condiviso/bloc/promos/promo/promo_bloc.dart';
+import 'package:gusto_condiviso/bloc/promos/user/user_promos_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe/recipe_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/login/user/user_login_bloc.dart';
@@ -20,6 +22,7 @@ import 'package:gusto_condiviso/bloc/signin/user/user_signin_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
+import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
 import 'package:gusto_condiviso/navigation/app_router.dart';
@@ -66,6 +69,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RecipesSearchBloc()
+        ),
+        BlocProvider(
+          create: (context) => UserVideoClassesBloc()
+        ),
+        BlocProvider(
+          create: (context) => UserCoursesBloc()
+        ),
+        BlocProvider(
+          create: (context) => UserPromosBloc()
         ),
         // Teacher
         BlocProvider(

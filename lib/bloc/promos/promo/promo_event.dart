@@ -8,3 +8,4 @@ final class LoadPromoRequest extends PromoEvent {
 
   LoadPromoRequest({required this.id});
 }
+

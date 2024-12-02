@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gusto_condiviso/bloc/courses/user/user_courses_bloc.dart';
+import 'package:gusto_condiviso/bloc/promos/user/user_promos_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
-import 'package:gusto_condiviso/pages/courses/user_courses_feed_page.dart';
+import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
+import 'package:gusto_condiviso/pages/courses/user/user_courses_feed_page.dart';
 import 'package:gusto_condiviso/pages/profiles/user_profile_page.dart';
-import 'package:gusto_condiviso/pages/promos/user_promo_page.dart';
+import 'package:gusto_condiviso/pages/promos/user/user_promos_feed_page.dart';
 import 'package:gusto_condiviso/pages/recipes/recipes_feed_page.dart';
 import 'package:gusto_condiviso/pages/subscriptions/user_subscription_page.dart';
-import 'package:gusto_condiviso/pages/video_classes/user_video_classes_feed_page.dart';
-
-import 'dart:developer' as dev;
+import 'package:gusto_condiviso/pages/video_classes/user/user_video_classes_feed_page.dart';
 
 class UserHomePage extends StatelessWidget {
   const UserHomePage({super.key});
@@ -118,12 +119,30 @@ class UserHomePage extends StatelessWidget {
                           }
                           case 3: {
                             context.read<NavigationBloc>().add(NavigateToUserHomeVideoClasses());
+                            context.read<UserVideoClassesBloc>().add(LoadVideoClassesFeed());
+                            context.read<UserVideoClassesBloc>().add(
+                              LoadVideoClassesStarted(
+                                userId: state.user!.username
+                              )
+                            );
                           }
                           case 4: {
                             context.read<NavigationBloc>().add(NavigateToUserHomeCourses());
+                            context.read<UserCoursesBloc>().add(LoadCoursesFeed());
+                            context.read<UserCoursesBloc>().add(
+                              LoadCoursesEnrolled(
+                                userId: state.user!.username
+                              )
+                            );
                           }
                           case 5: {
                             context.read<NavigationBloc>().add(NavigateToUserHomePromoCodes());
+                            context.read<UserPromosBloc>().add(LoadPromosForUserRequest());
+                            context.read<UserPromosBloc>().add(
+                              LoadPromosActivatedByUser(
+                                userId: state.user!.username
+                              )
+                            );
                           }
                           default: {
                             context.read<NavigationBloc>().add(NavigateToUserHomeProfileInfo());
@@ -142,8 +161,8 @@ class UserHomePage extends StatelessWidget {
                       1 => const UserSubscriptionPage(),
                       2 => const RecipesFeedPage(),
                       3 => const UserVideoClassesFeedPage(),
-                      4 => const CoursesFeedPage(),
-                      5 => const PromotionalCodesPage(),
+                      4 => const UserCoursesFeedPage(),
+                      5 => const UserPromosFeedPage(),
                       _ => const UserProfilePage()
                     }
                   )

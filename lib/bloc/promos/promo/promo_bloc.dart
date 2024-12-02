@@ -32,6 +32,7 @@ class PromoBloc extends Bloc<PromoEvent, PromoState> {
         final useInstructions = value.data["IstruzioniUso"] as String;
         final endDate = value.data["DataScadenza"] as String;
         final companyId = value.data["UsernameAzienda"] as String;
+
         emit(
           PromoLoaded(
             promo: Promo(
@@ -40,8 +41,8 @@ class PromoBloc extends Bloc<PromoEvent, PromoState> {
               description: description,
               useInstructions: useInstructions,
               endDate: endDate,
-              companyId: companyId
-            )
+              companyId: companyId,
+            ),
           )
         );
       });
