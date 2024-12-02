@@ -88,12 +88,17 @@ class CompanyLoginPageState extends State<CompanyLoginPage> {
                 
                     ElevatedButton(
                       onPressed: () {
-                        context.read<CompanyLoginBloc>().add(
-                          LoginRequestEvent(
-                            username: companyIdTextController.text,
-                            password: passwordTextController.text
-                          )
-                        );
+                        if (
+                          companyIdTextController.text.isNotEmpty &&
+                          passwordTextController.text.isNotEmpty
+                        ) {
+                          context.read<CompanyLoginBloc>().add(
+                            LoginRequestEvent(
+                              username: companyIdTextController.text,
+                              password: passwordTextController.text
+                            )
+                          );
+                        }
                       },
                       child: const Text(
                         "Accedi",

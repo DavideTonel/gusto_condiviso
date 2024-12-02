@@ -87,10 +87,15 @@ class UserLoginPageState extends State<UserLoginPage> {
                 
                     ElevatedButton(
                       onPressed: () {
-                        context.read<UserLoginBloc>().add(LoginRequestEvent(
-                          username: usernameTextController.text,
-                          password: passwordTextController.text)
-                        );
+                        if (
+                          usernameTextController.text.isNotEmpty &&
+                          passwordTextController.text.isNotEmpty
+                        ) {
+                          context.read<UserLoginBloc>().add(LoginRequestEvent(
+                            username: usernameTextController.text,
+                            password: passwordTextController.text)
+                          );
+                        }
                       },
                       child: const Text(
                         "Accedi",

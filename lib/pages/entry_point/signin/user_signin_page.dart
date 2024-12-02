@@ -181,15 +181,23 @@ class UserSigninPageState extends State<UserSigninPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<UserSigninBloc>().add(SigninRequestEvent(
-                            username: usernameTextController.text,
-                            password: passwordTextController.text,
-                            name: nameTextController.text,
-                            surname: surnameTextController.text,
-                            mail: mailTextController.text,
-                            birthday: birthdayTextController.text
-                            //birthday: DateTime.now()
-                          ));
+                          if (
+                            usernameTextController.text.isNotEmpty &&
+                            passwordTextController.text.isNotEmpty &&
+                            nameTextController.text.isNotEmpty &&
+                            surnameTextController.text.isNotEmpty &&
+                            mailTextController.text.isNotEmpty &&
+                            birthdayTextController.text.isNotEmpty
+                          ) {
+                            context.read<UserSigninBloc>().add(SigninRequestEvent(
+                              username: usernameTextController.text,
+                              password: passwordTextController.text,
+                              name: nameTextController.text,
+                              surname: surnameTextController.text,
+                              mail: mailTextController.text,
+                              birthday: birthdayTextController.text
+                            ));
+                          }
                         },
                         child: const Text(
                           "Iscriviti",

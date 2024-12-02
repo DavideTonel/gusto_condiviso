@@ -180,14 +180,21 @@ class CompanySigninPageState extends State<CompanySigninPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
-                          // TODO check is not blank in every signin and login
-                          context.read<CompanySigninBloc>().add(SigninRequestEvent(
-                            username: usernameTextController.text,
-                            password: passwordTextController.text,
-                            name: nameTextController.text,
-                            mail: mailTextController.text,
-                            linkWebSite: linkTextController.text
-                          ));
+                          if (
+                            usernameTextController.text.isNotEmpty &&
+                            passwordTextController.text.isNotEmpty &&
+                            nameTextController.text.isNotEmpty &&
+                            mailTextController.text.isNotEmpty &&
+                            linkTextController.text.isNotEmpty
+                          ) {
+                            context.read<CompanySigninBloc>().add(SigninRequestEvent(
+                              username: usernameTextController.text,
+                              password: passwordTextController.text,
+                              name: nameTextController.text,
+                              mail: mailTextController.text,
+                              linkWebSite: linkTextController.text
+                            ));
+                          }
                         },
                         child: const Text(
                           "Iscriviti",

@@ -199,15 +199,25 @@ class TeacherSigninPageState extends State<TeacherSigninPage> {
                       height: 80,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<TeacherSigninBloc>().add(SigninRequestEvent(
-                            username: usernameTextController.text,
-                            password: passwordTextController.text,
-                            name: nameTextController.text,
-                            surname: surnameTextController.text,
-                            mail: mailTextController.text,
-                            birthday: birthdayTextController.text,
-                            description: descriptionTextController.text
-                          ));
+                          if (
+                            usernameTextController.text.isNotEmpty &&
+                            passwordTextController.text.isNotEmpty &&
+                            nameTextController.text.isNotEmpty &&
+                            surnameTextController.text.isNotEmpty &&
+                            mailTextController.text.isNotEmpty &&
+                            birthdayTextController.text.isNotEmpty &&
+                            descriptionTextController.text.isNotEmpty
+                          ) {
+                            context.read<TeacherSigninBloc>().add(SigninRequestEvent(
+                              username: usernameTextController.text,
+                              password: passwordTextController.text,
+                              name: nameTextController.text,
+                              surname: surnameTextController.text,
+                              mail: mailTextController.text,
+                              birthday: birthdayTextController.text,
+                              description: descriptionTextController.text
+                            ));
+                          }
                         },
                         child: const Text(
                           "Iscriviti",

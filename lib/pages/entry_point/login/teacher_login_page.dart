@@ -88,12 +88,17 @@ class TeacherLoginPageState extends State<TeacherLoginPage> {
                 
                     ElevatedButton(
                       onPressed: () {
-                        context.read<TeacherLoginBloc>().add(
-                          LoginRequestEvent(
-                            username: teacherTextController.text,
-                            password: passwordTextController.text
-                          )
-                        );
+                        if (
+                          teacherTextController.text.isNotEmpty &&
+                          passwordTextController.text.isNotEmpty
+                        ) {
+                          context.read<TeacherLoginBloc>().add(
+                            LoginRequestEvent(
+                              username: teacherTextController.text,
+                              password: passwordTextController.text
+                            )
+                          );
+                        }
                       },
                       child: const Text(
                         "Accedi",

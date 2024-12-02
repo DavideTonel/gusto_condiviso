@@ -53,7 +53,7 @@ class UserCoursePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.course?.date}", //TODO aggiungere data
+                      "${state.course?.date}",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
