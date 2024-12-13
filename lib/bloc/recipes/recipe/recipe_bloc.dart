@@ -3,7 +3,9 @@ import 'dart:developer' as dev;
 
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
+import 'package:gusto_condiviso/model/recipe/ingredient/ingredient.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
+import 'package:gusto_condiviso/model/recipe/tool/tool.dart';
 import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
@@ -51,6 +53,14 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         )
       );
     });
+
+    on<ClearRecipe>((event, emit) {
+      emit(
+        const RecipeInitial()
+      );
+    });
+
+    on<DeleteRecipe>(onDeleteRecipe);
   }
 
   FutureOr<void> onLoadRecipeRequest(
@@ -69,6 +79,10 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         final usernameUtente = value.data["UsernameUtente"] as String;
         final recipeName = value.data["Nome"] as String;
         final recipeDescription = value.data["DescrizioneRicetta"] as String;
+        final recipeRating = value.data["Valutazione"] as double;
+        final recipeNumOfReviews = value.data["NumeroRecensioni"] as int;
+        final recipePersonPerDose = value.data["PersonePerDose"] as String;
+        final recipePubDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataPubblicazione"] as String));
 
         String? revisitedRecipeId;
         try {
@@ -128,7 +142,11 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
               name: recipeName,
               description: recipeDescription,
               steps: steps,
-              revisitedRecipeId: revisitedRecipeId
+              revisitedRecipeId: revisitedRecipeId,
+              rating: recipeRating,
+              numOfReviews: recipeNumOfReviews,
+              personPerDose: recipePersonPerDose,
+              pubDate: recipePubDate
             ),
             reviews: state.reviews
           )
@@ -244,6 +262,25 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
             )
           );
         });
+      });
+    } catch (e) {
+      dev.log("error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onDeleteRecipe(
+    DeleteRecipe event,
+    Emitter<RecipeState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/deleteRecipe",
+        data: {
+          "id": state.recipe!.id
+        }
+      ).then((value) {
       });
     } catch (e) {
       dev.log("error");

@@ -4,12 +4,14 @@ import 'package:gusto_condiviso/pages/courses/course_page.dart';
 import 'package:gusto_condiviso/pages/courses/creation/course_creation_page.dart';
 import 'package:gusto_condiviso/pages/courses/user/user_course_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/entry_point_page.dart';
+import 'package:gusto_condiviso/pages/entry_point/login/admin_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/company_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/teacher_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/user_login_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/company_signin_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/teacher_signin_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/signin/user_signin_page.dart';
+import 'package:gusto_condiviso/pages/home/admin_home_page.dart';
 import 'package:gusto_condiviso/pages/home/company_home_page.dart';
 import 'package:gusto_condiviso/pages/home/teacher_home_page.dart';
 import 'package:gusto_condiviso/pages/home/user_home_page.dart';
@@ -148,6 +150,17 @@ class AppRouter {
       GoRoute(
         path: "/promo",
         builder: (context, state) => const PromoPage(),
+      ),
+
+      // Admin
+
+      GoRoute(
+        path: "/adminLogin",
+        builder: (context, state) => const AdminLoginPage(),
+      ),
+      GoRoute(
+        path: "/adminHome",
+        builder: (context, state) => const AdminHomePage(),
       ),
     ]
   );

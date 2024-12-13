@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipes_search/recipes_search_bloc.dart';
+import 'package:gusto_condiviso/model/recipe/ingredient/ingredient.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 import 'package:gusto_condiviso/model/recipe/search/recipe_search_type.dart';
+import 'package:gusto_condiviso/model/recipe/tool/tool.dart';
 
 class RecipeSearchPage extends StatefulWidget {
   const RecipeSearchPage({super.key});
@@ -286,7 +288,7 @@ class RecipeSearchPageState extends State<RecipeSearchPage> {
                         ) {
                           context.read<RecipesSearchBloc>().add(SearchRequest());
                           final router = GoRouter.of(context);
-                          router.push("/recipeSearch/results");  
+                          router.push("/recipeSearch/results");
                         }
                       },
                       child: const Text(

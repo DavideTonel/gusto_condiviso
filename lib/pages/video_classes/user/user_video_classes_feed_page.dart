@@ -6,8 +6,6 @@ import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.
 import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 import 'package:gusto_condiviso/widgets/video_classes/video_class_preview.dart';
 
-// TODO aumentare lunghezza nomi ricette, videolezioni, corsi e promozioni 100 char
-// TODO aumentare lunghezza di tutte le descrizioni
 class UserVideoClassesFeedPage extends StatelessWidget {
   const UserVideoClassesFeedPage({super.key});
 

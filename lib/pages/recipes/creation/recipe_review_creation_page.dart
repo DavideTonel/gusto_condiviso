@@ -30,6 +30,15 @@ class RecipeReviewCreationPageState extends State<RecipeReviewCreationPage> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                context.read<RecipeBloc>().add(LoadRecipeReviewsRequest(recipeId: state.recipe!.id));
+                context.read<RecipeBloc>().add(LoadRecipeRequest(recipeId: state.recipe!.id));
+                final router = GoRouter.of(context);
+                router.pop();
+              },
+              icon: const Icon(Icons.arrow_back)
+            ),
             title: Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
               child: Row(

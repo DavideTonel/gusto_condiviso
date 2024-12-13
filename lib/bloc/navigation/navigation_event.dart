@@ -50,3 +50,17 @@ final class NavigateToCompanyLogin extends NavigationEvent {}
 final class NavigateToCompanyHomeProfileInfo extends NavigationEvent {}
 
 final class NavigateToCompanyHomePromoCodes extends NavigationEvent {}
+
+// Admin
+
+final class NavigateToAdminLogin extends NavigationEvent {}
+
+final class NavigateToAdminHomeProfileInfo extends NavigationEvent {}
+
+final class NavigateToAdminHomeRecipeCategories extends NavigationEvent {}
+
+final class NavigateToAdminHomeIngredients extends NavigationEvent {}
+
+final class NavigateToAdminHomeTools extends NavigationEvent {}
+
+final class NavigateToAdminHomeStatistics extends NavigationEvent {}

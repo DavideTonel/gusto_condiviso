@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe/recipe_bloc.dart';
 
-// TODO inserire valutazione calcolata realmente
+// TODO sistemare UI di cose come gli elenchi con i sized box gialli
 class RecipeReviewsPage extends StatefulWidget {
   const RecipeReviewsPage({super.key});
 
@@ -88,9 +88,9 @@ class RecipeReviewsPageState extends State<RecipeReviewsPage> {
                           Icons.star,
                           size: 35,
                         ),
-                        const Text(
-                          "4.5",
-                          style: TextStyle(fontSize: 30),
+                        Text(
+                          state.recipe!.rating.toString(),
+                          style: const TextStyle(fontSize: 30),
                         ),
 
                         SizedBox(
@@ -100,6 +100,7 @@ class RecipeReviewsPageState extends State<RecipeReviewsPage> {
                         ElevatedButton(
                           onPressed: () {
                             context.read<RecipeBloc>().add(LoadRecipeReviewsRequest(recipeId: state.recipe!.id));
+                            context.read<RecipeBloc>().add(LoadRecipeRequest(recipeId: state.recipe!.id));
                           },
                           child: const Text("Aggiorna")
                         )

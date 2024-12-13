@@ -34,3 +34,7 @@ final class SaveReviewRequest extends RecipeEvent {
 }
 
 final class ClearReviewCreation extends RecipeEvent {}
+
+final class ClearRecipe extends RecipeEvent {}
+
+final class DeleteRecipe extends RecipeEvent {}

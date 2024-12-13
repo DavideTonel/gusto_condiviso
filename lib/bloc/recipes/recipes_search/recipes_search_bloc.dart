@@ -3,8 +3,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
+import 'package:gusto_condiviso/model/recipe/ingredient/ingredient.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 import 'package:gusto_condiviso/model/recipe/search/recipe_search_type.dart';
+import 'package:gusto_condiviso/model/recipe/tool/tool.dart';
 import 'package:meta/meta.dart';
 import 'dart:developer' as dev;
 

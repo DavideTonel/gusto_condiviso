@@ -4,11 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe_creation/recipe_creation_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
+import 'package:gusto_condiviso/model/recipe/ingredient/ingredient.dart';
+import 'package:gusto_condiviso/model/recipe/tool/tool.dart';
 
-import 'package:gusto_condiviso/model/recipe/recipe.dart';
-
-
-// TODO aggiungere anche dosi nel db
 
 class RecipeStepCreationPage extends StatefulWidget {
   const RecipeStepCreationPage({super.key});
@@ -311,7 +309,6 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
                                 context.read<RecipeCreationBloc>().add(SaveRecipeStepEvent());
                                 descriptionTextController.clear();
                               }
-                              // TODO ricette salvate non si aggiornano automaticamente
                               context.read<RecipeCreationBloc>().add(SaveRecipeRequest(
                                   creatorId: context.read<UserBloc>().state.user!.username
                                 )

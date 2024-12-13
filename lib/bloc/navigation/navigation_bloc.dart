@@ -53,5 +53,19 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     on<NavigateToCompanyHomeProfileInfo>((event, emit) => emit(NavigationCompanyHomeProfileInfo()));
 
     on<NavigateToCompanyHomePromoCodes>((event, emit) => emit(NavigationCompanyHomePromoCodes()));
+
+    // Admin
+
+    on<NavigateToAdminLogin>((event, emit) => emit(NavigationAdminLogin()));
+
+    on<NavigateToAdminHomeProfileInfo>((event, emit) => emit(NavigationAdminHomeProfileInfo()));
+
+    on<NavigateToAdminHomeRecipeCategories>((event, emit) => emit(NavigationAdminHomeRecipeCategories()));
+
+    on<NavigateToAdminHomeIngredients>((event, emit) => emit(NavigationAdminHomeIngredients()));
+
+    on<NavigateToAdminHomeTools>((event, emit) => emit(NavigationAdminHomeTools()));
+
+    on<NavigateToAdminHomeStatistics>((event, emit) => emit(NavigationAdminHomeStatistics()));
   }
 }

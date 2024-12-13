@@ -37,6 +37,10 @@ class EntryPointPage extends StatelessWidget {
             final router = GoRouter.of(context);
             router.push("/companySignin");
           }
+          case NavigationAdminLogin _: {
+            final router = GoRouter.of(context);
+            router.push("/adminLogin");
+          }
           default: {
 
           }
@@ -178,6 +182,26 @@ class EntryPointPage extends StatelessWidget {
                       fontSize: 18
                     ),
                   )
+                ),
+
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+
+                SizedBox(
+                  width: size.width * 0.3,
+                  height: size.height * 0.1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.read<NavigationBloc>().add(NavigateToAdminLogin());
+                    },
+                    child: const Text(
+                      "Amministratore",
+                      style: TextStyle(
+                        fontSize: 25
+                      ),
+                    )
+                  ),
                 ),
               ],
             ),

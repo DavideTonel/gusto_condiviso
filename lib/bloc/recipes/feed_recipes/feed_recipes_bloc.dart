@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'feed_recipes_event.dart';
@@ -72,7 +73,8 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
             RecipePreview(
               id: entry["Codice"] as int,
               name: entry["Nome"] as String,
-              usernameCreator: entry["UsernameUtente"] as String
+              usernameCreator: entry["UsernameUtente"] as String,
+              saveDate: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataSalvataggio"] as String))
             )
           );
           

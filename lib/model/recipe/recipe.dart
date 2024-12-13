@@ -1,20 +1,48 @@
+import 'package:gusto_condiviso/model/recipe/ingredient/ingredient.dart';
+import 'package:gusto_condiviso/model/recipe/tool/tool.dart';
+
 class Recipe {
   final int id;
   final String usernameCreator;
   final String name;
   final String description;
+  final double rating;
+  final int numOfReviews;
+  final String personPerDose;
+  final String pubDate;
   final List<RecipeStep> steps;
   final String? revisitedRecipeId;
 
-  Recipe({required this.id, required this.usernameCreator, required this.name, required this.description, required this.steps, this.revisitedRecipeId});
+  Recipe(
+    {
+      required this.id,
+      required this.usernameCreator,
+      required this.name,
+      required this.description,
+      required this.rating,
+      required this.numOfReviews,
+      required this.personPerDose,
+      required this.pubDate,
+      required this.steps,
+      required this.revisitedRecipeId
+    }
+  );
 }
 
 class RecipePreview {
   final int id;
   final String name;
   final String usernameCreator;
+  final String? saveDate;
 
-  RecipePreview({required this.id, required this.name, required this.usernameCreator});
+  RecipePreview(
+    {
+      required this.id,
+      required this.name,
+      required this.usernameCreator,
+      this.saveDate
+    }
+  );
 }
 
 class RecipeCategory {
@@ -58,30 +86,6 @@ class IngredientInStep {
     return {
       "ingredient": ingredient.toJson(),
       "amount": amount,
-    };
-  }
-}
-
-class Ingredient {
-  final String name;
-
-  Ingredient({required this.name});
-
-  Map<String, dynamic> toJson() {
-    return {
-      "name": name,
-    };
-  }
-}
-
-class Tool {
-  final String name;
-
-  Tool({required this.name});
-
-  Map<String, dynamic> toJson() {
-    return {
-      "name": name,
     };
   }
 }

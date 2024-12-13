@@ -4,7 +4,9 @@ import 'dart:developer' as dev;
 
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
+import 'package:gusto_condiviso/model/recipe/ingredient/ingredient.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
+import 'package:gusto_condiviso/model/recipe/tool/tool.dart';
 import 'package:meta/meta.dart';
 
 part 'recipe_creation_event.dart';
@@ -316,24 +318,24 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
               name: entry["Nome"] as String
             )
           );
-          emit(
-            RecipeCreationInProgress(
-              recipeName: state.recipeName,
-              recipeDescription: state.recipeDescription,
-              savedSteps: state.savedSteps,
-              currentStepDescription: state.currentStepDescription,
-              currentIngredientSelected: state.currentIngredientSelected,
-              currentToolSelected: state.currentToolSelected,
-              availableIngredients: state.availableIngredients,
-              availableTools: tools,
-              availableCategories: state.availableCategories,
-              currentIngredients: state.currentIngredients,
-              currentTools: state.currentTools,
-              currentCategories: state.currentCategories,
-              revisitedRecipeId: state.revisitedRecipeId
-            )
-          );
         }
+        emit(
+          RecipeCreationInProgress(
+            recipeName: state.recipeName,
+            recipeDescription: state.recipeDescription,
+            savedSteps: state.savedSteps,
+            currentStepDescription: state.currentStepDescription,
+            currentIngredientSelected: state.currentIngredientSelected,
+            currentToolSelected: state.currentToolSelected,
+            availableIngredients: state.availableIngredients,
+            availableTools: tools,
+            availableCategories: state.availableCategories,
+            currentIngredients: state.currentIngredients,
+            currentTools: state.currentTools,
+            currentCategories: state.currentCategories,
+            revisitedRecipeId: state.revisitedRecipeId
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");
@@ -358,24 +360,24 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
               name: entry["Nome"] as String
             )
           );
-          emit(
-            RecipeCreationInProgress(
-              recipeName: state.recipeName,
-              recipeDescription: state.recipeDescription,
-              savedSteps: state.savedSteps,
-              currentStepDescription: state.currentStepDescription,
-              currentIngredientSelected: state.currentIngredientSelected,
-              currentToolSelected: state.currentToolSelected,
-              availableIngredients: state.availableIngredients,
-              availableTools: state.availableTools,
-              availableCategories: categories,
-              currentIngredients: state.currentIngredients,
-              currentTools: state.currentTools,
-              currentCategories: state.currentCategories,
-              revisitedRecipeId: state.revisitedRecipeId
-            )
-          );
         }
+        emit(
+          RecipeCreationInProgress(
+            recipeName: state.recipeName,
+            recipeDescription: state.recipeDescription,
+            savedSteps: state.savedSteps,
+            currentStepDescription: state.currentStepDescription,
+            currentIngredientSelected: state.currentIngredientSelected,
+            currentToolSelected: state.currentToolSelected,
+            availableIngredients: state.availableIngredients,
+            availableTools: state.availableTools,
+            availableCategories: categories,
+            currentIngredients: state.currentIngredients,
+            currentTools: state.currentTools,
+            currentCategories: state.currentCategories,
+            revisitedRecipeId: state.revisitedRecipeId
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");

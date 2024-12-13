@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gusto_condiviso/bloc/recipes/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe/recipe_bloc.dart';
+import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
-// TODO mostrare id ricetta
 class RecipePage extends StatelessWidget {
   const RecipePage({super.key});
 
@@ -18,6 +19,14 @@ class RecipePage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                context.read<RecipeBloc>().add(ClearRecipe());
+                final router = GoRouter.of(context);
+                router.pop();
+              },
+              icon: const Icon(Icons.arrow_back)
+            ),
             title: Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
               child: Row(
@@ -28,6 +37,9 @@ class RecipePage extends StatelessWidget {
                     state.recipe?.name ?? "nome non disponibile",
                     style: const TextStyle(fontSize: 35),
                   ),
+
+                  Text("(codice: ${state.recipe?.id ?? ""})"),
+
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: Text(
@@ -44,13 +56,22 @@ class RecipePage extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.005,
               ),
-              const Row(
+              Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 25.0),
+                    padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "del 12/19/2000", //TODO aggiungere data
-                      style: TextStyle(fontSize: 16),
+                      "Pubblicazione: ${state.recipe?.pubDate ?? "non disponibile"}",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+
+                  if (context.read<FeedRecipesBloc>().state.savedRecipes.map((e)=>e.id).contains(state.recipe?.id))
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Text(
+                      "Salvata il ${context.read<FeedRecipesBloc>().state.savedRecipes.firstWhere((e) => e.id == state.recipe?.id).saveDate ?? "non disponibile"}",
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
@@ -73,24 +94,62 @@ class RecipePage extends StatelessWidget {
                             final router = GoRouter.of(context);
                             router.push("/recipe/reviews");
                           },
-                          child: const Row(
+                          child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 size: 35,
                               ),
 
                               Text(
-                                "4.5",  // TODO aggiungere valutazione
-                                style: TextStyle(fontSize: 30),
+                                " ${state.recipe?.rating.toString() ?? "non disponibile"}",
+                                style: const TextStyle(fontSize: 30),
                               ),
                             ],
                           )
                         ),
+
+                        SizedBox(
+                          width: size.width * 0.4,
+                        ),
+
+                        if (state.recipe?.usernameCreator == context.read<UserBloc>().state.user?.username)
+                        ElevatedButton(
+                          onPressed: () {
+                            final router = GoRouter.of(context);
+                            router.pop();
+                            context.read<RecipeBloc>().add(DeleteRecipe());
+                            context.read<RecipeBloc>().add(ClearRecipe());
+                            context.read<FeedRecipesBloc>().add(
+                              LoadRecipesMadeByUserRequest(
+                                username: context.read<UserBloc>().state.user!.username
+                              )
+                            );
+                            context.read<FeedRecipesBloc>().add(
+                              LoadRecipesSavedByUserRequest(
+                                username: context.read<UserBloc>().state.user!.username
+                              )
+                            );
+                          },
+                          child: const Text("Elimina Ricetta")
+                        )
                       ],
                     ),
                   ),
                 ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${state.recipe?.numOfReviews.toString() ?? "non disponibile"} recensioni",
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
               ),
 
               SizedBox(

@@ -52,3 +52,17 @@ final class NavigationCompanyLogin extends NavigationState {}
 final class NavigationCompanyHomeProfileInfo extends NavigationState {}
 
 final class NavigationCompanyHomePromoCodes extends NavigationState {}
+
+// Admin
+
+final class NavigationAdminLogin extends NavigationState {}
+
+final class NavigationAdminHomeProfileInfo extends NavigationState {}
+
+final class NavigationAdminHomeRecipeCategories extends NavigationState {}
+
+final class NavigationAdminHomeIngredients extends NavigationState {}
+
+final class NavigationAdminHomeTools extends NavigationState {}
+
+final class NavigationAdminHomeStatistics extends NavigationState {}
