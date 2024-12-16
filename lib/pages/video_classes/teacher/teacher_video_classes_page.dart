@@ -6,9 +6,26 @@ import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
 import 'package:gusto_condiviso/widgets/video_classes/video_class_preview.dart';
 
+// TODO user can search video
+// TODO user can search courses
+// TODO user can search promos
 
-class TeacherVideoClassesPage extends StatelessWidget {
+class TeacherVideoClassesPage extends StatefulWidget {
   const TeacherVideoClassesPage({super.key});
+
+  @override
+  TeacherVideoClassesPageState createState() => TeacherVideoClassesPageState();
+}
+
+class TeacherVideoClassesPageState extends State<TeacherVideoClassesPage> {
+
+  final videoClassNameTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    videoClassNameTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +38,7 @@ class TeacherVideoClassesPage extends StatelessWidget {
         return Column(
           children: [
             SizedBox(
-              width: size.width,
-              height: 10,
+              height: size.height * 0.03,
             ),
 
             SizedBox(
@@ -70,8 +86,7 @@ class TeacherVideoClassesPage extends StatelessWidget {
             ),
 
             SizedBox(
-              width: size.width,
-              height: 15,
+              height: size.height * 0.03,
             ),
 
             SizedBox(
@@ -95,6 +110,92 @@ class TeacherVideoClassesPage extends StatelessWidget {
               height: size.height * 0.4,
               child: ListView(
                 children: state.videoClasses.map((elem) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+                  child: VideoClassPreview(
+                    name: elem.name,
+                    teacherId: elem.teacherCreatorId,
+                    duration: elem.duration,
+                    onTap: () {
+                      context.read<VideoClassBloc>().add(
+                        LoadVideoClassRequest(
+                          teacherId: context.read<TeacherBloc>().state.teacher!.username,
+                          videoClassName: elem.name
+                        )
+                      );
+                      final router = GoRouter.of(context);
+                      router.push("/videoClass");
+                    },
+                  ),
+                )).toList(),
+              ),
+            ),
+
+            SizedBox(
+              height: size.height * 0.03,
+            ),
+
+            SizedBox(
+              //color: Colors.amber,
+              width: size.width,
+              child: const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "Cerca videolezioni",
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+
+            SizedBox(
+              width: size.width,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.5,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: TextField(
+                        controller: videoClassNameTextController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(), 
+                          labelText: "Nome Videolezione",
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: size.width * 0.03,
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      if (videoClassNameTextController.text.isNotEmpty) {
+                        context.read<TeacherVideoClassesBloc>().add(
+                          SearchVideoClassRequest(
+                            name: videoClassNameTextController.text
+                          )
+                        );
+                      }
+                    },
+                    child: const Text("Cerca")
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: size.height * 0.2,
+              child: ListView(
+                children: state.searchedVideoClasses.map((elem) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                   child: VideoClassPreview(
                     name: elem.name,

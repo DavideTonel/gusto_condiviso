@@ -41,7 +41,8 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentCategories: state.currentCategories,
           currentTools: state.currentTools,
-          revisitedRecipeId: state.revisitedRecipeId
+          revisitedRecipeId: state.revisitedRecipeId,
+          personPerDose: state.personPerDose
         )
       );
     });
@@ -61,6 +62,28 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentIngredients: state.currentIngredients,
           currentCategories: state.currentCategories,
           currentTools: state.currentTools,
+          personPerDose: state.personPerDose,
+          revisitedRecipeId: state.revisitedRecipeId
+        )
+      );
+    });
+
+    on<SetRecipeDoseEvent>((event, emit) {
+      emit(
+        RecipeCreationInProgress(
+          recipeName: state.recipeName,
+          recipeDescription: state.recipeDescription,
+          savedSteps: state.savedSteps,
+          currentStepDescription: state.currentStepDescription,
+          currentIngredientSelected: state.currentIngredientSelected,
+          currentToolSelected: state.currentToolSelected,
+          availableIngredients: state.availableIngredients,
+          availableTools: state.availableTools,
+          availableCategories: state.availableCategories,
+          currentIngredients: state.currentIngredients,
+          currentCategories: state.currentCategories,
+          currentTools: state.currentTools,
+          personPerDose: event.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -88,6 +111,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentTools: state.currentTools,
           currentCategories: newCategoriesSelected,
           currentStepDescription: state.currentStepDescription,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -108,6 +132,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
           currentStepDescription: event.description,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -128,6 +153,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
           currentIngredientSelected: event.ingredient,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -148,6 +174,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
           currentToolSelected: event.tool,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -178,6 +205,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentTools: state.currentTools,
           currentCategories: state.currentCategories,
           currentIngredientSelected: null,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -203,6 +231,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentTools: newCurrentTools,
           currentCategories: state.currentCategories,
           currentIngredientSelected: null,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
@@ -233,12 +262,13 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentStepDescription: "",
           currentIngredientSelected: null,
           currentToolSelected: null,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
       );
     });
 
-    on<ClearRecipeCreation>((event, emit) {
+    on<ClearRecipeStep>((event, emit) {
       emit(
         RecipeCreationInProgress(
           recipeName: state.recipeName,
@@ -253,8 +283,15 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentStepDescription: "",
           currentIngredientSelected: null,
           currentToolSelected: null,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: state.revisitedRecipeId
         )
+      );
+    });
+
+    on<ClearRecipeCreation>((event, emit) {
+      emit(
+        const RecipeCreationInitial()
       );
     });
 
@@ -292,6 +329,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
             currentIngredients: state.currentIngredients,
             currentTools: state.currentTools,
             currentCategories: state.currentCategories,
+            personPerDose: state.personPerDose,
             revisitedRecipeId: state.revisitedRecipeId
           )
         );
@@ -333,6 +371,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
             currentIngredients: state.currentIngredients,
             currentTools: state.currentTools,
             currentCategories: state.currentCategories,
+            personPerDose: state.personPerDose,
             revisitedRecipeId: state.revisitedRecipeId
           )
         );
@@ -375,6 +414,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
             currentIngredients: state.currentIngredients,
             currentTools: state.currentTools,
             currentCategories: state.currentCategories,
+            personPerDose: state.personPerDose,
             revisitedRecipeId: state.revisitedRecipeId
           )
         );
@@ -404,6 +444,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           "creatorId": event.creatorId,
           "recipeName": state.recipeName,
           "recipeDescription": state.recipeDescription,
+          "personPerDose": state.personPerDose,
           "categories": jsonCategories,
           "revisitedRecipeId": state.revisitedRecipeId,
           "steps": jsonSteps,
@@ -445,6 +486,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
                 currentStepDescription: state.currentStepDescription,
                 currentIngredientSelected: state.currentIngredientSelected,
                 currentToolSelected: state.currentToolSelected,
+                personPerDose: state.personPerDose,
                 revisitedRecipeId: event.id,
               )
             );
@@ -463,6 +505,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
                 currentStepDescription: state.currentStepDescription,
                 currentIngredientSelected: state.currentIngredientSelected,
                 currentToolSelected: state.currentToolSelected,
+                personPerDose: state.personPerDose,
                 revisitedRecipeId: null,
               )
             );
@@ -487,6 +530,7 @@ class RecipeCreationBloc extends Bloc<RecipeCreationEvent, RecipeCreationState> 
           currentStepDescription: state.currentStepDescription,
           currentIngredientSelected: state.currentIngredientSelected,
           currentToolSelected: state.currentToolSelected,
+          personPerDose: state.personPerDose,
           revisitedRecipeId: null,
         )
       );

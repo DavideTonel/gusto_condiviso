@@ -5,6 +5,8 @@ import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 
+import 'dart:developer' as dev;
+
 class UserVideoClassPage extends StatelessWidget {
   const UserVideoClassPage({super.key});
 
@@ -20,6 +22,11 @@ class UserVideoClassPage extends StatelessWidget {
             leading: IconButton(
               onPressed: () {
                 context.read<UserVideoClassesBloc>().add(ClearCurrentVideoClassPercentage());
+                context.read<UserVideoClassesBloc>().add(
+                  LoadVideoClassesStarted(
+                    userId: context.read<UserBloc>().state.user!.username
+                  )
+                );
                 final router = GoRouter.of(context);
                 router.pop();
               },
@@ -69,8 +76,29 @@ class UserVideoClassPage extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                      padding: const EdgeInsets.only(left: 25.0),
-                      child: Text("Durata: ${state.videoClass?.duration}")),
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Text("Durata: ${state.videoClass?.duration}")
+                  ),
+
+                  SizedBox(
+                    width: size.width * 0.05,
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      dev.log("Button Pressed");
+                      context.read<UserVideoClassesBloc>().add(
+                        DeleteSavedVideoClass(
+                          userId: context.read<UserBloc>().state.user!.username,
+                          teacherId: state.videoClass!.teacherCreatorId,
+                          videoClassName: state.videoClass!.name
+                        )
+                      );
+                      final router = GoRouter.of(context);
+                      router.pop();
+                    },
+                    child: const Text("Segna completata")
+                  )
                 ],
               ),
               SizedBox(

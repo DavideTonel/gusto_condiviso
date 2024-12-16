@@ -26,6 +26,8 @@ import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_results_page.dart';
 import 'package:gusto_condiviso/pages/video_classes/creation/video_class_creation_page.dart';
+import 'package:gusto_condiviso/pages/video_classes/search/video_classes_search_page.dart';
+import 'package:gusto_condiviso/pages/video_classes/search/video_classes_search_results_page.dart';
 import 'package:gusto_condiviso/pages/video_classes/user/user_video_class_page.dart';
 import 'package:gusto_condiviso/pages/video_classes/video_class_page.dart';
 
@@ -88,6 +90,14 @@ class AppRouter {
       GoRoute(
         path: "/userVideoClass",
         builder: (context, state) => const UserVideoClassPage(),
+      ),
+      GoRoute(
+        path: "/videoClassSearch",
+        builder: (context, state) => const VideoClassesSearchPage(),
+      ),
+      GoRoute(
+        path: "/videoClassSearch/results",
+        builder: (context, state) => const VideoClassesSearchResultsPage(),
       ),
       GoRoute(
         path: "/userCourse",

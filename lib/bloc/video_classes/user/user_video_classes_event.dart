@@ -42,3 +42,11 @@ final class SaveCurrentVideoPercentage extends UserVideoClassesEvent {
     }
   );
 }
+
+final class DeleteSavedVideoClass extends UserVideoClassesEvent {
+    final String userId;
+    final String teacherId;
+    final String videoClassName;
+
+  DeleteSavedVideoClass({required this.userId, required this.teacherId, required this.videoClassName});
+}

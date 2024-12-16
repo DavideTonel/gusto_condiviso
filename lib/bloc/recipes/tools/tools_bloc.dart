@@ -18,6 +18,10 @@ class ToolsBloc extends Bloc<ToolsEvent, ToolsState> {
     on<SaveToolCategory>(onSaveToolCategory);
 
     on<SaveTool>(onSaveTool);
+
+    on<DeleteToolCategory>(onDeleteToolCategory);
+
+    on<DeleteTool>(onDeleteTool);
   }
 
   FutureOr<void> onLoadToolCategories(
@@ -136,6 +140,87 @@ class ToolsBloc extends Bloc<ToolsEvent, ToolsState> {
         data: {
           "name": event.name,
           "categoryId": event.categoryId
+        }
+      ).then((value) async {
+        await client.dio.post(
+          "api/tools"
+        ).then((value) {
+          List<ToolInfo> tools = [];
+          for (dynamic entry in value.data) {
+            tools.add(
+              ToolInfo(
+                name: entry["Nome"] as String,
+                category: ToolCategory(
+                  id: entry["CodiceCategoria"] as int,
+                  name: entry["NomeCategoria"] as String
+                )
+              )
+            );
+          }
+
+          emit(
+            ToolsLoaded(
+              availableCategories: state.availableCategories,
+              availableTools: tools,
+            )
+          );
+        });
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onDeleteToolCategory(
+    DeleteToolCategory event,
+    Emitter<ToolsState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/deleteToolCategory",
+        data: {
+          "id": event.id
+        }
+      ).then((value) async {
+        await client.dio.post(
+          "api/toolCategories"
+        ).then((value) {
+          List<ToolCategory> categories = [];
+          for (dynamic entry in value.data) {
+            categories.add(
+              ToolCategory(
+                id: entry["Codice"] as int,
+                name: entry["Nome"] as String
+              )
+            );
+          }
+
+          emit(
+            ToolsLoaded(
+              availableCategories: categories,
+              availableTools: state.availableTools,
+            )
+          );
+        });
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onDeleteTool(
+    DeleteTool event,
+    Emitter<ToolsState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/deleteTool",
+        data: {
+          "name": event.name,
         }
       ).then((value) async {
         await client.dio.post(

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe/recipe_bloc.dart';
 
-// TODO sistemare UI di cose come gli elenchi con i sized box gialli
 class RecipeReviewsPage extends StatefulWidget {
   const RecipeReviewsPage({super.key});
 

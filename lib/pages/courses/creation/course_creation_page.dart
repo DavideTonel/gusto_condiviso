@@ -151,7 +151,7 @@ class CourseCreationPageState extends State<CourseCreationPage> {
               ),
 
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.15,
                 child: ListView(
                   children: state.videoClasses.map((elem) => Padding(

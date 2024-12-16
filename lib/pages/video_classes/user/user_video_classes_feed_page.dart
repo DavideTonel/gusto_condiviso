@@ -39,7 +39,7 @@ class UserVideoClassesFeedPage extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               final router = GoRouter.of(context);
-                              router.push("/videoClassCreation");
+                              router.push("/videoClassSearch");
                             },
                             child: const Text(
                               "Cerca Videolezione",

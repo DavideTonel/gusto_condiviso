@@ -115,7 +115,6 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
             "username": event.username
           }
         ).then((value) {
-          dev.log("Load saved recipes");
           List<RecipePreview> recipes = [];
           for(dynamic entry in value.data) {
             recipes.add(
@@ -125,10 +124,6 @@ class FeedRecipesBloc extends Bloc<FeedRecipesEvent, FeedRecipesState> {
                 usernameCreator: entry["UsernameUtente"] as String
               )
             );
-          
-            dev.log("Saved recipes: ");
-            dev.log(entry.toString());
-            dev.log("end saved recipes");
           }
           emit(
             FeedRecipesLoaded(

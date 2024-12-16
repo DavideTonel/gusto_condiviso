@@ -39,7 +39,7 @@ class UserCoursesFeedPage extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               final router = GoRouter.of(context);
-                              router.push("/videoClassCreation"); // TODO search for courses and also for video page
+                              router.push("/videoClassCreation");
                             },
                             child: const Text(
                               "Cerca Corso",

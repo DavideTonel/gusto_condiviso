@@ -150,7 +150,7 @@ class RecipeSearchPageState extends State<RecipeSearchPage> {
 
               if (state.searchType == RecipeSearchType.byCategories || state.searchType == RecipeSearchType.byNameAndCategories)
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.10,
                 child: ListView(
                   children: state.selectedCategories
@@ -202,7 +202,7 @@ class RecipeSearchPageState extends State<RecipeSearchPage> {
 
               if (state.searchType == RecipeSearchType.byIngredients || state.searchType == RecipeSearchType.byIngredientsAndTools)
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.10,
                 child: ListView(
                   children: state.selectedIngredients
@@ -254,7 +254,7 @@ class RecipeSearchPageState extends State<RecipeSearchPage> {
 
               if (state.searchType == RecipeSearchType.byTools || state.searchType == RecipeSearchType.byIngredientsAndTools)
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.10,
                 child: ListView(
                   children: state.selectedTools

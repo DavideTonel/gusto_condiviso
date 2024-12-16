@@ -28,6 +28,8 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
         )
       );
     });
+  
+    on<DeleteSavedVideoClass>(onDeleteSavedVideoClassRequest);
   }
 
   FutureOr<void> onLoadVideoClassesFeed(
@@ -148,7 +150,7 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
     try {
       var client = DioClient();
       await client.dio.post(
-        "api/getVideoClassMinuteUser", // TODO gestire eliminazione perchè lezione è finita
+        "api/getVideoClassMinuteUser",
         data: {
           "teacherId": event.teacherId,
           "videoClassName": event.videoClassName,
@@ -163,6 +165,53 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
             currentVideoCompletePercentage: value.data[0]["MinutoRiproduzione"] as int
           )
         );
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onDeleteSavedVideoClassRequest(
+    DeleteSavedVideoClass event,
+    Emitter<UserVideoClassesState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/deleteSavedVideoClass",
+        data: {
+          "teacherId": event.teacherId,
+          "videoClassName": event.videoClassName,
+          "userId": event.userId,
+        }
+      ).then((value) async {
+        await client.dio.post(
+          "api/videoClassesStartedByUser",
+          data: {
+            "userId": event.userId
+          }
+        ).then((value) {
+          List<VideoClass> videoClasses = [];
+          for(dynamic entry in value.data) {
+            videoClasses.add(
+              VideoClass(
+                teacherCreatorId: entry["UsernameInsegnante"] as String,
+                name: entry["Nome"] as String,
+                description: entry["Descrizione"] as String,
+                date: DateFormat('dd/MM/yyyy').format(DateTime.parse(entry["DataPubblicazione"] as String)),
+                duration: entry["Durata"] as String,
+              )
+            );
+          }
+          emit(
+            UserVideoClassesLoaded(
+              feedVideoClasses: state.feedVideoClasses,
+              seenVideoClasses: videoClasses,
+              currentVideoCompletePercentage: state.currentVideoCompletePercentage
+            )
+          );
+        });
       });
     } catch (e) {
       dev.log("Error");

@@ -21,3 +21,15 @@ final class SaveIngredient extends IngredientsEvent {
 
   SaveIngredient({required this.name, required this.categoryId});
 }
+
+final class DeleteIngredientCategory extends IngredientsEvent {
+  final int id;
+
+  DeleteIngredientCategory({required this.id});
+}
+
+final class DeleteIngredient extends IngredientsEvent {
+  final String name;
+
+  DeleteIngredient({required this.name});
+}

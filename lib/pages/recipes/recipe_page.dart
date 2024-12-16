@@ -172,13 +172,31 @@ class RecipePage extends StatelessWidget {
               SizedBox(
                 height: size.height * 0.05,
               ),
-               Padding(
+
+              Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       state.recipe?.description ?? "descrizione non disponibile",
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Dosi: ${state.recipe?.personPerDose ?? "dose non disponibile"}",
                       style: const TextStyle(fontSize: 20),
                     ),
                   ],

@@ -22,6 +22,8 @@ class RecipeCategoriesBloc extends Bloc<RecipeCategoriesEvent, RecipeCategoriesS
     });
 
     on<SaveNewCategory>(onSaveNewCategory);
+
+    on<DeleteCategory>(onDeleteCategory);
   }
 
   FutureOr<void> onLoadRecipeCategories(
@@ -65,6 +67,44 @@ class RecipeCategoriesBloc extends Bloc<RecipeCategoriesEvent, RecipeCategoriesS
         "api/saveRecipeCategory",
         data: {
           "name": event.name
+        }
+      ).then((value) async {
+        await client.dio.post(
+          "api/recipeCategories"
+        ).then((value) {
+          List<RecipeCategory> categories = [];
+          for (dynamic entry in value.data) {
+            categories.add(
+              RecipeCategory(
+                id: entry["Codice"] as int,
+                name: entry["Nome"] as String
+              )
+            );
+          }
+
+          emit(
+            RecipeCategoriesLoaded(
+              availableCategories: categories,
+            )
+          );
+        });
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onDeleteCategory(
+    DeleteCategory event,
+    Emitter<RecipeCategoriesState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/deleteRecipeCategory",
+        data: {
+          "id": event.id
         }
       ).then((value) async {
         await client.dio.post(

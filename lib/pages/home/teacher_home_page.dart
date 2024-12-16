@@ -6,7 +6,7 @@ import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
 import 'package:gusto_condiviso/pages/courses/teacher_courses_page.dart';
 import 'package:gusto_condiviso/pages/profiles/teacher_profile_page.dart';
-import 'package:gusto_condiviso/pages/video_classes/teacher_video_classes_page.dart';
+import 'package:gusto_condiviso/pages/video_classes/teacher/teacher_video_classes_page.dart';
 
 class TeacherHomePage extends StatelessWidget {
   const TeacherHomePage({super.key});

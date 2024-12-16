@@ -24,3 +24,9 @@ final class SaveVideoClassRequest extends TeacherVideoClassesEvent {
     }
   );
 }
+
+final class SearchVideoClassRequest extends TeacherVideoClassesEvent {
+  final String name;
+
+  SearchVideoClassRequest({required this.name});   
+}

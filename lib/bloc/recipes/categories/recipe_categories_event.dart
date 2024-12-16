@@ -16,3 +16,9 @@ final class SaveNewCategory extends RecipeCategoriesEvent {
 
   SaveNewCategory({required this.name});
 }
+
+final class DeleteCategory extends RecipeCategoriesEvent {
+  final int id;
+
+  DeleteCategory({required this.id});
+}

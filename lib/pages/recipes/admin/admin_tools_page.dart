@@ -212,6 +212,16 @@ class AdminToolsPageState extends State<AdminToolsPage> {
                   child: ListTile(
                     title: Text(elem.name),
                     subtitle: Text(elem.id.toString()),
+                    trailing: IconButton(
+                      onPressed: () {
+                        context.read<ToolsBloc>().add(
+                          DeleteToolCategory(
+                            id: elem.id
+                          )
+                        );
+                      },
+                      icon: const Icon(Icons.delete)
+                    ),
                   )
                 )).toList(),
               ),
@@ -243,8 +253,27 @@ class AdminToolsPageState extends State<AdminToolsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                   child: ListTile(
                     title: Text(elem.name),
-                    subtitle: Text(elem.category.name),
-                    trailing: Text("Codice: ${elem.category.id}"),
+                    subtitle: Row(
+                      children: [
+                        Text("Codice: ${elem.category.id}"),
+
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+
+                        Text("Categoria: ${elem.category.name}")
+                      ],
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        context.read<ToolsBloc>().add(
+                          DeleteTool(
+                            name: elem.name
+                          )
+                        );
+                      },
+                      icon: const Icon(Icons.delete)
+                    ),
                   )
                 )).toList(),
               ),

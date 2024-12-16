@@ -24,3 +24,15 @@ final class SaveTool extends ToolsEvent {
     }
   );
 }
+
+final class DeleteToolCategory extends ToolsEvent {
+  final int id;
+
+  DeleteToolCategory({required this.id});
+}
+
+final class DeleteTool extends ToolsEvent {
+  final String name;
+
+  DeleteTool({required this.name});
+}

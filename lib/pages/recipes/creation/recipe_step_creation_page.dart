@@ -38,7 +38,7 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
-                context.read<RecipeCreationBloc>().add(ClearRecipeCreation());
+                context.read<RecipeCreationBloc>().add(ClearRecipeStep());
                 final router = GoRouter.of(context);
                 router.pop();
               },
@@ -146,7 +146,7 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
               ),
 
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.2,
                 child: ListView(
                   children: state.currentTools.map((elem) => Padding(
@@ -253,7 +253,7 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
               ),
               
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.2,
                 child: ListView(
                   children: state.currentIngredients.map((elem) => Padding(
@@ -303,25 +303,29 @@ class RecipeStepCreationPageState extends State<RecipeStepCreationPage> {
                             onPressed: () {
                               if (
                                 state.currentStepDescription.isNotEmpty
-                                //state.currentIngredients.isNotEmpty &&
-                                //state.currentTools.isNotEmpty
                               ) {
                                 context.read<RecipeCreationBloc>().add(SaveRecipeStepEvent());
+                                context.read<RecipeCreationBloc>().add(
+                                  SaveRecipeRequest(
+                                    creatorId: context.read<UserBloc>().state.user!.username
+                                  )
+                                );
                                 descriptionTextController.clear();
+                                context.read<RecipeCreationBloc>().add(ClearRecipeCreation());
+                                final router = GoRouter.of(context);
+                                router.pop();
+                                router.pop();
+                              } else if (state.savedSteps.isNotEmpty) {
+                                context.read<RecipeCreationBloc>().add(
+                                  SaveRecipeRequest(
+                                    creatorId: context.read<UserBloc>().state.user!.username
+                                  )
+                                );
+                                context.read<RecipeCreationBloc>().add(ClearRecipeCreation());
+                                final router = GoRouter.of(context);
+                                router.pop();
+                                router.pop();
                               }
-                              context.read<RecipeCreationBloc>().add(SaveRecipeRequest(
-                                  creatorId: context.read<UserBloc>().state.user!.username
-                                )
-                              );
-                              /*
-                              context.read<FeedRecipesBloc>().add(LoadRecipesMadeByUserRequest(
-                                  username: context.read<UserBloc>().state.user!.username
-                                )
-                              );
-                              */
-                              final router = GoRouter.of(context);
-                              router.pop();
-                              router.pop();
                             },
                             child: const Text(
                               "Fine",

@@ -31,6 +31,12 @@ final class SetRecipeDescriptionEvent extends RecipeCreationEvent {
   SetRecipeDescriptionEvent({required this.description});
 }
 
+final class SetRecipeDoseEvent extends RecipeCreationEvent {
+  final String personPerDose;
+
+  SetRecipeDoseEvent({required this.personPerDose});
+}
+
 // Step setters
 
 final class SelectCurrentCategory extends RecipeCreationEvent {
@@ -74,5 +80,7 @@ final class SaveRecipeRequest extends RecipeCreationEvent {
 
   SaveRecipeRequest({required this.creatorId});
 }
+
+final class ClearRecipeStep extends RecipeCreationEvent {}
 
 final class ClearRecipeCreation extends RecipeCreationEvent {}

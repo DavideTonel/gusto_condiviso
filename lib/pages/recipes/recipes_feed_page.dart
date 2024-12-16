@@ -131,6 +131,18 @@ class RecipesFeedPage extends StatelessWidget {
                           username: context.read<UserBloc>().state.user!.username
                         )
                       );
+
+                      context.read<FeedRecipesBloc>().add(
+                        LoadRecipesMadeByUserRequest(
+                          username: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+
+                      context.read<FeedRecipesBloc>().add(
+                        LoadRecipesSavedByUserRequest(
+                          username: context.read<UserBloc>().state.user!.username
+                        )
+                      );
                     },
                     onTap: () {
                       context.read<RecipeBloc>().add(LoadRecipeRequest(recipeId: elem.id));
@@ -179,6 +191,13 @@ class RecipesFeedPage extends StatelessWidget {
                           username: context.read<UserBloc>().state.user!.username
                         )
                       );
+
+                      context.read<FeedRecipesBloc>().add(
+                        LoadRecipesMadeByUserRequest(
+                          username: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+
                       context.read<FeedRecipesBloc>().add(
                         LoadRecipesSavedByUserRequest(
                           username: context.read<UserBloc>().state.user!.username

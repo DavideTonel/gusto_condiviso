@@ -30,6 +30,7 @@ import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
+import 'package:gusto_condiviso/bloc/video_classes/video_classes_search/video_classes_search_bloc.dart';
 import 'package:gusto_condiviso/navigation/app_router.dart';
 
 void main() {
@@ -144,6 +145,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ToolsBloc()
         ),
+        BlocProvider(
+          create: (context) => VideoClassesSearchBloc()
+        )
       ],
       child: MaterialApp.router(
         routerConfig: appRouter.router,

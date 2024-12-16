@@ -16,12 +16,14 @@ class RecipeCreationPage extends StatefulWidget {
 class RecipeCreationPageState extends State<RecipeCreationPage> {
   final recipeNameTextController = TextEditingController();
   final recipeDescriptionTextController = TextEditingController();
+  final recipeDoseTextController = TextEditingController();
   final revisitedRecipeId = TextEditingController();
 
   @override
   void dispose() {
     recipeNameTextController.dispose();
     recipeDescriptionTextController.dispose();
+    recipeDoseTextController.dispose();
     revisitedRecipeId.dispose();
     super.dispose();
   }
@@ -83,6 +85,24 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
                 height: size.height * 0.05,
               ),
 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextField(
+                  controller: recipeDoseTextController,
+                  onChanged: (value) {
+                    context.read<RecipeCreationBloc>().add(SetRecipeDoseEvent(personPerDose: recipeDoseTextController.text));
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Dosi per: "
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -119,7 +139,7 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
               ),
 
               Container(
-                color: Colors.amber,
+                color: Colors.grey[350],
                 height: size.height * 0.15,
                 child: ListView(
                   children: state.currentCategories.map((elem) => Padding(
@@ -174,8 +194,11 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
                     ElevatedButton(
                       onPressed: () {
                         if (
-                          state.recipeName != null && state.recipeName!.isNotEmpty &&
-                          state.recipeDescription != null && state.recipeDescription!.isNotEmpty &&
+                          state.recipeName != null &&
+                          state.recipeName!.isNotEmpty &&
+                          state.recipeDescription != null &&
+                          state.recipeDescription!.isNotEmpty &&
+                          state.personPerDose!.isNotEmpty &&
                           state.currentCategories.isNotEmpty
                         ) {
                           final router = GoRouter.of(context);

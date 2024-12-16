@@ -31,8 +31,7 @@ class AdminRecipesCategoriesPageState extends State<AdminRecipeCategoriesPage> {
         return Column(
           children: [
             SizedBox(
-              width: size.width,
-              height: 10,
+              height: size.height * 0.03,
             ),
 
             SizedBox(
@@ -54,13 +53,20 @@ class AdminRecipesCategoriesPageState extends State<AdminRecipeCategoriesPage> {
               children: [
                 SizedBox(
                   width: size.width * 0.5,
-                  child: TextField(
-                    controller: newCategoryNameTextController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(), 
-                      labelText: "Nome Categoria",
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: newCategoryNameTextController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(), 
+                        labelText: "Nome Categoria",
+                      ),
                     ),
                   ),
+                ),
+
+                SizedBox(
+                  width: size.width * 0.03,
                 ),
 
                 ElevatedButton(
@@ -83,7 +89,7 @@ class AdminRecipesCategoriesPageState extends State<AdminRecipeCategoriesPage> {
             ),
 
             SizedBox(
-              height: size.height * 0.01,
+              height: size.height * 0.03,
             ),
 
             SizedBox(
@@ -108,7 +114,13 @@ class AdminRecipesCategoriesPageState extends State<AdminRecipeCategoriesPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                   child: ListTile(
                     title: Text(elem.name),
-                    trailing: Text("Codice: ${elem.id.toString()}"),
+                    subtitle: Text("Codice: ${elem.id.toString()}"),
+                    trailing: IconButton(
+                      onPressed: () {
+                        context.read<RecipeCategoriesBloc>().add(DeleteCategory(id: elem.id));
+                      },
+                      icon: const Icon(Icons.delete)
+                    ),
                   )
                 )).toList(),
               ),
