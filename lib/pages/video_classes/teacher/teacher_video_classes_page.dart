@@ -6,10 +6,6 @@ import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.
 import 'package:gusto_condiviso/bloc/video_classes/teacher/teacher_video_classes_bloc.dart';
 import 'package:gusto_condiviso/widgets/video_classes/video_class_preview.dart';
 
-// TODO user can search video
-// TODO user can search courses
-// TODO user can search promos
-
 class TeacherVideoClassesPage extends StatefulWidget {
   const TeacherVideoClassesPage({super.key});
 

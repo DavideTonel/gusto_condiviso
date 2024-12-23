@@ -4,6 +4,7 @@ import 'package:gusto_condiviso/bloc/admin/admin_bloc.dart';
 import 'package:gusto_condiviso/bloc/company/company_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/course/course_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/course_creation/course_creation_bloc.dart';
+import 'package:gusto_condiviso/bloc/courses/courses_search/courses_search_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/teacher/teacher_courses_bloc.dart';
 import 'package:gusto_condiviso/bloc/courses/user/user_courses_bloc.dart';
 import 'package:gusto_condiviso/bloc/login/admin/admin_login_bloc.dart';
@@ -19,6 +20,7 @@ import 'package:gusto_condiviso/bloc/recipes/feed_recipes/feed_recipes_bloc.dart
 import 'package:gusto_condiviso/bloc/login/user/user_login_bloc.dart';
 import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe_creation/recipe_creation_bloc.dart';
+import 'package:gusto_condiviso/bloc/recipes/recipe_step_update/recipe_step_update_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipes_search/recipes_search_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/tools/tools_bloc.dart';
 import 'package:gusto_condiviso/bloc/signin/company/company_signin_bloc.dart';
@@ -72,6 +74,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RecipeBloc()
+        ),
+        BlocProvider(
+          create: (context) => RecipeStepUpdateBloc()
         ),
         BlocProvider(
           create: (context) => RecipesSearchBloc()
@@ -147,6 +152,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => VideoClassesSearchBloc()
+        ),
+        BlocProvider(
+          create: (context) => CoursesSearchBloc()
         )
       ],
       child: MaterialApp.router(

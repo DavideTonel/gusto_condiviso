@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
 import 'package:gusto_condiviso/model/user/subscription_type.dart';
 import 'package:gusto_condiviso/model/user/user.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'user_event.dart';
@@ -17,6 +18,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<SetSubscription>(onSetSubscription);
+
+    on<CancelSubscription>(onCancelSubscription);
 
   }
 
@@ -44,7 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               mail: state.user!.mail,
               birthday: state.user!.birthday,
               subscription: UserSubscription(
-                startDate: value.data["DataInizio"] as String,
+                startDate: DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataInizio"] as String)),
                 subscriptionType: SubscriptionType(
                   id: value.data["CodiceTipoAbbonamento"] as int,
                   name: value.data["Nome"] as String, 
@@ -54,6 +57,40 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               )
             ),
           ));
+        }
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onCancelSubscription(
+    CancelSubscription event,
+    Emitter<UserState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/deleteSubscription",
+        data: {
+          "userUsername": state.user!.username
+        }
+      ).then((value) {
+        if (value.data != null) {
+          emit(
+            UserLoaded(
+              user: User(
+                username: state.user!.username,
+                password: state.user!.password,
+                name: state.user!.name,
+                surname: state.user!.surname,
+                mail: state.user!.mail,
+                birthday: state.user!.birthday,
+                subscription: null
+              )
+            ),
+          );
         }
       });
     } catch (e) {

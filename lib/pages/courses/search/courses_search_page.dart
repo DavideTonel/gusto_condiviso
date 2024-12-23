@@ -2,23 +2,25 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gusto_condiviso/bloc/video_classes/video_classes_search/video_classes_search_bloc.dart';
-import 'package:gusto_condiviso/model/video_classes/search/video_class_search_type.dart';
+import 'package:gusto_condiviso/bloc/courses/courses_search/courses_search_bloc.dart';
+import 'package:gusto_condiviso/model/courses/search/course_search_type.dart';
 
-class VideoClassesSearchPage extends StatefulWidget {
-  const VideoClassesSearchPage({super.key});
+class CoursesSearchPage extends StatefulWidget {
+  const CoursesSearchPage({super.key});
 
   @override
-  VideoClassesSearchPageState createState() => VideoClassesSearchPageState();
+  CoursesSearchPageState createState() => CoursesSearchPageState();
 }
 
-class VideoClassesSearchPageState extends State<VideoClassesSearchPage> {
-  final videoClassNameTextController = TextEditingController();
+class CoursesSearchPageState extends State<CoursesSearchPage> {
+  final courseIdTextController = TextEditingController();
+  final courseNameTextController = TextEditingController();
   final teacherIdTextController = TextEditingController();
 
   @override
   void dispose() {
-    videoClassNameTextController.dispose();
+    courseIdTextController.dispose();
+    courseNameTextController.dispose();
     teacherIdTextController.dispose();
     super.dispose();
   }
@@ -27,13 +29,13 @@ class VideoClassesSearchPageState extends State<VideoClassesSearchPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    return BlocConsumer<VideoClassesSearchBloc, VideoClassesSearchState>(
+    return BlocConsumer<CoursesSearchBloc, CoursesSearchState>(
       listener: (context, state) {
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Ricerca videolezione"),
+            title: const Text("Ricerca corso"),
           ),
           body: Column(
             children: [
@@ -52,14 +54,14 @@ class VideoClassesSearchPageState extends State<VideoClassesSearchPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           DropdownButtonHideUnderline(
-                            child: DropdownButton2<VideoClassSearchType>(
+                            child: DropdownButton2<CourseSearchType>(
                               dropdownStyleData: DropdownStyleData(
                                   maxHeight: size.height * 0.3),
                               onChanged: (value) => context
-                                  .read<VideoClassesSearchBloc>()
-                                  .add(SetVideoClassSearchType(type: value!)),
+                                  .read<CoursesSearchBloc>()
+                                  .add(SetCourseSearchType(type: value!)),
                               hint: const Text("Cerca per"),
-                              items: VideoClassSearchType.values
+                              items: CourseSearchType.values
                                   .map((elem) => DropdownMenuItem(
                                       value: elem, child: Text(elem.name)
                                     )
@@ -74,55 +76,80 @@ class VideoClassesSearchPageState extends State<VideoClassesSearchPage> {
                 ],
               ),
 
-              if (
-                state.searchType == VideoClassSearchType.byName || 
-                state.searchType == VideoClassSearchType.byNameAndTeacher
-              )
+              if (state.searchType == CourseSearchType.byCodice)
               SizedBox(
                 height: size.height * 0.02,
               ),
 
-              if (
-                state.searchType == VideoClassSearchType.byName ||
-                state.searchType == VideoClassSearchType.byNameAndTeacher
-              )
+              if (state.searchType == CourseSearchType.byCodice)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: TextField(
-                  controller: videoClassNameTextController,
+                  controller: courseIdTextController,
                   onChanged: (value) {
-                    context.read<VideoClassesSearchBloc>()
+                    context.read<CoursesSearchBloc>()
                       .add(
-                        SetVideoClassNameEvent(
-                          name: videoClassNameTextController.text
+                        SetCourseIdEvent(
+                          id: courseIdTextController.text
                         )
                       );
                   },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Nome videolezione"
+                    labelText: "Codice corso"
                   ),
                 ),
               ),
 
               if (
-                state.searchType == VideoClassSearchType.byTeacher || 
-                state.searchType == VideoClassSearchType.byNameAndTeacher
+                state.searchType == CourseSearchType.byName || 
+                state.searchType == CourseSearchType.byNameAndTeacher
               )
               SizedBox(
                 height: size.height * 0.02,
               ),
 
               if (
-                state.searchType == VideoClassSearchType.byTeacher ||
-                state.searchType == VideoClassSearchType.byNameAndTeacher
+                state.searchType == CourseSearchType.byName ||
+                state.searchType == CourseSearchType.byNameAndTeacher
+              )
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextField(
+                  controller: courseNameTextController,
+                  onChanged: (value) {
+                    context.read<CoursesSearchBloc>()
+                      .add(
+                        SetCourseNameEvent(
+                          name: courseNameTextController.text
+                        )
+                      );
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Nome corso"
+                  ),
+                ),
+              ),
+
+              if (
+                state.searchType == CourseSearchType.byTeacher || 
+                state.searchType == CourseSearchType.byNameAndTeacher
+              )
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+
+              if (
+                state.searchType == CourseSearchType.byTeacher ||
+                state.searchType == CourseSearchType.byNameAndTeacher
               )
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: TextField(
                   controller: teacherIdTextController,
                   onChanged: (value) {
-                    context.read<VideoClassesSearchBloc>()
+                    context.read<CoursesSearchBloc>()
                       .add(
                         SetTeacherIdEvent(
                           id: teacherIdTextController.text
@@ -149,13 +176,16 @@ class VideoClassesSearchPageState extends State<VideoClassesSearchPage> {
                     ElevatedButton(
                       onPressed: () {
                         if (
-                          state.videoClassName != null || state.teacherId != null
+                          state.courseName != null ||
+                          state.teacherId != null ||
+                          state.courseId != null
                         ) {
-                          context.read<VideoClassesSearchBloc>().add(SearchRequest());
+                          context.read<CoursesSearchBloc>().add(SearchRequest());
                           final router = GoRouter.of(context);
-                          router.push("/videoClassSearch/results");
-                          
-                          videoClassNameTextController.clear();
+                          router.push("/coursesSearch/results");
+
+                          courseIdTextController.clear();
+                          courseNameTextController.clear();
                           teacherIdTextController.clear();
                         }
                       },

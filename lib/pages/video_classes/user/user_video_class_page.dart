@@ -5,8 +5,6 @@ import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/user/user_video_classes_bloc.dart';
 import 'package:gusto_condiviso/bloc/video_classes/video_class/video_class_bloc.dart';
 
-import 'dart:developer' as dev;
-
 class UserVideoClassPage extends StatelessWidget {
   const UserVideoClassPage({super.key});
 
@@ -86,7 +84,6 @@ class UserVideoClassPage extends StatelessWidget {
 
                   ElevatedButton(
                     onPressed: () {
-                      dev.log("Button Pressed");
                       context.read<UserVideoClassesBloc>().add(
                         DeleteSavedVideoClass(
                           userId: context.read<UserBloc>().state.user!.username,

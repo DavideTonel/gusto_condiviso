@@ -26,6 +26,9 @@ class CoursePage extends StatelessWidget {
                     state.course?.name ?? "nome non disponibile",
                     style: const TextStyle(fontSize: 35),
                   ),
+
+                  Text("(Codice: ${state.course?.id})"),
+
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: Text(

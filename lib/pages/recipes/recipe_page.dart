@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/bloc/recipes/feed_recipes/feed_recipes_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/recipe/recipe_bloc.dart';
+import 'package:gusto_condiviso/bloc/recipes/recipe_step_update/recipe_step_update_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
+// TODO extra delete passaggio ma forse no
+// TODO scrivere che videolezione è stata guardata l'ultima volta il ...
 class RecipePage extends StatelessWidget {
   const RecipePage({super.key});
 
@@ -218,6 +221,19 @@ class RecipePage extends StatelessWidget {
                       ingredients: [],
                       tools: []
                     ),
+                    isOwner: state.recipe?.usernameCreator == context.read<UserBloc>().state.user?.username,
+                    onStepUpdatePressed: () {
+                      context.read<RecipeStepUpdateBloc>().add(
+                        LoadRecipeStep(
+                          recipeId: state.recipe!.id,
+                          stepNumber: i+1
+                        )
+                      );
+                      context.read<RecipeStepUpdateBloc>().add(LoadAvailableToolsRequest());
+                      context.read<RecipeStepUpdateBloc>().add(LoadAvailableIngredientsRequest());
+                      final router = GoRouter.of(context);
+                      router.push("/recipe/updateRecipeStep");
+                    },
                   )
                 ),
               )
@@ -232,12 +248,16 @@ class RecipePage extends StatelessWidget {
 class RecipeStepWidget extends StatelessWidget {
   final int stepNumber;
   final RecipeStep step;
+  final bool isOwner;
+  final VoidCallback onStepUpdatePressed;
 
   const RecipeStepWidget(
     {
       super.key,
       required this.stepNumber,
-      required this.step
+      required this.step,
+      required this.isOwner,
+      required this.onStepUpdatePressed
     }
   );
 
@@ -260,6 +280,16 @@ class RecipeStepWidget extends StatelessWidget {
                       "Passaggio $stepNumber",
                       style: const TextStyle(fontSize: 25),
                     ),
+
+                    SizedBox(
+                      width: size.width * 0.3,
+                    ),
+
+                    if (isOwner)
+                    ElevatedButton(
+                      onPressed: onStepUpdatePressed,
+                      child: const Text("Modifica")
+                    )
                   ],
                 ),
 

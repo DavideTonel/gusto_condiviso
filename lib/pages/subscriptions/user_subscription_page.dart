@@ -10,11 +10,8 @@ class UserSubscriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    //final List<Subscription> subscriptions = List.empty();
-
     return BlocConsumer<SubscriptionsBloc, SubscriptionsState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Column(
           children: [
@@ -45,14 +42,27 @@ class UserSubscriptionPage extends StatelessWidget {
                 itemCount: state.subscriptionTypes.length,
                 itemBuilder: (context, index) {
                   final subscriptionType = state.subscriptionTypes[index];
-                  return SubscriptionWidget(
-                    name: subscriptionType.name,
-                    pricePerMonth: subscriptionType.price,
-                    description: subscriptionType.description,
-                    onSubscriptionSelected: () {
-                      context.read<UserBloc>().add(SetSubscription(
-                        subscriptionType: subscriptionType
-                      ));
+                  return BlocConsumer<UserBloc, UserState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return SubscriptionWidget(
+                        name: subscriptionType.name,
+                        pricePerMonth: subscriptionType.price,
+                        description: subscriptionType.description,
+                        selected: context.read<UserBloc>().state.user?.subscription?.subscriptionType.id ==subscriptionType.id,
+                        onEnrollSubscription: () {
+                          context.read<UserBloc>().add(
+                            SetSubscription(
+                              subscriptionType: subscriptionType
+                            )
+                          );
+                        },
+                        onCancelSubscription: () {
+                          context.read<UserBloc>().add(
+                            CancelSubscription()
+                          );
+                        },
+                      );
                     },
                   );
                 }
@@ -69,17 +79,21 @@ class SubscriptionWidget extends StatelessWidget {
   final String name;
   final String pricePerMonth;
   final String description;
-  final VoidCallback onSubscriptionSelected;
+  final bool selected;
+  final VoidCallback onEnrollSubscription;
+  final VoidCallback onCancelSubscription;
 
   const SubscriptionWidget(
-    {
-      super.key,
-      required this.name,
-      required this.pricePerMonth,
-      required this.description,
-      required this.onSubscriptionSelected
-    }
-  );
+      {
+        super.key,
+        required this.name,
+        required this.pricePerMonth,
+        required this.description,
+        required this.selected,
+        required this.onEnrollSubscription,
+        required this.onCancelSubscription
+      }
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -137,10 +151,10 @@ class SubscriptionWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 40.0),
                     child: ElevatedButton(
-                        onPressed: onSubscriptionSelected,
-                        child: const Text(
-                          "Seleziona",
-                          style: TextStyle(fontSize: 25),
+                        onPressed: selected ? onCancelSubscription : onEnrollSubscription,
+                        child: Text(
+                          selected ? "Annulla iscrizione" : "Seleziona",
+                          style: const TextStyle(fontSize: 25),
                         )),
                   )
                 ],

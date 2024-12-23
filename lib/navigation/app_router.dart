@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gusto_condiviso/pages/courses/course_page.dart';
 import 'package:gusto_condiviso/pages/courses/creation/course_creation_page.dart';
+import 'package:gusto_condiviso/pages/courses/search/courses_search_page.dart';
+import 'package:gusto_condiviso/pages/courses/search/courses_search_results_page.dart';
 import 'package:gusto_condiviso/pages/courses/user/user_course_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/entry_point_page.dart';
 import 'package:gusto_condiviso/pages/entry_point/login/admin_login_page.dart';
@@ -23,6 +25,7 @@ import 'package:gusto_condiviso/pages/recipes/creation/recipe_review_creation_pa
 import 'package:gusto_condiviso/pages/recipes/creation/recipe_step_creation_page.dart';
 import 'package:gusto_condiviso/pages/recipes/recipe_page.dart';
 import 'package:gusto_condiviso/pages/recipes/recipe_reviews_page.dart';
+import 'package:gusto_condiviso/pages/recipes/recipe_step_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_page.dart';
 import 'package:gusto_condiviso/pages/recipes/search/recipe_search_results_page.dart';
 import 'package:gusto_condiviso/pages/video_classes/creation/video_class_creation_page.dart';
@@ -72,6 +75,10 @@ class AppRouter {
         builder: (context, state) => const RecipePage(),
       ),
       GoRoute(
+        path: "/recipe/updateRecipeStep",
+        builder: (context, state) => const RecipeStepPage(),
+      ),
+      GoRoute(
         path: "/recipe/reviews",
         builder: (context, state) => const RecipeReviewsPage(),
       ),
@@ -102,6 +109,14 @@ class AppRouter {
       GoRoute(
         path: "/userCourse",
         builder: (context, state) => const UserCoursePage(),
+      ),
+      GoRoute(
+        path: "/courseSearch",
+        builder: (context, state) => const CoursesSearchPage(),
+      ),
+      GoRoute(
+        path: "/coursesSearch/results",
+        builder: (context, state) => const CoursesSearchResultsPage(),
       ),
       GoRoute(
         path: "/userPromo",

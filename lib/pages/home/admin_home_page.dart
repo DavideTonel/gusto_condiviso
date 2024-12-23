@@ -100,7 +100,9 @@ class AdminHomePage extends StatelessWidget {
                             context.read<NavigationBloc>().add(NavigateToAdminHomeTools());
                           }
                           case 4: {
-                            // TODO
+                            // TODO vedere insegnante con più lezioni riprodotte
+                            // TODO vedere classifica ricette per recensioni e/o salvataggi
+                            // TODO vedere ingredienti più usati nelle ricette
                             //context.read<RecipeCategoriesBloc>().add(LoadStatistics());
                             context.read<NavigationBloc>().add(NavigateToAdminHomeStatistics());
                           }
@@ -121,7 +123,7 @@ class AdminHomePage extends StatelessWidget {
                       1 => const AdminRecipeCategoriesPage(),
                       2 => const AdminIngredientsPage(),
                       3 => const AdminToolsPage(),
-                      4 => const AdminStatisticsPage(),  // TODO
+                      4 => const AdminStatisticsPage(),  // TODO scrivere ui
                       _ => const AdminProfilePage()
                     }
                   )

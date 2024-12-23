@@ -18,3 +18,5 @@ final class SetSubscription extends UserEvent {
 
   SetSubscription({required this.subscriptionType});
 }
+
+final class CancelSubscription extends UserEvent {}

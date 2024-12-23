@@ -140,7 +140,7 @@ class UserProfilePage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Text(
-                                "Abbonamento: ${state.user!.subscription?.subscriptionType.name}",
+                                "Abbonamento: ${state.user!.subscription?.subscriptionType.name ?? "Nessun abbonamento"}",
                                 style: const TextStyle(fontSize: 20),
                               ),
                             ),
@@ -155,7 +155,7 @@ class UserProfilePage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Text(
-                                "Data iscrizione abbonamento: ${state.user!.subscription?.startDate}",
+                                "Data iscrizione abbonamento: ${state.user!.subscription?.startDate ?? "Nessun abbonamento"}",
                                 style: const TextStyle(fontSize: 20),
                               ),
                             ),
