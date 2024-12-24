@@ -27,6 +27,22 @@ final class GetCurrentVideoPercentageRequest extends UserVideoClassesEvent {
 
 final class ClearCurrentVideoClassPercentage extends UserVideoClassesEvent {}
 
+final class GetCurrentVideoSavedDateRequest extends UserVideoClassesEvent {
+  final String teacherId;
+  final String videoClassName;
+  final String userId;
+
+  GetCurrentVideoSavedDateRequest(
+    {
+      required this.teacherId, 
+      required this.videoClassName,
+      required this.userId
+    }
+  );
+}
+
+final class ClearCurrentVideoSaveDate extends UserVideoClassesEvent {}
+
 final class SaveCurrentVideoPercentage extends UserVideoClassesEvent {
   final String teacherId;
   final String videoClassName;

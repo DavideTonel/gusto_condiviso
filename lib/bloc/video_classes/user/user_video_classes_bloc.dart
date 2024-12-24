@@ -30,6 +30,18 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
     });
   
     on<DeleteSavedVideoClass>(onDeleteSavedVideoClassRequest);
+
+    on<GetCurrentVideoSavedDateRequest>(onGetCurrentVideoSavedDateRequest);
+
+    on<ClearCurrentVideoSaveDate>((event, emit) {
+      emit(
+        UserVideoClassesLoaded(
+          feedVideoClasses: state.feedVideoClasses,
+          seenVideoClasses: state.seenVideoClasses,
+          currentVideoCompletePercentage: null,
+        )
+      );
+    });
   }
 
   FutureOr<void> onLoadVideoClassesFeed(
@@ -57,7 +69,8 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
           UserVideoClassesLoaded(
             feedVideoClasses: videoClasses,
             seenVideoClasses: state.seenVideoClasses,
-            currentVideoCompletePercentage: state.currentVideoCompletePercentage
+            currentVideoCompletePercentage: state.currentVideoCompletePercentage,
+            currentVideoSavedDate: state.currentVideoSavedDate
           )
         );
       });
@@ -95,7 +108,8 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
           UserVideoClassesLoaded(
             feedVideoClasses: state.feedVideoClasses,
             seenVideoClasses: videoClasses,
-            currentVideoCompletePercentage: state.currentVideoCompletePercentage
+            currentVideoCompletePercentage: state.currentVideoCompletePercentage,
+            currentVideoSavedDate: state.currentVideoSavedDate
           )
         );
       });
@@ -132,7 +146,8 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
             UserVideoClassesLoaded(
               feedVideoClasses: state.feedVideoClasses,
               seenVideoClasses: state.seenVideoClasses,
-              currentVideoCompletePercentage: value.data[0]["MinutoRiproduzione"] as int
+              currentVideoCompletePercentage: value.data[0]["MinutoRiproduzione"] as int,
+              currentVideoSavedDate: state.currentVideoSavedDate
             )
           );
         });
@@ -162,7 +177,8 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
           UserVideoClassesLoaded(
             feedVideoClasses: state.feedVideoClasses,
             seenVideoClasses: state.seenVideoClasses,
-            currentVideoCompletePercentage: value.data[0]["MinutoRiproduzione"] as int
+            currentVideoCompletePercentage: value.data[0]["MinutoRiproduzione"] as int,
+            currentVideoSavedDate: state.currentVideoSavedDate
           )
         );
       });
@@ -208,10 +224,41 @@ class UserVideoClassesBloc extends Bloc<UserVideoClassesEvent, UserVideoClassesS
             UserVideoClassesLoaded(
               feedVideoClasses: state.feedVideoClasses,
               seenVideoClasses: videoClasses,
-              currentVideoCompletePercentage: state.currentVideoCompletePercentage
+              currentVideoCompletePercentage: state.currentVideoCompletePercentage,
+              currentVideoSavedDate: state.currentVideoSavedDate
             )
           );
         });
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onGetCurrentVideoSavedDateRequest(
+    GetCurrentVideoSavedDateRequest event,
+    Emitter<UserVideoClassesState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/getVideoClassUserSavedDate",
+        data: {
+          "teacherId": event.teacherId,
+          "videoClassName": event.videoClassName,
+          "userId": event.userId,
+        }
+      ).then((value) async {
+        dev.log(value.data.toString());
+        emit(
+          UserVideoClassesLoaded(
+            feedVideoClasses: state.feedVideoClasses,
+            seenVideoClasses: state.seenVideoClasses,
+            currentVideoCompletePercentage: state.currentVideoCompletePercentage,
+            currentVideoSavedDate: DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data[0]["DataInizio"] as String))
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");

@@ -7,8 +7,6 @@ import 'package:gusto_condiviso/bloc/recipes/recipe_step_update/recipe_step_upda
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 import 'package:gusto_condiviso/model/recipe/recipe.dart';
 
-// TODO extra delete passaggio ma forse no
-// TODO scrivere che videolezione è stata guardata l'ultima volta il ...
 class RecipePage extends StatelessWidget {
   const RecipePage({super.key});
 
@@ -90,7 +88,8 @@ class RecipePage extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            context.read<RecipeBloc>().add(LoadRecipeReviewsRequest(
+                            context.read<RecipeBloc>().add(
+                              LoadRecipeReviewsRequest(
                                 recipeId: state.recipe!.id
                               )
                             );
@@ -105,7 +104,7 @@ class RecipePage extends StatelessWidget {
                               ),
 
                               Text(
-                                " ${state.recipe?.rating.toString() ?? "non disponibile"}",
+                                " ${state.recipe?.rating.toStringAsPrecision(2) ?? "non disponibile"}",
                                 style: const TextStyle(fontSize: 30),
                               ),
                             ],

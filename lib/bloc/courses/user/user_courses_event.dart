@@ -17,3 +17,12 @@ final class EnrollUserRequest extends UserCoursesEvent {
 
   EnrollUserRequest({required this.userId, required this.courseId});
 }
+
+final class GetCurrentCourseSavedDate extends UserCoursesEvent {
+  final int courseId;
+  final String userId;
+
+  GetCurrentCourseSavedDate({required this.courseId, required this.userId});
+}
+
+final class ClearCurrentCourseSavedDate extends UserCoursesEvent {}

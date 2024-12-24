@@ -18,18 +18,19 @@ class UserVideoClassPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: () {
-                context.read<UserVideoClassesBloc>().add(ClearCurrentVideoClassPercentage());
-                context.read<UserVideoClassesBloc>().add(
-                  LoadVideoClassesStarted(
-                    userId: context.read<UserBloc>().state.user!.username
-                  )
-                );
-                final router = GoRouter.of(context);
-                router.pop();
-              },
-              icon: const Icon(Icons.arrow_back)
-            ),
+                onPressed: () {
+                  context.read<UserVideoClassesBloc>().add(ClearCurrentVideoClassPercentage());
+                  context.read<UserVideoClassesBloc>().add(ClearCurrentVideoSaveDate());
+                  context.read<UserVideoClassesBloc>().add(LoadVideoClassesFeed());
+                  context.read<UserVideoClassesBloc>().add(
+                    LoadVideoClassesStarted(
+                      userId: context.read<UserBloc>().state.user!.username
+                    )
+                  );
+                  final router = GoRouter.of(context);
+                  router.pop();
+                },
+                icon: const Icon(Icons.arrow_back)),
             title: Padding(
               padding:
                   const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
@@ -62,9 +63,27 @@ class UserVideoClassPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.videoClass?.date}",
+                      "Pubblicata il ${state.videoClass?.date}",
                       style: const TextStyle(fontSize: 16),
                     ),
+                  ),
+
+                  if (
+                    context.read<UserVideoClassesBloc>().state.seenVideoClasses
+                      .where((e) => e.teacherCreatorId == state.videoClass?.teacherCreatorId && e.name == state.videoClass?.name)
+                      .toList()
+                      .isNotEmpty
+                  )
+                  BlocBuilder<UserVideoClassesBloc, UserVideoClassesState>(
+                    builder: (context, state) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Text(
+                          "Salvata il ${state.currentVideoSavedDate}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -74,28 +93,26 @@ class UserVideoClassPage extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 25.0),
-                    child: Text("Durata: ${state.videoClass?.duration}")
-                  ),
-
+                      padding: const EdgeInsets.only(left: 25.0),
+                      child: Text("Durata: ${state.videoClass?.duration}")),
                   SizedBox(
                     width: size.width * 0.05,
                   ),
-
                   ElevatedButton(
-                    onPressed: () {
-                      context.read<UserVideoClassesBloc>().add(
-                        DeleteSavedVideoClass(
-                          userId: context.read<UserBloc>().state.user!.username,
-                          teacherId: state.videoClass!.teacherCreatorId,
-                          videoClassName: state.videoClass!.name
-                        )
-                      );
-                      final router = GoRouter.of(context);
-                      router.pop();
-                    },
-                    child: const Text("Segna completata")
-                  )
+                      onPressed: () {
+                        context.read<UserVideoClassesBloc>().add(
+                            DeleteSavedVideoClass(
+                                userId: context
+                                    .read<UserBloc>()
+                                    .state
+                                    .user!
+                                    .username,
+                                teacherId: state.videoClass!.teacherCreatorId,
+                                videoClassName: state.videoClass!.name));
+                        final router = GoRouter.of(context);
+                        router.pop();
+                      },
+                      child: const Text("Segna completata"))
                 ],
               ),
               SizedBox(
@@ -122,19 +139,31 @@ class UserVideoClassPage extends StatelessWidget {
                   return SizedBox(
                     width: size.width * 0.4,
                     child: Slider(
-                      value: state.currentVideoCompletePercentage?.toDouble() ?? 0.0,
+                      value: state.currentVideoCompletePercentage?.toDouble() ??
+                          0.0,
                       onChangeEnd: (value) {
                         context.read<UserVideoClassesBloc>().add(
-                          SaveCurrentVideoPercentage(
-                            teacherId: context.read<VideoClassBloc>().state.videoClass?.teacherCreatorId ?? "",
-                            videoClassName: context.read<VideoClassBloc>().state.videoClass?.name ?? "",
-                            userId: context.read<UserBloc>().state.user!.username,
-                            currentPercentage: value.toInt()
-                          )
-                        );
+                            SaveCurrentVideoPercentage(
+                                teacherId: context
+                                        .read<VideoClassBloc>()
+                                        .state
+                                        .videoClass
+                                        ?.teacherCreatorId ??
+                                    "",
+                                videoClassName: context
+                                        .read<VideoClassBloc>()
+                                        .state
+                                        .videoClass
+                                        ?.name ??
+                                    "",
+                                userId: context
+                                    .read<UserBloc>()
+                                    .state
+                                    .user!
+                                    .username,
+                                currentPercentage: value.toInt()));
                       },
-                      onChanged: (value) {
-                      },
+                      onChanged: (value) {},
                       max: 100,
                       divisions: 100,
                       label: state.currentVideoCompletePercentage.toString(),

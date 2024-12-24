@@ -21,6 +21,21 @@ class UserCoursePage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                context.read<UserCoursesBloc>().add(ClearCurrentCourseSavedDate());
+                context.read<UserCoursesBloc>().add(LoadCoursesFeed());
+                context.read<UserCoursesBloc>().add(
+                  LoadCoursesEnrolled(
+                    userId: context.read<UserBloc>().state.user!.username
+                  )
+                );
+
+                final router = GoRouter.of(context);
+                router.pop();
+              },
+              icon: const Icon(Icons.arrow_back)
+            ),
             title: Padding(
               padding:
                   const EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0),
@@ -32,9 +47,7 @@ class UserCoursePage extends StatelessWidget {
                     state.course?.name ?? "nome non disponibile",
                     style: const TextStyle(fontSize: 35),
                   ),
-
                   Text("(Codice: ${state.course?.id})"),
-
                   Padding(
                     padding: const EdgeInsets.only(right: 20.0),
                     child: Text(
@@ -56,17 +69,33 @@ class UserCoursePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
                     child: Text(
-                      "${state.course?.date}",
+                      "Pubblicato il ${state.course?.date}",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
+
+                  if (
+                    context.read<UserCoursesBloc>().state.enrolledCourses
+                      .map((c) => c.id)
+                      .toList()
+                      .contains(context.read<CourseBloc>().state.course?.id)
+                  )
+                  BlocBuilder<UserCoursesBloc, UserCoursesState>(
+                    builder: (context, state) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Text(
+                          "Salvato il ${state.currentCourseSavedDate}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
-              
               SizedBox(
                 height: size.height * 0.05,
               ),
-
               Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Row(
@@ -80,61 +109,55 @@ class UserCoursePage extends StatelessWidget {
                   ],
                 ),
               ),
-
               SizedBox(
                 height: size.height * 0.2,
               ),
-
               BlocBuilder<UserCoursesBloc, UserCoursesState>(
                 builder: (context, state) {
                   return ElevatedButton(
-                    onPressed: state.enrolledCourses
-                      .map((c) => c.id)
-                      .toList()
-                      .contains(context.read<CourseBloc>().state.course?.id)
-                    ? null
-                    :  () {
-                      context.read<UserCoursesBloc>().add(
-                        EnrollUserRequest(
-                          userId: context.read<UserBloc>().state.user!.username,
-                          courseId: context.read<CourseBloc>().state.course!.id
-                        )
-                      );
-                    } ,
+                    onPressed: state.enrolledCourses.map((c) => c.id).toList().contains(context.read<CourseBloc>().state.course?.id)
+                      ? null
+                      : () {
+                        context.read<UserCoursesBloc>().add(
+                          EnrollUserRequest(
+                            userId: context.read<UserBloc>().state.user!.username,
+                            courseId: context.read<CourseBloc>().state.course!.id
+                          )
+                        );
+                      },
                     child: const Text("Segui corso"),
                   );
                 },
               ),
-
               SizedBox(
                 height: size.height * 0.05,
               ),
-
               Flexible(
                 fit: FlexFit.loose,
                 child: ListView.builder(
                   itemCount: state.course?.videoClasses.length ?? 0,
                   itemBuilder: (context, i) => VideoClassInCourseWidget(
-                    position: i+1,
-                    videoClass: state.course?.videoClasses[i] ?? VideoClass(
-                      teacherCreatorId: "",
-                      name: "",
-                      description: "",
-                      date: "",
-                      duration: "",
-                    ),
+                    position: i + 1,
+                    videoClass: state.course?.videoClasses[i] ??
+                      VideoClass(
+                        teacherCreatorId: "",
+                        name: "",
+                        description: "",
+                        date: "",
+                        duration: "",
+                      ),
                     onTap: () {
                       context.read<UserVideoClassesBloc>().add(
                         GetCurrentVideoPercentageRequest(
                           teacherId: state.course?.videoClasses[i].teacherCreatorId ?? "",
-                          videoClassName: state.course?.videoClasses[i].name?? "",
+                          videoClassName: state.course?.videoClasses[i].name ?? "",
                           userId: context.read<UserBloc>().state.user!.username
                         )
                       );
                       context.read<VideoClassBloc>().add(
                         LoadVideoClassRequest(
                           teacherId: state.course?.videoClasses[i].teacherCreatorId ?? "",
-                          videoClassName: state.course?.videoClasses[i].name?? ""
+                          videoClassName: state.course?.videoClasses[i].name ?? ""
                         )
                       );
                       final router = GoRouter.of(context);

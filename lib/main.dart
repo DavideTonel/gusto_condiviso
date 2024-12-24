@@ -26,6 +26,7 @@ import 'package:gusto_condiviso/bloc/recipes/tools/tools_bloc.dart';
 import 'package:gusto_condiviso/bloc/signin/company/company_signin_bloc.dart';
 import 'package:gusto_condiviso/bloc/signin/teacher/teacher_signin_bloc.dart';
 import 'package:gusto_condiviso/bloc/signin/user/user_signin_bloc.dart';
+import 'package:gusto_condiviso/bloc/statistics/admin_statistics/admin_statistics_bloc.dart';
 import 'package:gusto_condiviso/bloc/subscription/subscription_bloc.dart';
 import 'package:gusto_condiviso/bloc/teacher/teacher_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
@@ -140,6 +141,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AdminBloc()
+        ),
+        BlocProvider(
+          create: (context) => AdminStatisticsBloc()
         ),
         BlocProvider(
           create: (context) => RecipeCategoriesBloc()

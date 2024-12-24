@@ -5,7 +5,6 @@ import 'package:gusto_condiviso/bloc/promos/promo/promo_bloc.dart';
 import 'package:gusto_condiviso/bloc/promos/user/user_promos_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 
-// TODO rivalutare id promozione monouso
 class UserPromoPage extends StatelessWidget {
   const UserPromoPage({super.key});
 
@@ -21,6 +20,12 @@ class UserPromoPage extends StatelessWidget {
             leading: IconButton(
               onPressed: () {
                 context.read<UserPromosBloc>().add(ClearCurrentOneshotCode());
+                context.read<UserPromosBloc>().add(LoadPromosForUserRequest());
+                context.read<UserPromosBloc>().add(
+                  LoadPromosActivatedByUser(
+                    userId: context.read<UserBloc>().state.user!.username
+                  )
+                );
                 final router = GoRouter.of(context);
                 router.pop();
               },

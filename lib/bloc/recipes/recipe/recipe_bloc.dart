@@ -56,7 +56,7 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
 
     on<ClearRecipe>((event, emit) {
       emit(
-        const RecipeInitial()
+        const RecipeInitial(recipe: null)
       );
     });
 
@@ -81,6 +81,7 @@ class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
         final recipeDescription = value.data["DescrizioneRicetta"] as String;
         final recipeRating = value.data["Valutazione"] as double;
         final recipeNumOfReviews = value.data["NumeroRecensioni"] as int;
+        dev.log(recipeNumOfReviews.toString());
         final recipePersonPerDose = value.data["PersonePerDose"] as String;
         final recipePubDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataPubblicazione"] as String));
 

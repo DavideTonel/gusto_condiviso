@@ -88,7 +88,7 @@ class RecipeReviewsPageState extends State<RecipeReviewsPage> {
                           size: 35,
                         ),
                         Text(
-                          state.recipe!.rating.toString(),
+                          state.recipe!.rating.toStringAsPrecision(2),
                           style: const TextStyle(fontSize: 30),
                         ),
 

@@ -117,6 +117,14 @@ class UserVideoClassesFeedPage extends StatelessWidget {
                         )
                       );
 
+                      context.read<UserVideoClassesBloc>().add(
+                        GetCurrentVideoSavedDateRequest(
+                          teacherId: elem.teacherCreatorId,
+                          videoClassName: elem.name,
+                          userId: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+
                       final router = GoRouter.of(context);
                       router.push("/userVideoClass");
                     },
@@ -165,6 +173,14 @@ class UserVideoClassesFeedPage extends StatelessWidget {
 
                       context.read<UserVideoClassesBloc>().add(
                         GetCurrentVideoPercentageRequest(
+                          teacherId: elem.teacherCreatorId,
+                          videoClassName: elem.name,
+                          userId: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+
+                      context.read<UserVideoClassesBloc>().add(
+                        GetCurrentVideoSavedDateRequest(
                           teacherId: elem.teacherCreatorId,
                           videoClassName: elem.name,
                           userId: context.read<UserBloc>().state.user!.username

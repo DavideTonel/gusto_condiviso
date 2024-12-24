@@ -5,6 +5,7 @@ import 'package:gusto_condiviso/bloc/navigation/navigation_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/categories/recipe_categories_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/ingredients/ingredients_bloc.dart';
 import 'package:gusto_condiviso/bloc/recipes/tools/tools_bloc.dart';
+import 'package:gusto_condiviso/bloc/statistics/admin_statistics/admin_statistics_bloc.dart';
 import 'package:gusto_condiviso/pages/profiles/admin_profile_page.dart';
 import 'package:gusto_condiviso/pages/recipes/admin/admin_ingredients_page.dart';
 import 'package:gusto_condiviso/pages/recipes/admin/admin_recipes_categories_page.dart';
@@ -100,10 +101,10 @@ class AdminHomePage extends StatelessWidget {
                             context.read<NavigationBloc>().add(NavigateToAdminHomeTools());
                           }
                           case 4: {
-                            // TODO vedere insegnante con più lezioni riprodotte
-                            // TODO vedere classifica ricette per recensioni e/o salvataggi
-                            // TODO vedere ingredienti più usati nelle ricette
-                            //context.read<RecipeCategoriesBloc>().add(LoadStatistics());
+                            context.read<AdminStatisticsBloc>().add(LoadPromosStatistics());
+                            context.read<AdminStatisticsBloc>().add(LoadTeacherStatistics());
+                            context.read<AdminStatisticsBloc>().add(LoadRecipesStatistics());
+                            context.read<AdminStatisticsBloc>().add(LoadIngredientsStatistics());
                             context.read<NavigationBloc>().add(NavigateToAdminHomeStatistics());
                           }
                           default: {
@@ -123,7 +124,7 @@ class AdminHomePage extends StatelessWidget {
                       1 => const AdminRecipeCategoriesPage(),
                       2 => const AdminIngredientsPage(),
                       3 => const AdminToolsPage(),
-                      4 => const AdminStatisticsPage(),  // TODO scrivere ui
+                      4 => const AdminStatisticsPage(),
                       _ => const AdminProfilePage()
                     }
                   )

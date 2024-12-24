@@ -5,13 +5,13 @@ sealed class UserCoursesState {
   final List<CoursePreview> feedCourses;
   final List<CoursePreview> enrolledCourses;
 
-  //final bool? currentCourseEnrolled;
+  final String? currentCourseSavedDate;
 
   const UserCoursesState(
     {
       required this.feedCourses,
       required this.enrolledCourses,
-      //required this.currentCourseEnrolled
+      required this.currentCourseSavedDate
     }
   );
 }
@@ -21,7 +21,7 @@ final class UserCoursesInitial extends UserCoursesState {
     {
       super.feedCourses = const [],
       super.enrolledCourses = const [],
-      //super.currentCourseEnrolled
+      super.currentCourseSavedDate
     }
   );
 }
@@ -31,7 +31,7 @@ final class UserCoursesLoaded extends UserCoursesState{
     {
       required super.feedCourses,
       required super.enrolledCourses,
-      //super.currentCourseEnrolled
+      super.currentCourseSavedDate
     }
   );
 }

@@ -53,6 +53,7 @@ class UserCoursesFeedPage extends StatelessWidget {
                             context.read<UserCoursesBloc>().add(
                               LoadCoursesFeed()
                             );
+
                             context.read<UserCoursesBloc>().add(
                               LoadCoursesEnrolled(
                                 userId: context.read<UserBloc>().state.user!.username
@@ -107,6 +108,14 @@ class UserCoursesFeedPage extends StatelessWidget {
                           id: elem.id
                         )
                       );
+
+                      context.read<UserCoursesBloc>().add(
+                        GetCurrentCourseSavedDate(
+                          courseId: elem.id,
+                          userId: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+                      
                       final router = GoRouter.of(context);
                       router.push("/userCourse");
                     },
@@ -151,6 +160,14 @@ class UserCoursesFeedPage extends StatelessWidget {
                           id: elem.id
                         )
                       );
+
+                      context.read<UserCoursesBloc>().add(
+                        GetCurrentCourseSavedDate(
+                          courseId: elem.id,
+                          userId: context.read<UserBloc>().state.user!.username
+                        )
+                      );
+
                       final router = GoRouter.of(context);
                       router.push("/userCourse");
                     },

@@ -6,12 +6,14 @@ sealed class UserVideoClassesState {
   final List<VideoClass> seenVideoClasses;
 
   final int? currentVideoCompletePercentage;
+  final String? currentVideoSavedDate;
 
   const UserVideoClassesState(
     {
       required this.feedVideoClasses,
       required this.seenVideoClasses,
-      required this.currentVideoCompletePercentage
+      required this.currentVideoCompletePercentage,
+      required this.currentVideoSavedDate
     }
   );
 }
@@ -21,7 +23,8 @@ final class UserVideoClassesInitial extends UserVideoClassesState {
     {
       super.feedVideoClasses = const [],
       super.seenVideoClasses = const [],
-      super.currentVideoCompletePercentage
+      super.currentVideoCompletePercentage,
+      super.currentVideoSavedDate
     }
   );
 }
@@ -31,7 +34,8 @@ final class UserVideoClassesLoaded extends UserVideoClassesState{
     {
       required super.feedVideoClasses,
       required super.seenVideoClasses,
-      super.currentVideoCompletePercentage
+      super.currentVideoCompletePercentage,
+      super.currentVideoSavedDate
     }
   );
 }

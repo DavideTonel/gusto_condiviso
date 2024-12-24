@@ -17,6 +17,18 @@ class UserCoursesBloc extends Bloc<UserCoursesEvent, UserCoursesState> {
     on<LoadCoursesEnrolled>(onLoadCoursesEnrolled);
 
     on<EnrollUserRequest>(onEnrollUserRequest);
+
+    on<ClearCurrentCourseSavedDate>((event, emit) {
+      emit(
+        UserCoursesLoaded(
+          feedCourses: state.feedCourses,
+          enrolledCourses: state.enrolledCourses,
+          currentCourseSavedDate: null
+        )
+      );
+    });
+
+    on<GetCurrentCourseSavedDate>(onGetCurrentCourseSavedDate);
   }
 
   FutureOr<void> onLoadCoursesFeed(
@@ -66,7 +78,6 @@ class UserCoursesBloc extends Bloc<UserCoursesEvent, UserCoursesState> {
       ).then((value) {
         List<CoursePreview> courses = [];
         for(dynamic entry in value.data) {
-          dev.log(entry.toString());
           courses.add(
             CoursePreview(
               id: entry["Codice"] as int,
@@ -126,6 +137,33 @@ class UserCoursesBloc extends Bloc<UserCoursesEvent, UserCoursesState> {
             )
           );
         });
+      });
+    } catch (e) {
+      dev.log("Error");
+      dev.log(e.toString());
+    }
+  }
+
+  FutureOr<void> onGetCurrentCourseSavedDate(
+    GetCurrentCourseSavedDate event,
+    Emitter<UserCoursesState> emit
+  ) async {
+    try {
+      var client = DioClient();
+      await client.dio.post(
+        "api/getCourseSavedDate",
+        data: {
+          "userId": event.userId,
+          "courseId": event.courseId
+        }
+      ).then((value) {
+        emit(
+          UserCoursesLoaded(
+            feedCourses: state.feedCourses,
+            enrolledCourses: state.enrolledCourses,
+            currentCourseSavedDate: DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data[0]["DataInizio"] as String))
+          )
+        );
       });
     } catch (e) {
       dev.log("Error");
