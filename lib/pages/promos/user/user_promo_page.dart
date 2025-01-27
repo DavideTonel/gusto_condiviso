@@ -5,6 +5,7 @@ import 'package:gusto_condiviso/bloc/promos/promo/promo_bloc.dart';
 import 'package:gusto_condiviso/bloc/promos/user/user_promos_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 
+// TODO aggiungere data nelle recensioni
 class UserPromoPage extends StatelessWidget {
   const UserPromoPage({super.key});
 
