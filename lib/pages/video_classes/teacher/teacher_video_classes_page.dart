@@ -200,7 +200,7 @@ class TeacherVideoClassesPageState extends State<TeacherVideoClassesPage> {
                     onTap: () {
                       context.read<VideoClassBloc>().add(
                         LoadVideoClassRequest(
-                          teacherId: context.read<TeacherBloc>().state.teacher!.username,
+                          teacherId: elem.teacherCreatorId,
                           videoClassName: elem.name
                         )
                       );

@@ -137,11 +137,15 @@ class TeacherProfilePage extends StatelessWidget {
                         height: 50,
                         child: Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: Text(
-                                "Descrizione: ${state.teacher!.description}",
-                                style: const TextStyle(fontSize: 20),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  "Descrizione: ${state.teacher!.description}",
+                                  style: const TextStyle(fontSize: 20),
+                                  softWrap: true,
+                                  overflow: TextOverflow.visible,
+                                ),
                               ),
                             ),
                           ],

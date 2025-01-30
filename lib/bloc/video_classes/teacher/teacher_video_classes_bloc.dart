@@ -3,6 +3,7 @@ import 'dart:developer' as dev;
 
 import 'package:bloc/bloc.dart';
 import 'package:gusto_condiviso/client/dio_client.dart';
+import 'package:gusto_condiviso/model/video_classes/search/video_class_search_type.dart';
 import 'package:gusto_condiviso/model/video_classes/video_class.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
@@ -108,11 +109,13 @@ class TeacherVideoClassesBloc extends Bloc<TeacherVideoClassesEvent, TeacherVide
     Emitter<TeacherVideoClassesState> emit
   ) async {
     try {
+      dev.log("search for ${event.name}");
       var client = DioClient();
       await client.dio.post(
         "api/searchVideoClass",
         data: {
-          "name": event.name
+          "name": event.name,
+          "searchType": VideoClassSearchType.byName.name
         }
       ).then((value) {
         List<VideoClass> results = [];

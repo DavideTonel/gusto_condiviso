@@ -182,38 +182,33 @@ class RecipeCreationPageState extends State<RecipeCreationPage> {
                 ),
               ),
 
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        if (
-                          state.recipeName != null &&
-                          state.recipeName!.isNotEmpty &&
-                          state.recipeDescription != null &&
-                          state.recipeDescription!.isNotEmpty &&
-                          state.personPerDose!.isNotEmpty &&
-                          state.currentCategories.isNotEmpty
-                        ) {
-                          final router = GoRouter.of(context);
-                          router.push("/recipeCreation/recipeStepCreation");  
-                        }
-                      },
-                      child: const Text(
-                        "Avanti",
-                        style: TextStyle(fontSize: 24),
-                      )
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (
+                            state.recipeName != null &&
+                            state.recipeName!.isNotEmpty &&
+                            state.recipeDescription != null &&
+                            state.recipeDescription!.isNotEmpty &&
+                            state.personPerDose!.isNotEmpty &&
+                            state.currentCategories.isNotEmpty
+                          ) {
+                            final router = GoRouter.of(context);
+                            router.push("/recipeCreation/recipeStepCreation");  
+                          }
+                        },
+                        child: const Text(
+                          "Avanti",
+                          style: TextStyle(fontSize: 24),
+                        )
+                      ),
                     ),
-
-                    SizedBox(
-                      height: size.height * 0.05,
-                    )
                   ],
                 ),
               )

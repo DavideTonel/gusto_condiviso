@@ -164,7 +164,7 @@ class RecipePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      state.recipe == null || state.recipe?.revisitedRecipeId != null ? "rivisitazione di ${state.recipe?.revisitedRecipeId ?? "non disponibile"}" : "",
+                      state.recipe == null || state.recipe?.revisitedRecipeId != null ? "rivisitazione della ricetta con codice ${state.recipe?.revisitedRecipeId ?? "non disponibile"}" : "",
                       style: const TextStyle(fontSize: 16),
                     ),
                   ],

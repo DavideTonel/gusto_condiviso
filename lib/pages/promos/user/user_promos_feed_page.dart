@@ -33,36 +33,25 @@ class UserPromosFeedPage extends StatelessWidget {
                   SizedBox(
                     width: size.width * 0.6,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20.0),
+                          padding: const EdgeInsets.only(right: 45.0),
                           child: ElevatedButton(
                             onPressed: () {
-                              final router = GoRouter.of(context);
-                              router.push("/videoClassCreation");
+                              context.read<UserPromosBloc>().add(
+                                LoadPromosForUserRequest()
+                              );
+                              context.read<UserPromosBloc>().add(
+                                LoadPromosActivatedByUser(
+                                  userId: context.read<UserBloc>().state.user!.username
+                                )
+                              );
                             },
                             child: const Text(
-                              "Cerca Promozione",
+                              "Aggiorna Pagina",
                               style: TextStyle(fontSize: 20),
                             ),
-                          ),
-                        ),
-
-                        ElevatedButton(
-                          onPressed: () {
-                            context.read<UserPromosBloc>().add(
-                              LoadPromosForUserRequest()
-                            );
-                            context.read<UserPromosBloc>().add(
-                              LoadPromosActivatedByUser(
-                                userId: context.read<UserBloc>().state.user!.username
-                              )
-                            );
-                          },
-                          child: const Text(
-                            "Aggiorna Pagina",
-                            style: TextStyle(fontSize: 20),
                           ),
                         )
                       ],
