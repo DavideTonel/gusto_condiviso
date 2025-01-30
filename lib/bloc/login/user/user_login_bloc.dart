@@ -38,7 +38,9 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
           final birthday = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataNascita"] as String));
           
           try {
+            final subscriptionId = value.data["Codice"] as int;
             final startDateSubscription = DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataInizio"] as String));
+            final endDate = value.data["DataFine"] != null ? DateFormat('dd/MM/yyyy').format(DateTime.parse(value.data["DataFine"] as String)) : null;
             final subscriptionTypeId = value.data["CodiceTipoAbbonamento"] as int;
             final subscriptionTypeName = value.data["NomeTipo"] as String;
             final subscriptionTypeDescription = value.data["Descrizione"] as String;
@@ -53,7 +55,9 @@ class UserLoginBloc extends Bloc<UserLoginEvent, UserLoginState> {
                 mail: mail,
                 birthday: birthday,
                 subscription: UserSubscription(
+                  id: subscriptionId,
                   startDate: startDateSubscription,
+                  endDate: endDate,
                   subscriptionType: SubscriptionType(
                     id: subscriptionTypeId,
                     name: subscriptionTypeName,

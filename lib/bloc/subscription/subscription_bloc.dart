@@ -14,7 +14,6 @@ class SubscriptionsBloc extends Bloc<SubscriptionsEvent, SubscriptionsState> {
     on<LoadSubscriptionTypesRequest>(onLoadSubscriptionsRequest);
   }
 
-
   FutureOr<void> onLoadSubscriptionsRequest(
     LoadSubscriptionTypesRequest event,
     Emitter<SubscriptionsState> emit
@@ -37,8 +36,6 @@ class SubscriptionsBloc extends Bloc<SubscriptionsEvent, SubscriptionsState> {
         }
         emit(SubscriptionsTypeLoaded(subscriptionTypes: subsciptionTypes));
       });
-
-
     } catch (e) {
       dev.log("Error");
       dev.log(e.toString());

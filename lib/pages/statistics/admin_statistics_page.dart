@@ -233,7 +233,7 @@ class AdminStatisticsPage extends StatelessWidget {
                   child: ListTile(
                     title: Text(elem.name),
                     subtitle: Text("Codice: ${elem.id}"),
-                    trailing: Text("Punteggio: ${elem.numCodeUsed}"),
+                    trailing: Text("Utilizzi: ${elem.numCodeUsed}"),
                   )
                 )).toList(),
               ),

@@ -24,8 +24,17 @@ class User {
 }
 
 class UserSubscription {
+  final int id;
   final String startDate;
+  final String? endDate;
   final SubscriptionType subscriptionType;
 
-  UserSubscription({required this.startDate, required this.subscriptionType}); 
+  UserSubscription(
+    {
+      required this.id,
+      required this.startDate,
+      this.endDate,
+      required this.subscriptionType
+    }
+  ); 
 }

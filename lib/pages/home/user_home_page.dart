@@ -74,25 +74,25 @@ class UserHomePage extends StatelessWidget {
                           selectedIcon: const Icon(Icons.feed),
                           icon: const Icon(Icons.feed_outlined),
                           label: const Text("Ricette"),
-                          disabled: state.user!.subscription?.subscriptionType.name != "Free" && state.user!.subscription?.subscriptionType.name != "Silver" && state.user!.subscription?.subscriptionType.name != "Gold"
+                          disabled: state.user?.subscription?.subscriptionType.name != "Free" && state.user?.subscription?.subscriptionType.name != "Silver" && state.user?.subscription?.subscriptionType.name != "Gold"
                         ),
                         NavigationRailDestination(
                           selectedIcon: const Icon(Icons.featured_video),
                           icon: const Icon(Icons.featured_video_outlined),
                           label: const Text("Lezioni"),
-                          disabled: state.user!.subscription?.subscriptionType.name != "Silver" && state.user!.subscription?.subscriptionType.name != "Gold"
+                          disabled: state.user?.subscription?.subscriptionType.name != "Silver" && state.user?.subscription?.subscriptionType.name != "Gold"
                         ),
                         NavigationRailDestination(
                           selectedIcon: const Icon(Icons.class_),
                           icon: const Icon(Icons.class_outlined),
                           label: const Text("Corsi"),
-                          disabled: state.user!.subscription?.subscriptionType.name != "Gold"
+                          disabled: state.user?.subscription?.subscriptionType.name != "Gold"
                         ),
                         NavigationRailDestination(
                           selectedIcon: const Icon(Icons.card_giftcard),
                           icon: const Icon(Icons.card_giftcard_outlined),
                           label: const Text("Promozioni"),
-                          disabled: state.user!.subscription?.subscriptionType.name != "Gold"
+                          disabled: state.user?.subscription?.subscriptionType.name != "Gold"
                         ),
                       ],
                       onDestinationSelected: (value) {
@@ -108,12 +108,12 @@ class UserHomePage extends StatelessWidget {
                             context.read<NavigationBloc>().add(NavigateToUserHomeRecipes());
                             context.read<FeedRecipesBloc>()
                               .add(LoadRecipesMadeByUserRequest(
-                                  username: context.read<UserBloc>().state.user!.username
+                                  username: context.read<UserBloc>().state.user?.username ?? "none"
                                 )
                               );
                             context.read<FeedRecipesBloc>()
                               .add(LoadRecipesSavedByUserRequest(
-                                  username: context.read<UserBloc>().state.user!.username
+                                  username: context.read<UserBloc>().state.user?.username ?? "none"
                                 )
                               );
                           }
@@ -122,7 +122,7 @@ class UserHomePage extends StatelessWidget {
                             context.read<UserVideoClassesBloc>().add(LoadVideoClassesFeed());
                             context.read<UserVideoClassesBloc>().add(
                               LoadVideoClassesStarted(
-                                userId: state.user!.username
+                                userId: state.user?.username ?? "none"
                               )
                             );
                           }
@@ -131,7 +131,7 @@ class UserHomePage extends StatelessWidget {
                             context.read<UserCoursesBloc>().add(LoadCoursesFeed());
                             context.read<UserCoursesBloc>().add(
                               LoadCoursesEnrolled(
-                                userId: state.user!.username
+                                userId: state.user?.username ?? "none"
                               )
                             );
                           }
@@ -140,7 +140,7 @@ class UserHomePage extends StatelessWidget {
                             context.read<UserPromosBloc>().add(LoadPromosForUserRequest());
                             context.read<UserPromosBloc>().add(
                               LoadPromosActivatedByUser(
-                                userId: state.user!.username
+                                userId: state.user?.username ?? "none"
                               )
                             );
                           }
