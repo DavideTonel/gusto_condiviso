@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gusto_condiviso/bloc/user/user_bloc.dart';
 
-import 'dart:developer' as dev;
-
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
 
